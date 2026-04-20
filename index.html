@@ -321,6 +321,67 @@ section { padding: 5.5rem 1.5rem; }
 .author-info span { font-size: 0.78rem; color: var(--c-text-muted); }
 .testimonials-cta { text-align: center; margin-top: 3.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
 
+/* ── STARS ── */
+.testimonial-stars { display: block; font-size: 0.82rem; color: #F59E0B; letter-spacing: 0.14em; margin-bottom: 0.85rem; }
+
+/* ── DOTS CAROUSEL TÉMOIGNAGES ── */
+.testimonials-dots {
+  display: none;
+  gap: 0.4rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.25rem;
+}
+.testimonials-dot {
+  width: 6px; height: 6px; border-radius: 100px;
+  background: rgba(124,58,237,0.2);
+  transition: width 300ms var(--ease), background 300ms;
+  cursor: pointer; flex-shrink: 0;
+}
+.testimonials-dot.active { background: #7C3AED; width: 20px; }
+
+/* ── ANIMATION entrée carte ── */
+@keyframes testi-slide-in {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── CAROUSEL MOBILE ── */
+@media (max-width: 768px) {
+  .testimonials-grid {
+    grid-template-columns: unset !important;
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.85rem;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding: 0.5rem 1.5rem 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin-top: 2rem;
+  }
+  .testimonials-grid::-webkit-scrollbar { display: none; }
+  .testimonial-card {
+    flex: 0 0 86% !important;
+    scroll-snap-align: start;
+    padding: 1.5rem !important;
+    animation: testi-slide-in 550ms var(--ease) both;
+  }
+  .testimonial-card:nth-child(2) { animation-delay: 110ms; }
+  .testimonials-dots { display: flex; }
+}
+@media (max-width: 480px) {
+  .testimonials-grid {
+    margin-left: -1rem !important;
+    margin-right: -1rem !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .testimonial-card { flex: 0 0 90% !important; }
+}
+
 /* FAQ */
 .faq-section { background: var(--c-bg);  }
 .faq-list { max-width: 720px; margin: 3.5rem auto 0; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -2593,6 +2654,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     <h2 class="section-title reveal">Ils en parlent mieux que nous.</h2>
     <div class="testimonials-grid">
       <div class="testimonial-card reveal tilt">
+        <span class="testimonial-stars" aria-label="5 étoiles">★★★★★</span>
         <div class="testimonial-quote" aria-hidden="true">"</div>
         <p class="testimonial-text">On avait déjà essayé deux logiciels qui n'avaient rien changé. Avec Horizon, en 3 semaines, mon équipe admin a récupéré l'équivalent d'un mi-temps. Ce qui m'a convaincu : ils ont commencé par l'audit.</p>
         <div class="testimonial-result">14h / semaine récupérées — ROI en 3 semaines</div>
@@ -2605,6 +2667,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         </div>
       </div>
       <div class="testimonial-card reveal reveal-delay-1 tilt">
+        <span class="testimonial-stars" aria-label="5 étoiles">★★★★★</span>
         <div class="testimonial-quote" aria-hidden="true">"</div>
         <p class="testimonial-text">Ils n'ont jamais utilisé un seul mot technique. Ils ont parlé de mes problèmes, pas de leur technologie. Aujourd'hui mon équipe commerciale passe 2h de moins par jour sur l'admin — et ça se voit sur le CA.</p>
         <div class="testimonial-result">+22% de CA dès le 2ème mois</div>
@@ -2617,6 +2680,13 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         </div>
       </div>
     </div>
+
+    <!-- Dots de navigation — mobile uniquement -->
+    <div class="testimonials-dots" id="testimonials-dots" aria-hidden="true">
+      <span class="testimonials-dot active" data-index="0"></span>
+      <span class="testimonials-dot" data-index="1"></span>
+    </div>
+
     <div class="testimonials-cta reveal">
       <a href="#contact" class="btn-primary">
         Réserver mon audit gratuit
@@ -2911,6 +2981,29 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   if (sub && isMobile()) {
     sub.textContent = 'Appuyez sur chaque service pour voir ce que ça donne concrètement.';
   }
+})();
+
+/* ── TESTIMONIALS — Carousel dots ── */
+(function() {
+  const grid = document.querySelector('.testimonials-grid');
+  const dots = document.querySelectorAll('.testimonials-dot');
+  if (!grid || !dots.length) return;
+
+  function updateDots() {
+    const cardW = (grid.querySelector('.testimonial-card')?.offsetWidth || 0) + 14;
+    const idx = cardW > 0 ? Math.round(grid.scrollLeft / cardW) : 0;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  grid.addEventListener('scroll', updateDots, { passive: true });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.index);
+      const card = grid.querySelectorAll('.testimonial-card')[idx];
+      if (card) card.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    });
+  });
 })();
 
 /* ── ROADMAP TIMELINE ── */
