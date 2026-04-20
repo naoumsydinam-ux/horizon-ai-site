@@ -95,7 +95,7 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 /* ── SMOOTH SCROLL MOMENTUM ── */
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 * { scroll-behavior: smooth; }
 body { background: var(--c-bg); color: var(--c-text); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
@@ -436,7 +436,7 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 
   /* STATS */
   .stats-bar-inner { grid-template-columns: 1fr; }
-  .stat-item { border-right: none;  }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .stat-item:last-child { border-bottom: none; }
 
   /* GRIDS → 1 col */
@@ -1381,13 +1381,23 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 /* Responsive */
 @media (max-width: 768px) {
   .tabdash-inner { max-width: 100%; }
+  .tabdash-section { padding: 3rem 1rem 4rem; }
   .tabdash-dash { grid-template-columns: 1fr; }
   .tabdash-dash.active { grid-template-columns: 1fr; }
   .td-sidebar { display: none; }
   .td-content-row { grid-template-columns: 1fr; }
-  .td-chart-panel { border-right: none;  }
-  .tabdash-tabs { flex-wrap: wrap; border-radius: 16px; }
+  .td-chart-panel { border-right: none; }
+  .tabdash-tabs { display: flex; flex-wrap: wrap; width: 100%; border-radius: 14px; }
+  .tabdash-tab { flex: 1 1 calc(50% - 0.5rem); text-align: center; min-width: 0; }
   .td-kpis { grid-template-columns: repeat(3,1fr); }
+}
+
+@media (max-width: 480px) {
+  .tabdash-tabs { border-radius: 12px; }
+  .tabdash-tab { font-size: 0.75rem; padding: 0.45rem 0.6rem; }
+  .td-kpis { grid-template-columns: 1fr 1fr; }
+  .td-kpi:last-child { grid-column: span 2; border-right: none; border-top: 1px solid var(--c-border); }
+  .td-kpi:nth-child(2) { border-right: none; }
 }
 
 
@@ -1528,6 +1538,14 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .hslider-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
   .hslider-text { font-size: clamp(1.1rem, 4vw, 1.5rem); }
   .hslider-img-label strong { font-size: 0.95rem; }
+  .hslider-section { padding: 4rem 1.25rem 5rem; }
+  .hslider-sub { margin-bottom: 1.75rem; }
+}
+
+@media (max-width: 480px) {
+  .hslider-section { padding: 3rem 1rem 4rem; }
+  .hslider-sub { margin-bottom: 1.25rem; }
+  .hslider-item { padding: 0.85rem 0; }
 }
 
 
