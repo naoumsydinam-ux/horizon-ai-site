@@ -391,41 +391,49 @@ section { padding: 5.5rem 1.5rem; }
 }
 .testimonials-dot.active { background: #7C3AED; width: 20px; }
 
+/* ── SPINNING BORDER ── */
+@property --tc-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 /* ── ANIMATIONS MOBILE TESTIMONIALS ── */
-@keyframes testi-slide-in {
-  from { opacity: 0; transform: translateX(72px) scale(0.94); filter: blur(8px); }
-  to   { opacity: 1; transform: translateX(0)    scale(1);    filter: blur(0);   }
+@keyframes tc-border-spin { to { --tc-angle: 360deg; } }
+@keyframes tc-float {
+  0%,100% { transform: translateY(0px);  box-shadow: 0 20px 60px rgba(124,58,237,0.22), 0 4px 16px rgba(0,0,0,0.07); }
+  50%     { transform: translateY(-9px); box-shadow: 0 32px 80px rgba(124,58,237,0.32), 0 8px 24px rgba(0,0,0,0.08); }
 }
-@keyframes testi-slide-in-rev {
-  from { opacity: 0; transform: translateX(-72px) scale(0.94); filter: blur(8px); }
-  to   { opacity: 1; transform: translateX(0)     scale(1);    filter: blur(0);   }
+@keyframes tc-throw-left {
+  from { opacity: 1; transform: translateX(0)     rotate(0deg)  scale(1);    filter: blur(0); }
+  to   { opacity: 0; transform: translateX(-110%) rotate(-8deg) scale(0.88); filter: blur(6px); }
 }
-@keyframes testi-slide-out {
-  from { opacity: 1; transform: translateX(0)    scale(1);    filter: blur(0);  }
-  to   { opacity: 0; transform: translateX(-56px) scale(0.94); filter: blur(6px); }
+@keyframes tc-throw-right {
+  from { opacity: 1; transform: translateX(0)    rotate(0deg) scale(1);    filter: blur(0); }
+  to   { opacity: 0; transform: translateX(110%) rotate(8deg) scale(0.88); filter: blur(6px); }
 }
-@keyframes testi-slide-out-rev {
-  from { opacity: 1; transform: translateX(0)   scale(1);    filter: blur(0);  }
-  to   { opacity: 0; transform: translateX(56px) scale(0.94); filter: blur(6px); }
+@keyframes tc-spring-in {
+  0%   { opacity: 0; transform: translateX(90px)  rotate(4deg)   scale(0.9);    filter: blur(10px); }
+  65%  { opacity: 1; transform: translateX(-6px)  rotate(-1deg)  scale(1.02);   filter: blur(0); }
+  80%  { transform: translateX(3px)   rotate(0.5deg)  scale(0.99); }
+  100% { transform: translateX(0)     rotate(0deg)    scale(1); }
 }
-@keyframes testi-stars-pop {
-  from { opacity: 0; transform: scale(0.3) translateY(8px); }
-  to   { opacity: 1; transform: scale(1)   translateY(0);   }
+@keyframes tc-spring-in-rev {
+  0%   { opacity: 0; transform: translateX(-90px) rotate(-4deg)  scale(0.9);    filter: blur(10px); }
+  65%  { opacity: 1; transform: translateX(6px)   rotate(1deg)   scale(1.02);   filter: blur(0); }
+  80%  { transform: translateX(-3px)  rotate(-0.5deg) scale(0.99); }
+  100% { transform: translateX(0)     rotate(0deg)    scale(1); }
 }
-@keyframes testi-float {
-  0%,100% { transform: translateY(0px);   }
-  50%     { transform: translateY(-7px);  }
+@keyframes tc-item-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes testi-progress {
   from { width: 0%; }
   to   { width: 100%; }
 }
-@keyframes testi-border-glow {
-  0%,100% { opacity: 0.8; }
-  50%     { opacity: 1;   }
-}
 
-/* ── CARTE MOBILE — une à la fois ── */
+/* ── CARTE MOBILE ── */
 @media (max-width: 768px) {
   .testimonials-section { padding: 3.5rem 1.25rem 4rem; }
 
@@ -440,56 +448,59 @@ section { padding: 5.5rem 1.5rem; }
   .testimonial-card {
     display: none;
     width: 100%;
-    padding: 1.75rem !important;
-    border-radius: 22px !important;
+    padding: 2rem 1.75rem !important;
+    border-radius: 24px !important;
     border: 2px solid var(--c-border) !important;
     will-change: transform, opacity;
   }
 
-  /* Carte active — entre depuis la droite */
+  /* Carte active : bordure tournante + spring in */
   .testimonial-card.tc-active {
+    --tc-angle: 0deg;
     display: block;
     position: relative !important;
-    z-index: 1;
-    animation: testi-slide-in 550ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    z-index: 2;
     border: 2px solid transparent !important;
     background:
       linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
-      linear-gradient(135deg, #3B82F6, #7C3AED, #EC4899) border-box !important;
-    box-shadow: 0 20px 70px rgba(124,58,237,0.2), 0 4px 20px rgba(0,0,0,0.06) !important;
+      conic-gradient(from var(--tc-angle) at 50% 50%,
+        #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%) border-box !important;
+    animation: tc-border-spin 4s linear infinite, tc-spring-in 680ms cubic-bezier(0.22,1,0.36,1) both;
   }
-  /* Variante — entre depuis la gauche (prev) */
   .testimonial-card.tc-active.tc-from-left {
-    animation: testi-slide-in-rev 550ms cubic-bezier(0.22, 1, 0.36, 1) both !important;
+    animation: tc-border-spin 4s linear infinite, tc-spring-in-rev 680ms cubic-bezier(0.22,1,0.36,1) both !important;
   }
-  /* Floating sur la carte active (déclenché après l'entrée) */
+  /* Float après l'entrée */
   .testimonial-card.tc-floating {
-    animation: testi-float 4s ease-in-out infinite !important;
+    animation: tc-border-spin 4s linear infinite, tc-float 5s ease-in-out infinite !important;
   }
 
-  /* Carte qui sort vers la gauche */
+  /* Carte qui sort */
   .testimonial-card.tc-exiting {
     display: block !important;
     position: absolute !important;
     top: 0; left: 0; right: 0;
-    z-index: 0;
+    z-index: 1;
     pointer-events: none !important;
-    animation: testi-slide-out 320ms cubic-bezier(0.4, 0, 1, 1) forwards !important;
     border: 2px solid transparent !important;
     background:
       linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
-      linear-gradient(135deg, #3B82F6, #7C3AED, #EC4899) border-box !important;
+      conic-gradient(from var(--tc-angle) at 50% 50%,
+        #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%) border-box !important;
+    animation: tc-throw-left 380ms cubic-bezier(0.4,0,1,1) forwards !important;
   }
-  /* Sort vers la droite (prev) */
   .testimonial-card.tc-exiting.tc-to-right {
-    animation: testi-slide-out-rev 320ms cubic-bezier(0.4, 0, 1, 1) forwards !important;
+    animation: tc-throw-right 380ms cubic-bezier(0.4,0,1,1) forwards !important;
   }
 
-  .testimonial-card.tc-active .testimonial-stars {
-    animation: testi-stars-pop 500ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
+  /* Reveal séquentiel du contenu */
+  .testimonial-card.tc-active .testimonial-stars  { animation: tc-item-in 400ms  40ms  cubic-bezier(0.22,1,0.36,1) both; }
+  .testimonial-card.tc-active .testimonial-quote  { animation: tc-item-in 400ms  110ms cubic-bezier(0.22,1,0.36,1) both; }
+  .testimonial-card.tc-active .testimonial-text   { animation: tc-item-in 400ms  190ms cubic-bezier(0.22,1,0.36,1) both; }
+  .testimonial-card.tc-active .testimonial-result { animation: tc-item-in 400ms  290ms cubic-bezier(0.22,1,0.36,1) both; }
+  .testimonial-card.tc-active .testimonial-author { animation: tc-item-in 400ms  370ms cubic-bezier(0.22,1,0.36,1) both; }
 
-  /* ── Barre de progression ── */
+  /* Barre de progression */
   .testi-progress {
     display: none;
     height: 2px;
@@ -501,12 +512,12 @@ section { padding: 5.5rem 1.5rem; }
   .testi-progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #3B82F6, #7C3AED, #EC4899);
+    background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316);
     border-radius: 100px;
   }
   .testi-progress-fill.running { animation: testi-progress 5s linear forwards; }
 
-  /* ── Compteur premium ── */
+  /* Compteur + boutons */
   .testi-counter {
     display: none;
     align-items: center;
@@ -522,17 +533,17 @@ section { padding: 5.5rem 1.5rem; }
   .testi-counter-num span { color: var(--c-text); font-weight: 700; }
   .testi-counter-btns { display: flex; gap: 0.5rem; }
   .testi-btn {
-    width: 32px; height: 32px;
+    width: 34px; height: 34px;
     border-radius: 50%;
     border: 1px solid var(--c-border-strong);
     background: var(--c-surface);
     color: var(--c-text);
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    transition: background 200ms, border-color 200ms;
-    font-size: 0.7rem;
+    transition: background 200ms, transform 120ms;
+    font-size: 0.75rem;
   }
-  .testi-btn:active { background: var(--c-surface-2); }
+  .testi-btn:active { transform: scale(0.88); }
 
   .testimonials-dots { display: none; }
 }
