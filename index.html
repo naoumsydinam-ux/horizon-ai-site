@@ -448,11 +448,18 @@ section { padding: 5.5rem 1.5rem; }
   .testimonial-card {
     display: none;
     width: 100%;
-    padding: 2rem 1.75rem !important;
-    border-radius: 24px !important;
+    padding: 1.25rem 1.25rem !important;
+    border-radius: 20px !important;
     border: 2px solid var(--c-border) !important;
     will-change: transform, opacity;
   }
+  .testimonial-quote { font-size: 1.8rem !important; margin-bottom: 0.5rem !important; }
+  .testimonial-text  { font-size: 0.82rem !important; line-height: 1.6 !important; margin-bottom: 1rem !important; }
+  .testimonial-result { font-size: 0.68rem !important; padding: 0.25rem 0.7rem !important; margin-bottom: 1rem !important; }
+  .testimonial-stars { font-size: 0.72rem !important; margin-bottom: 0.6rem !important; }
+  .testimonial-avatar { width: 30px !important; height: 30px !important; font-size: 0.68rem !important; }
+  .author-info strong { font-size: 0.8rem !important; }
+  .author-info span   { font-size: 0.7rem !important; }
 
   /* Carte active : bordure tournante + spring in */
   .testimonial-card.tc-active {
@@ -3536,7 +3543,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
       return;
     }
     const oldIdx = currentIdx;
-    if (oldIdx === idx) return;
+    if (oldIdx === idx && cards[idx].classList.contains('tc-active')) return;
     const goingForward = direction !== 'prev';
     currentIdx = idx;
 
