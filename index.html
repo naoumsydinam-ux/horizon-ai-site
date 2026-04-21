@@ -1901,7 +1901,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     top: 68px;
     z-index: 20;
     background: #F0F2F5;
-    padding-bottom: 1.25rem;
+    padding-bottom: 1.75rem;
     margin-bottom: 0;
   }
   /* Hide description on mobile to keep heading compact */
@@ -1913,11 +1913,11 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     box-shadow: 0 6px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
     transition: transform 260ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms;
   }
-  /* Top offsets start below the sticky heading (~190px from top) */
-  .agents-grid .agent-card:nth-child(1) { top: 200px; z-index: 11; }
-  .agents-grid .agent-card:nth-child(2) { top: 278px; z-index: 12; }
-  .agents-grid .agent-card:nth-child(3) { top: 356px; z-index: 13; }
-  .agents-grid .agent-card:nth-child(4) { top: 434px; z-index: 14; }
+  /* Top offsets start well below the sticky heading */
+  .agents-grid .agent-card:nth-child(1) { top: 232px; z-index: 11; }
+  .agents-grid .agent-card:nth-child(2) { top: 310px; z-index: 12; }
+  .agents-grid .agent-card:nth-child(3) { top: 388px; z-index: 13; }
+  .agents-grid .agent-card:nth-child(4) { top: 466px; z-index: 14; }
   /* No entrance stagger on mobile */
   .agents-grid .agent-card:nth-child(1).visible,
   .agents-grid .agent-card:nth-child(2).visible,
@@ -3578,7 +3578,7 @@ window.closeMobileNav = function() {
 (function() {
   const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
   if (!cards.length) return;
-  const tops = [200, 278, 356, 434]; // must match CSS top values
+  const tops = [232, 310, 388, 466]; // must match CSS top values
 
   function update() {
     if (window.innerWidth > 600) { cards.forEach(c => c.style.transform = ''); return; }
