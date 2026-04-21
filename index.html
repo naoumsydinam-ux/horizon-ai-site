@@ -1980,10 +1980,9 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-head .section-desc { display: none; }
   .agents-grid { gap: 1.25rem; }
 
-  /* Initial state overridé par JS — neutraliser les règles de base */
+  /* Désactiver card-enter — JS contrôle opacity/transform via inline styles */
   .agents-grid .agent-card,
   .agents-grid .agent-card.visible {
-    opacity: 0 !important;
     animation: none !important;
   }
 
@@ -3837,11 +3836,12 @@ window.closeMobileNav = function() {
   function stop() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
 
   const obs = new IntersectionObserver(entries => {
-    entries[0].isIntersecting ? loop() : stop();
+    if (entries[0].isIntersecting) { if (!rafId) loop(); }
+    else stop();
   }, { threshold: 0 });
   obs.observe(section);
 
-  update(); /* état initial immédiat */
+  update();
 })();
 
 /* ── TILT CARDS ── */
