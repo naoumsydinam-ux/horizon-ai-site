@@ -1562,7 +1562,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 .hslider-items { display: flex; flex-direction: column; gap: 0; }
 .hslider-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem 0;
   
@@ -1598,6 +1598,24 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 }
 .hslider-item.active .hslider-text,
 .hslider-item:hover  .hslider-text { opacity: 1; }
+
+.hslider-item-body { display: flex; flex-direction: column; padding-top: 0.18em; }
+.hslider-desc {
+  font-size: 0.82rem;
+  color: var(--c-text-muted);
+  font-weight: 400;
+  line-height: 1.55;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 400ms ease, opacity 350ms ease, margin-top 350ms ease;
+  margin-top: 0;
+}
+.hslider-item.active .hslider-desc {
+  max-height: 3rem;
+  opacity: 1;
+  margin-top: 0.3rem;
+}
 
 /* Barre de progression synchronisée avec le timer JS (1.8s) */
 @keyframes hslider-progress {
@@ -2526,23 +2544,38 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
       <div class="hslider-items" id="hslider-items">
         <div class="hslider-item" data-index="0">
           <span class="hslider-num">01</span>
-          <span class="hslider-text" data-text="Support client automatisé">Support client automatisé</span>
+          <div class="hslider-item-body">
+            <span class="hslider-text" data-text="Support client automatisé">Support client automatisé</span>
+            <span class="hslider-desc">Triage, réponse et escalade automatiques 24h/7 — zéro ticket sans réponse.</span>
+          </div>
         </div>
         <div class="hslider-item" data-index="1">
           <span class="hslider-num">02</span>
-          <span class="hslider-text" data-text="Relances &amp; prospection">Relances &amp; prospection</span>
+          <div class="hslider-item-body">
+            <span class="hslider-text" data-text="Relances &amp; prospection">Relances &amp; prospection</span>
+            <span class="hslider-desc">Séquences personnalisées envoyées au bon moment, sans aucune action manuelle.</span>
+          </div>
         </div>
         <div class="hslider-item" data-index="2">
           <span class="hslider-num">03</span>
-          <span class="hslider-text" data-text="Traitement de documents">Traitement de documents</span>
+          <div class="hslider-item-body">
+            <span class="hslider-text" data-text="Traitement de documents">Traitement de documents</span>
+            <span class="hslider-desc">Factures extraites, rapprochées et archivées en quelques secondes.</span>
+          </div>
         </div>
         <div class="hslider-item" data-index="3">
           <span class="hslider-num">04</span>
-          <span class="hslider-text" data-text="Reporting automatique">Reporting automatique</span>
+          <div class="hslider-item-body">
+            <span class="hslider-text" data-text="Reporting automatique">Reporting automatique</span>
+            <span class="hslider-desc">Synthèse multi-canaux générée et envoyée chaque lundi à 8h.</span>
+          </div>
         </div>
         <div class="hslider-item" data-index="4">
           <span class="hslider-num">05</span>
-          <span class="hslider-text" data-text="Onboarding RH">Onboarding RH</span>
+          <div class="hslider-item-body">
+            <span class="hslider-text" data-text="Onboarding RH">Onboarding RH</span>
+            <span class="hslider-desc">Comptes créés, documents envoyés et planning généré dès la signature.</span>
+          </div>
         </div>
       </div>
 
