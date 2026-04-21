@@ -39,8 +39,8 @@
   --c-surface: #111111;
   --c-surface-2: #161616;
   --c-surface-3: #1C1C1C;
-  --c-text: #F0F2F5;
-  --c-text-muted: #8B95A5;
+  --c-text: #F9FAFB;
+  --c-text-muted: #C4CDD8;
   --c-border: rgba(255,255,255,0.08);
   --c-border-strong: rgba(255,255,255,0.12);
   --c-border-accent: rgba(255,255,255,0.22);
@@ -234,7 +234,7 @@ section { padding: 5.5rem 1.5rem; }
 .section-tag { display: inline-block; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-text-muted); margin-bottom: 1.25rem; font-family: var(--font-mono); padding-left: 1.1rem; position: relative; }
 .section-tag::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 6px; height: 1px; background: linear-gradient(90deg, #3B82F6, #A78BFA); }
 .section-title { font-family: var(--font-display); font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight: 700; line-height: 1.15; margin-bottom: 1.1rem; letter-spacing: -0.02em; }
-.section-desc { font-size: 0.95rem; color: #3D4451; max-width: 520px; line-height: 1.75; font-weight: 400; }
+.section-desc { font-size: 0.95rem; color: var(--c-text-muted); max-width: 520px; line-height: 1.75; font-weight: 400; }
 
 /* REVEAL SCROLL */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 550ms var(--ease), transform 550ms var(--ease); }
@@ -344,7 +344,7 @@ section { padding: 5.5rem 1.5rem; }
 .metric-card:last-child { border-right: none; }
 .metric-card:hover { background: var(--c-surface-2); }
 .metric-val { font-family: var(--font-mono); font-size: clamp(2.5rem,3.5vw,3.5rem); font-weight: 700; line-height: 1; margin-bottom: 0.6rem; background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316, #8B5CF6, #3B82F6); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 13s ease infinite; }
-.metric-label { font-size: 0.82rem; color: #3D4451; line-height: 1.5; font-weight: 400; }
+.metric-label { font-size: 0.82rem; color: var(--c-text-muted); line-height: 1.5; font-weight: 400; }
 
 /* USE CASES */
 .use-cases-section { background: var(--c-bg);  }
@@ -1274,7 +1274,7 @@ p, .section-desc, .agent-desc, .hslider-desc,
 .metric-label, .tabdash-sub, .h195-sub,
 .rd-card p, .rd-card-desc {
   font-weight: 400 !important;
-  color: #3D4451 !important;
+  color: var(--c-text-muted) !important;
 }
 /* Titres toujours en texte plein */
 h1, h2, h3, h4 { color: var(--c-text) !important; }
@@ -1446,12 +1446,12 @@ nav.scrolled { background: rgba(13,15,18,0.95) !important; box-shadow: 0 1px 24p
 .logo-plus svg { stroke: var(--c-border-strong); }
 
 /* Footer — stay dark */
-footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
-.footer-nav a { color: rgba(255,255,255,0.45); }
+footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
+.footer-nav a { color: rgba(255,255,255,0.6); }
 .footer-nav a:hover { color: #fff; }
 .footer-top-link { border: 1px solid rgba(255,255,255,0.12) !important; border-radius: 100px; padding: 0.2rem 0.75rem !important; transition: border-color 200ms, color 200ms !important; }
 .footer-top-link:hover { border-color: rgba(255,255,255,0.35) !important; color: #fff !important; }
-.footer-copy { color: rgba(255,255,255,0.3); }
+.footer-copy { color: rgba(255,255,255,0.45); }
 
 /* Back to top */
 #back-to-top { background: var(--c-surface); border: 1px solid var(--c-border-strong); color: var(--c-text); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
@@ -1572,7 +1572,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   background: var(--c-surface);
 }
 .mq-item svg { flex-shrink: 0; opacity: 0.8; }
-.mq-item span:not(.mq-tag) { color: #3D4451; }
+.mq-item span:not(.mq-tag) { color: var(--c-text-muted); }
 .mq-item strong { color: var(--c-text); font-weight: 700; }
 .mq-tag {
   font-size: 0.65rem;
@@ -2132,7 +2132,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   background: #22C55E;
   animation: pulse-dot 2s infinite;
 }
-.agent-desc { font-size: 0.78rem; color: #3D4451; line-height: 1.6; font-weight: 400; }
+.agent-desc { font-size: 0.78rem; color: var(--c-text-muted); line-height: 1.6; font-weight: 400; }
 .agent-checks { display: flex; flex-direction: column; gap: 0.3rem; }
 .agent-check {
   display: flex; align-items: center; gap: 0.4rem;
