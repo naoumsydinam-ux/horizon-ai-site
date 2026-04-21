@@ -835,12 +835,12 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 /* Wrapper spinning border */
 .cf-spin-wrap {
   --tc-angle: 0deg;
-  border-radius: calc(var(--radius-lg) + 3px);
-  padding: 3px;
+  border-radius: calc(var(--radius-lg) + 1px);
+  padding: 1px;
   background: conic-gradient(from var(--tc-angle) at 50% 50%,
     #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%);
   animation: tc-border-spin 4s linear infinite;
-  box-shadow: 0 8px 48px rgba(139,92,246,0.25), 0 2px 12px rgba(59,130,246,0.15);
+  box-shadow: 0 4px 24px rgba(139,92,246,0.12), 0 1px 6px rgba(59,130,246,0.08);
 }
 .contact-form {
   background: var(--c-surface);
@@ -2098,8 +2098,9 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 2px;
+  padding: 1px;
   background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316);
+  opacity: 0.6;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
