@@ -2264,14 +2264,15 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   .form-note { padding-bottom: 1.25rem; }
 }
 
-/* ── CAPOT SECTION — thrown card animation ── */
-.capot-section { position: relative; background: var(--c-bg); padding: 5.5rem 1.5rem; }
+/* ── CAPOT SECTION ── */
+.capot-section { height: 320vh; position: relative; background: var(--c-bg); }
 .capot-sticky {
+  position: sticky; top: 0; height: 100vh;
   display: flex; flex-direction: column;
-  align-items: center;
-  max-width: 960px; margin: 0 auto;
+  align-items: center; justify-content: center;
+  padding: 1.5rem; overflow: hidden;
 }
-.capot-header { text-align: center; margin-bottom: 2.5rem; }
+.capot-header { text-align: center; margin-bottom: 2rem; }
 .capot-header .section-title { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; }
 .capot-header .section-desc  { margin-top: 0.5rem; }
 .capot-prog-wrap {
@@ -2290,19 +2291,20 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 1.25rem;
   padding: 1.25rem 1.35rem;
-  will-change: transform, opacity;
-  transform-origin: left center;
-  transition: border-color 320ms ease, box-shadow 320ms ease;
+  will-change: transform, border-color, box-shadow;
+  transform-origin: center;
 }
 .capot-card::before { display: none !important; }
-.capot-card:hover   { border-color: rgba(255,255,255,0.14); box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
 .capot-card .agent-name { color: #fff !important; }
 .capot-card .agent-score-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-top: 0.6rem; }
 .capot-card .agent-score-fill { height: 100%; border-radius: 2px; width: 0%; transform: none; transition: width 1.2s cubic-bezier(0.22,1,0.36,1); }
 .capot-card.cap-lit .agent-score-fill { width: var(--score-w, 80%); }
 @media (max-width: 680px) {
-  .capot-section { padding: 4rem 1.25rem 3rem; }
+  .capot-section { height: auto; padding: 4rem 1.25rem 3rem; }
+  .capot-sticky  { position: static; height: auto; overflow: visible; justify-content: flex-start; padding: 0; }
   .capot-grid    { grid-template-columns: 1fr; }
+  .capot-card    { will-change: transform, opacity; transform-origin: left center; transition: border-color 320ms ease; }
+  .capot-card:hover { border-color: rgba(255,255,255,0.14); }
 }
 
 /* ── WORD SCROLL SECTION (Ce qu'on fait) ── */
@@ -4184,75 +4186,92 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── CAPOT SECTION — thrown card animation (spring physics) ── */
+/* ── CAPOT SECTION — desktop: border illumination | mobile: thrown spring ── */
 (function() {
   const section = document.getElementById('capot');
   if (!section) return;
-
   const cards = Array.from(section.querySelectorAll('.capot-card'));
   if (!cards.length) return;
 
-  /* Spring constants — DAMPING < 0.8 gives overshoot/bounce */
-  const SPRING  = 0.09;
-  const DAMPING = 0.72;
-  const MAX_POS = 1.06; /* allows slight overshoot past final position */
+  const isMobile = window.matchMedia('(max-width: 680px)').matches;
 
-  /* Per-card state + stagger (right-column cards trigger 80ms later) */
-  const states = cards.map((_, i) => ({
-    pos: 0, vel: 0,
-    stagger: (i % 2 === 1) ? 0.09 : 0  /* col-right starts slightly later */
-  }));
-  const litOnce = new Array(cards.length).fill(false);
+  if (isMobile) {
+    /* ── MOBILE : thrown card spring animation ── */
+    const SPRING = 0.09, DAMPING = 0.72, MAX_POS = 1.06;
+    const states  = cards.map((_, i) => ({ pos: 0, vel: 0, stagger: (i % 2 === 1) ? 0.09 : 0 }));
+    const litOnce = new Array(cards.length).fill(false);
 
-  /* Initial hidden state */
-  cards.forEach(card => {
-    card.style.opacity   = '0';
-    card.style.transform = 'translateX(-130px) rotate(-4deg) scale(0.94)';
-  });
-
-  function tick() {
-    const vh = window.innerHeight;
-
-    cards.forEach((card, i) => {
-      const s    = states[i];
-      const rect = card.getBoundingClientRect();
-
-      /* Target = 1 when card top crosses 82% of viewport, adjusted for stagger */
-      const raw    = (vh * 0.82 - rect.top) / (vh * 0.42) - s.stagger;
-      const target = Math.max(0, Math.min(1, raw));
-
-      /* Spring step */
-      s.vel += (target - s.pos) * SPRING;
-      s.vel *= DAMPING;
-      s.pos  = Math.max(-0.01, Math.min(MAX_POS, s.pos + s.vel));
-
-      const p  = Math.max(0, s.pos);
-      const tx = ((1 - p) * -130).toFixed(1);
-      const rot = ((1 - p) * -4).toFixed(2);
-      const sc  = (0.94 + 0.06 * p).toFixed(3);
-      const op  = Math.min(1, p * 2).toFixed(3); /* opacity leads the move */
-
-      card.style.opacity   = op;
-      card.style.transform = `translateX(${tx}px) rotate(${rot}deg) scale(${sc})`;
-
-      /* Score bars animate in once card is mostly visible */
-      if (p > 0.88 && !litOnce[i]) {
-        litOnce[i] = true;
-        card.classList.add('cap-lit');
-      }
+    cards.forEach(card => {
+      card.style.opacity   = '0';
+      card.style.transform = 'translateX(-130px) rotate(-4deg) scale(0.94)';
     });
 
+    function tick() {
+      const vh = window.innerHeight;
+      cards.forEach((card, i) => {
+        const s      = states[i];
+        const rect   = card.getBoundingClientRect();
+        const target = Math.max(0, Math.min(1, (vh * 0.82 - rect.top) / (vh * 0.42) - s.stagger));
+        s.vel += (target - s.pos) * SPRING;
+        s.vel *= DAMPING;
+        s.pos  = Math.max(-0.01, Math.min(MAX_POS, s.pos + s.vel));
+        const p = Math.max(0, s.pos);
+        card.style.opacity   = Math.min(1, p * 2).toFixed(3);
+        card.style.transform = `translateX(${((1-p)*-130).toFixed(1)}px) rotate(${((1-p)*-4).toFixed(2)}deg) scale(${(0.94+0.06*p).toFixed(3)})`;
+        if (p > 0.88 && !litOnce[i]) { litOnce[i] = true; card.classList.add('cap-lit'); }
+      });
+      rafId = requestAnimationFrame(tick);
+    }
+
+    let rafId = null;
+    const obs = new IntersectionObserver(e => {
+      if (e[0].isIntersecting) { if (!rafId) rafId = requestAnimationFrame(tick); }
+      else if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }, { threshold: 0 });
+    obs.observe(section);
     rafId = requestAnimationFrame(tick);
+
+  } else {
+    /* ── DESKTOP : scroll-driven border illumination (320vh sticky) ── */
+    const fill    = document.getElementById('capot-fill');
+    const N       = cards.length;
+    const glows   = new Float32Array(N);
+    const litOnce = new Array(N).fill(false);
+
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function applyGlow(card, glow, rgb) {
+      card.style.borderColor = `rgba(${rgb},${(glow * 0.55 + 0.06).toFixed(3)})`;
+      card.style.boxShadow   = `0 0 28px rgba(${rgb},${(glow * 0.28).toFixed(3)}), 0 0 64px rgba(${rgb},${(glow * 0.14).toFixed(3)}), inset 0 0 18px rgba(${rgb},${(glow * 0.06).toFixed(3)})`;
+      card.style.transform   = `scale(${(1 + glow * 0.012).toFixed(4)})`;
+    }
+
+    let displayFill = 0, rafId = null;
+
+    function loop() {
+      const rect     = section.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, -rect.top / (section.offsetHeight - window.innerHeight)));
+
+      cards.forEach((card, i) => {
+        const rgb    = card.dataset.color || '255,255,255';
+        const target = ease(Math.max(0, Math.min(1, (progress - i / N) / (1 / N))));
+        glows[i] += (target - glows[i]) * 0.07;
+        applyGlow(card, glows[i], rgb);
+        if (glows[i] > 0.5 && !litOnce[i]) { litOnce[i] = true; card.classList.add('cap-lit'); }
+      });
+
+      displayFill += (progress - displayFill) * 0.07;
+      if (fill) fill.style.width = `${displayFill * 100}%`;
+      rafId = requestAnimationFrame(loop);
+    }
+
+    const obs = new IntersectionObserver(e => {
+      if (e[0].isIntersecting) { if (!rafId) rafId = requestAnimationFrame(loop); }
+      else if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }, { threshold: 0 });
+    obs.observe(section);
+    rafId = requestAnimationFrame(loop);
   }
-
-  let rafId = null;
-  const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) { if (!rafId) rafId = requestAnimationFrame(tick); }
-    else if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-  }, { threshold: 0 });
-  obs.observe(section);
-
-  rafId = requestAnimationFrame(tick);
 })();
 
 /* ── CONTACT FORM — spotlight cursor ── */
