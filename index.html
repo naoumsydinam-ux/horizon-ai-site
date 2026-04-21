@@ -978,7 +978,7 @@ body { background: #FFFFFF; color: var(--c-text); }
 .testimonials-section { background: #F8F9FB !important; }
 
 /* Marquee sur fond blanc */
-.mq-section { border-top: 1px solid rgba(0,0,0,0.05) !important; border-bottom: 1px solid rgba(0,0,0,0.05) !important; }
+.mq-section { border-top: none !important; border-bottom: none !important; }
 .mq-section::before { background: linear-gradient(to right, #fff, transparent); }
 .mq-section::after { background: linear-gradient(to left, #fff, transparent); }
 .mq-item { background: #FFFFFF; }
@@ -1195,8 +1195,6 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
 .mq-section {
   background: var(--c-surface);
-  border-top: 1px solid var(--c-border);
-  
   overflow: hidden;
   position: relative;
 }
