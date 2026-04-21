@@ -1711,26 +1711,32 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 }
 
 @media (max-width: 480px) {
-  /* Section moins haute */
-  .tabdash-section { padding: 2rem 1rem 2.5rem !important; }
-  .tabdash-sub { font-size: 0.85rem !important; margin-bottom: 1rem !important; }
-  .tabdash-tabs { margin-bottom: 0.75rem !important; border-radius: 12px; }
-  .tabdash-tab { font-size: 0.75rem; padding: 0.45rem 0.6rem; }
-  /* Topbar ultra compact */
-  .td-topbar { padding: 0.4rem 0.75rem !important; }
+  /* Section — plus d'air vertical et horizontal */
+  .tabdash-section { padding: 2.75rem 1.25rem 3.25rem !important; }
+  /* Titre : espace entre tag et titre, titre et sous-titre */
+  .tabdash-title { margin: 0.85rem 0 0.6rem !important; }
+  .tabdash-sub { font-size: 0.88rem !important; margin-bottom: 1.5rem !important; line-height: 1.65 !important; }
+  /* Tabs — plus de respiration avant la card */
+  .tabdash-tabs { margin-bottom: 1rem !important; border-radius: 12px; }
+  .tabdash-tab { font-size: 0.75rem; padding: 0.48rem 0.65rem; }
+  /* Topbar compact mais lisible */
+  .td-topbar { padding: 0.5rem 0.85rem !important; }
   /* KPIs : 3 colonnes en 1 seule ligne */
   .td-kpis { grid-template-columns: repeat(3, 1fr) !important; }
   .td-kpi:last-child { grid-column: auto !important; border-top: none !important; border-right: none !important; }
   .td-kpi:nth-child(2) { border-right: 1px solid var(--c-border) !important; }
-  .td-kpi { padding: 0.4rem 0.4rem !important; }
-  .td-kpi-val { font-size: 0.88rem !important; }
-  .td-kpi-label { font-size: 0.5rem !important; letter-spacing: 0.02em !important; }
-  .td-kpi-delta { font-size: 0.5rem !important; }
-  /* Feed : 4 items max, gap réduit */
+  .td-kpi { padding: 0.5rem 0.45rem !important; }
+  .td-kpi-val { font-size: 0.92rem !important; }
+  .td-kpi-label { font-size: 0.52rem !important; letter-spacing: 0.02em !important; }
+  .td-kpi-delta { font-size: 0.52rem !important; }
+  /* Feed — items plus aérés */
   .td-feed-item:nth-child(n+5) { display: none !important; }
-  .td-feed { gap: 0.3rem !important; }
-  .td-feed-panel { padding: 0.55rem !important; }
-  .td-panel-title { margin-bottom: 0.35rem !important; }
+  .td-feed { gap: 0.4rem !important; }
+  .td-feed-panel { padding: 0.65rem !important; }
+  .td-panel-title { margin-bottom: 0.4rem !important; font-size: 0.7rem !important; }
+  .td-feed-text { font-size: 0.73rem !important; }
+  .td-feed-time { font-size: 0.63rem !important; }
+  .td-badge { font-size: 0.63rem; padding: 0.1rem 0.35rem; }
 }
 
 
