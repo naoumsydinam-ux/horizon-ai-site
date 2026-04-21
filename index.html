@@ -94,11 +94,7 @@
   background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316) !important;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-/* ── SMOOTH SCROLL — tous appareils ── */
-html { scroll-behavior: smooth; overflow-x: clip; }
-@media (prefers-reduced-motion: no-preference) {
-  html { scroll-behavior: smooth; }
-}
+html { overflow-x: clip; }
 body { background: var(--c-bg); color: var(--c-text); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip; }
 
 /* SCROLL BAR */
@@ -2270,6 +2266,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
 
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <body>
 
 <div id="scroll-bar" style="width: 0%;"></div>
@@ -3999,32 +3996,22 @@ window.closeMobileNav = function() {
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 })();
 
-/* ── SMOOTH SCROLL — easing expo, durée longue, tous appareils ── */
+/* ── LENIS SMOOTH SCROLL — ultra fluide, tous appareils ── */
 (function() {
-  function easeInOutExpo(t) {
-    if (t === 0) return 0;
-    if (t === 1) return 1;
-    return t < 0.5
-      ? Math.pow(2, 20 * t - 10) / 2
-      : (2 - Math.pow(2, -20 * t + 10)) / 2;
-  }
-  let raf = null;
-  function smoothTo(to, dur) {
-    if (raf) cancelAnimationFrame(raf);
-    const from = window.scrollY;
-    const dist = Math.max(0, to) - from;
-    if (Math.abs(dist) < 2) return;
-    const duration = dur || Math.min(Math.max(Math.abs(dist) * 0.55, 650), 1400);
-    let t0 = null;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      const p = Math.min((ts - t0) / duration, 1);
-      window.scrollTo(0, from + dist * easeInOutExpo(p));
-      if (p < 1) raf = requestAnimationFrame(step);
-      else raf = null;
-    }
-    raf = requestAnimationFrame(step);
-  }
+  const lenis = new Lenis({
+    duration: 1.6,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 0.9,
+    smoothTouch: true,
+    touchMultiplier: 1.5,
+  });
+
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  /* Ancres internes */
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href^="#"]');
     if (!a) return;
@@ -4033,9 +4020,11 @@ window.closeMobileNav = function() {
     const target = document.querySelector(id);
     if (!target) return;
     e.preventDefault();
-    smoothTo(target.getBoundingClientRect().top + window.scrollY - 80);
+    lenis.scrollTo(target, { offset: -80, duration: 1.6 });
   });
-  window.__smoothTo = smoothTo;
+
+  window.__smoothTo = (top) => lenis.scrollTo(top, { duration: 1.4 });
+  window.__lenis    = lenis;
 })();
 
 /* ── BACK TO TOP ── */
