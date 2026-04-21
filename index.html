@@ -1980,30 +1980,16 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-head .section-desc { display: none; }
   .agents-grid { gap: 1.25rem; }
 
-  /* État initial pour le fallback (odd=droite, even=gauche) */
-  .agents-grid .agent-card:nth-child(odd)  { opacity: 0; transform: translateX(72%)  rotate(13deg)  scale(0.84); }
-  .agents-grid .agent-card:nth-child(even) { opacity: 0; transform: translateX(-72%) rotate(-13deg) scale(0.84); }
-
-  /* ── Scroll-driven : suit le scroll dans les deux sens ── */
-  @supports (animation-timeline: view()) {
-    .agents-grid .agent-card:nth-child(odd) {
-      animation: card-from-right linear both;
-      animation-timeline: view();
-      animation-range: entry 5% entry 62%;
-    }
-    .agents-grid .agent-card:nth-child(even) {
-      animation: card-from-left linear both;
-      animation-timeline: view();
-      animation-range: entry 5% entry 62%;
-    }
+  /* Animation pausée — JS scrub via animation-delay négatif */
+  .agents-grid .agent-card:nth-child(odd) {
+    animation: card-from-right 1s linear both;
+    animation-play-state: paused;
+    animation-delay: calc(var(--throw-p, 0) * -1s);
   }
-
-  /* ── Fallback : déclenchement à 45% visible, droite/gauche alternés ── */
-  @supports not (animation-timeline: view()) {
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(1) { animation: card-from-right 1s cubic-bezier(0.22,1,0.36,1) both; animation-delay:   0ms; }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(2) { animation: card-from-left  1s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 220ms; }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(3) { animation: card-from-right 1s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 440ms; }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(4) { animation: card-from-left  1s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 660ms; }
+  .agents-grid .agent-card:nth-child(even) {
+    animation: card-from-left 1s linear both;
+    animation-play-state: paused;
+    animation-delay: calc(var(--throw-p, 0) * -1s);
   }
 
   /* Hide pre-contact CTA on mobile */
@@ -3821,19 +3807,25 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── AGENT CARDS — fallback IO (navigateurs sans Scroll-driven Animations) ── */
+/* ── AGENT CARDS — scroll scrub (marche dans les deux sens, tous navigateurs) ── */
 (function() {
   if (window.innerWidth > 600) return;
-  if (CSS.supports('animation-timeline', 'view()')) return; /* géré en CSS pur */
-  const section = document.querySelector('.agents-section');
-  if (!section) return;
-  const obs = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      section.classList.add('cards-dealt');
-      obs.disconnect();
-    }
-  }, { threshold: 0.45 }); /* déclenche à 45% visible */
-  obs.observe(section);
+  const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
+  if (!cards.length) return;
+
+  function update() {
+    const vh = window.innerHeight;
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      /* 0 = carte hors écran en bas, 1 = animation terminée (carte à 38% depuis le haut) */
+      const p = Math.max(0, Math.min(1, (vh - rect.top) / (vh * 0.62)));
+      card.style.setProperty('--throw-p', p.toFixed(3));
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
 })();
 
 /* ── TILT CARDS ── */
