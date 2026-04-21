@@ -743,7 +743,8 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .contact-testimonial::before { content: '"'; position: absolute; top: -0.6rem; left: 1.25rem; font-size: 3.5rem; color: rgba(139,92,246,0.3); font-family: Georgia, serif; line-height: 1; }
 .contact-testimonial-text { font-size: 0.82rem; color: var(--c-text-muted); line-height: 1.65; margin-bottom: 1rem; font-style: italic; }
 .contact-testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
-.contact-testimonial-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #3B82F6, #8B5CF6); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: white; flex-shrink: 0; }
+.contact-testimonial-avatar { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; border: 2px solid transparent; background: linear-gradient(var(--c-bg),var(--c-bg)) padding-box, linear-gradient(135deg,#3B82F6,#8B5CF6,#EC4899) border-box; flex-shrink: 0; }
+.contact-testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
 .contact-testimonial-author strong { display: block; font-size: 0.8rem; color: var(--c-text); font-weight: 600; }
 .contact-testimonial-author span { font-size: 0.68rem; color: var(--c-text-muted); font-family: var(--font-mono); }
 
@@ -3246,7 +3247,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         <div class="contact-testimonial">
           <p class="contact-testimonial-text">L'audit a identifié 8h d'économies hebdomadaires pour notre équipe. Mis en place en 2 semaines, sans aucune disruption.</p>
           <div class="contact-testimonial-author">
-            <div class="contact-testimonial-avatar">SL</div>
+            <div class="contact-testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Sophie Laurent" loading="lazy"></div>
             <div>
               <strong>Sophie Laurent</strong>
               <span>DRH · Groupe Medicis</span>
