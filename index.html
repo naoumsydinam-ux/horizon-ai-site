@@ -1847,13 +1847,42 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     border-color: rgba(249,115,22,0.25) !important;
     border-left: 3px solid #F97316 !important;
   }
+}
+
+/* ── AGENTS — sticky stack on mobile ── */
+@media (max-width: 600px) {
+  .agents-section { padding-bottom: 1.5rem; }
+  .agents-head {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: #F0F2F5;
+    padding-bottom: 1.75rem;
+    margin-bottom: 0;
+    will-change: transform;
+  }
+  .agents-head .section-desc { display: none; }
+  .agents-grid { gap: 1rem; }
+  .agents-grid .agent-card {
+    position: sticky;
+    background: #ffffff !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 380ms ease;
+  }
+  /* Replace card-enter (has translateY) with opacity-only fade on mobile */
+  .agents-grid .agent-card.visible {
+    animation: none !important;
+    opacity: 1 !important;
+  }
   /* Top offsets set by JS from actual heading height — z-index only here */
   .agents-grid .agent-card:nth-child(1) { z-index: 11; }
   .agents-grid .agent-card:nth-child(2) { z-index: 12; }
   .agents-grid .agent-card:nth-child(3) { z-index: 13; }
   .agents-grid .agent-card:nth-child(4) { z-index: 25; }
 
-  /* Hide pre-contact CTA on mobile (contact section replaces it) */
+  /* Hide pre-contact CTA on mobile */
   .cta-final { display: none; }
 
   /* Contact section — mobile */
