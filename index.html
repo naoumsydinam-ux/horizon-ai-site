@@ -279,7 +279,27 @@ section { padding: 5.5rem 1.5rem; }
 .pa-text strong { color: var(--c-text); font-weight: 600; }
 
 /* SOLUTION */
-.solution-section { background: var(--c-surface);  }
+.solution-section { background: var(--c-surface); }
+/* ── BOUNCE CARDS ── */
+.sol-bc-header { margin-bottom: 2.5rem; }
+.bc-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; margin-bottom: 1rem; }
+.bc-col-4 { grid-column: span 12; }
+.bc-col-8 { grid-column: span 12; }
+@media (min-width: 768px) { .bc-col-4 { grid-column: span 4; } .bc-col-8 { grid-column: span 8; } }
+.bounce-card { position: relative; min-height: 300px; cursor: pointer; overflow: hidden; border-radius: 1.25rem; background: var(--c-surface-2); padding: 2rem; transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 250ms; border: 1px solid var(--c-border); }
+.bounce-card:hover { transform: scale(0.95) rotate(-1deg); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
+.bc-title { text-align: center; font-size: clamp(1.2rem,2vw,1.5rem); font-weight: 600; font-family: var(--font-display); color: var(--c-text); margin: 0 auto; }
+.bc-panel { position: absolute; bottom: 0; left: 1rem; right: 1rem; top: 7rem; transform: translateY(2rem); border-radius: 1rem 1rem 0 0; padding: 1.5rem; transition: transform 250ms ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
+.bounce-card:hover .bc-panel { transform: translateY(1rem) rotate(2deg); }
+.bc-panel-violet { background: linear-gradient(135deg, #7C3AED, #4F46E5); }
+.bc-panel-amber  { background: linear-gradient(135deg, #D97706, #EA580C); }
+.bc-panel-green  { background: linear-gradient(135deg, #059669, #10B981); }
+.bc-panel-pink   { background: linear-gradient(135deg, #DB2777, #EF4444); }
+.bc-panel-label { font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; font-family: var(--font-mono); }
+.bc-panel-stat { font-size: 2.8rem; font-weight: 700; color: #fff; font-family: var(--font-mono); line-height: 1; }
+.bc-panel-desc { font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.8); text-align: center; }
+.bc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.25rem; }
+.bc-tag { background: rgba(255,255,255,0.2); color: #fff; font-size: 0.62rem; font-weight: 700; font-family: var(--font-mono); padding: 0.22rem 0.6rem; border-radius: 100px; letter-spacing: 0.06em; }
 .solution-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3.5rem; }
 .sol-card { background: var(--c-bg); border: 1px solid var(--c-border-strong); border-radius: var(--radius-lg); padding: 1.75rem; }
 .sol-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem;  }
@@ -2737,68 +2757,58 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
 
 <section class="solution-section" id="solution">
   <div class="section-inner">
-    <div class="solution-layout">
-      <div class="solution-visual reveal" aria-hidden="true">
-        <div class="sol-card">
-          <div class="sol-header">
-            <div class="sol-dot red"></div>
-            <div class="sol-dot yellow"></div>
-            <div class="sol-dot green"></div>
-            <span class="sol-title-bar">AGENT HORIZON — EN COURS</span>
-          </div>
-          <div class="sol-flow">
-            <div class="sol-step">
-              <span class="sol-step-badge badge-done">FAIT</span>
-              <span class="sol-step-label">Relances clients impayés — 47 envoyées</span>
-              <span class="sol-step-time">08:12</span>
+    <div class="sol-bc-header reveal">
+      <span class="section-tag">La solution</span>
+      <h2 class="section-title" style="margin-top:1rem;max-width:640px;">Et si vos opérations tournaient <span class="grad-text">même quand vos équipes dorment ?</span></h2>
+      <p class="section-desc" style="margin-top:1rem;margin-bottom:2.5rem;">Horizon AI identifie ce qui peut être automatisé et déploie des agents qui agissent à votre place — sans erreur, sans pause, sans formation lourde.</p>
+    </div>
+    <!-- Row 1 -->
+    <div class="bc-row reveal">
+      <div class="bc-col-4">
+        <div class="bounce-card">
+          <h3 class="bc-title">Zéro disruption</h3>
+          <div class="bc-panel bc-panel-violet">
+            <span class="bc-panel-label">S'intègre à vos outils</span>
+            <div class="bc-tags">
+              <span class="bc-tag">CRM</span>
+              <span class="bc-tag">Slack</span>
+              <span class="bc-tag">Drive</span>
+              <span class="bc-tag">HubSpot</span>
+              <span class="bc-tag">Notion</span>
             </div>
-            <div class="sol-step">
-              <span class="sol-step-badge badge-done">FAIT</span>
-              <span class="sol-step-label">Rapport hebdo — exporté &amp; envoyé</span>
-              <span class="sol-step-time">08:30</span>
-            </div>
-            <div class="sol-step">
-              <span class="sol-step-badge badge-run">ACTIF</span>
-              <span class="sol-step-label">Qualification leads — 12 en traitement</span>
-              <span class="sol-step-time">Maintenant</span>
-            </div>
-            <div class="sol-step">
-              <span class="sol-step-badge badge-wait">PLANIFIÉ</span>
-              <span class="sol-step-label">Mise à jour CRM automatique</span>
-              <span class="sol-step-time">18:00</span>
-            </div>
-          </div>
-          <div class="sol-metric">
-            <span class="sol-metric-label">Temps récupéré aujourd'hui</span>
-            <span class="sol-metric-val" id="live-counter">4h 44</span>
           </div>
         </div>
       </div>
-      <div class="solution-content">
-        <span class="section-tag reveal">La solution</span>
-        <h2 class="section-title reveal">Et si vos opérations tournaient <span class="grad-text">même quand vos équipes dorment ?</span></h2>
-        <p class="section-desc reveal" style="margin-bottom:2.25rem;">Horizon AI identifie ce qui peut être automatisé et déploie des agents qui agissent à votre place — sans erreur, sans pause, sans formation lourde.</p>
-        <div class="solution-benefits">
-          <div class="sol-benefit reveal">
-            <span class="sol-benefit-num">01</span>
-            <div>
-              <strong>Zéro disruption</strong>
-              <span>S'intègre à vos outils existants. Rien à changer pour vos équipes.</span>
-            </div>
+      <div class="bc-col-8">
+        <div class="bounce-card">
+          <h3 class="bc-title">ROI visible en 30 jours</h3>
+          <div class="bc-panel bc-panel-amber">
+            <span class="bc-panel-label">Temps récupéré ce mois</span>
+            <span class="bc-panel-stat">+127h</span>
+            <span class="bc-panel-desc">par équipe de 5 personnes</span>
           </div>
-          <div class="sol-benefit reveal reveal-delay-1">
-            <span class="sol-benefit-num">02</span>
-            <div>
-              <strong>ROI visible en 30 jours</strong>
-              <span>Un tableau de bord simple montre le temps et l'argent récupérés.</span>
-            </div>
+        </div>
+      </div>
+    </div>
+    <!-- Row 2 -->
+    <div class="bc-row reveal reveal-delay-1">
+      <div class="bc-col-8">
+        <div class="bounce-card">
+          <h3 class="bc-title">Opérationnel en 72h</h3>
+          <div class="bc-panel bc-panel-green">
+            <span class="bc-panel-label">Tâches automatisées aujourd'hui</span>
+            <span class="bc-panel-stat">47</span>
+            <span class="bc-panel-desc">relances · rapports · CRM · leads</span>
           </div>
-          <div class="sol-benefit reveal reveal-delay-2">
-            <span class="sol-benefit-num">03</span>
-            <div>
-              <strong>Vos équipes restent aux commandes</strong>
-              <span>Les agents exécutent. Vos équipes décident. L'humain au centre.</span>
-            </div>
+        </div>
+      </div>
+      <div class="bc-col-4">
+        <div class="bounce-card">
+          <h3 class="bc-title">Vos équipes aux commandes</h3>
+          <div class="bc-panel bc-panel-pink">
+            <span class="bc-panel-label">Les agents exécutent</span>
+            <span class="bc-panel-stat" style="font-size:1.5rem;">Vous décidez</span>
+            <span class="bc-panel-desc">L'humain au centre, toujours</span>
           </div>
         </div>
       </div>
