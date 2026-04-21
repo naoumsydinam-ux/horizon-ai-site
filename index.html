@@ -976,13 +976,17 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
   pointer-events: none;
 }
 @keyframes badge-elastic-fill {
-  0%   { opacity: 0;    transform: scale(0.82); }
-  28%  { opacity: 0.72; transform: scale(1.04); }
-  58%  { opacity: 0.48; transform: scale(1.0); }
-  100% { opacity: 0;    transform: scale(1.0); }
+  0%   { opacity: 0;  transform: scale(0.78); }
+  55%  { opacity: 1;  transform: scale(1.06); }
+  100% { opacity: 1;  transform: scale(1.0); }
 }
 .rd-end-badge.badge-pop::after {
-  animation: badge-elastic-fill 1.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+  animation: badge-elastic-fill 1.8s cubic-bezier(0.34, 1.25, 0.64, 1) forwards;
+}
+.rd-end-badge.badge-pop {
+  color: #fff;
+  border-color: transparent;
+  transition: color 300ms 1s, border-color 300ms 1s;
 }
 .rd-end-badge:hover { border-color: rgba(139,92,246,0.5); box-shadow: 0 8px 30px rgba(139,92,246,0.15); }
 .rd-end-icon {
@@ -3571,7 +3575,7 @@ window.closeMobileNav = function() {
         obs.unobserve(badge);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.9, rootMargin: '0px 0px -60px 0px' });
   obs.observe(badge);
 })();
 
