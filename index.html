@@ -1980,16 +1980,11 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-head .section-desc { display: none; }
   .agents-grid { gap: 1.25rem; }
 
-  /* Animation pausée — JS scrub via animation-delay négatif */
-  .agents-grid .agent-card:nth-child(odd) {
-    animation: card-from-right 1s linear both;
-    animation-play-state: paused;
-    animation-delay: calc(var(--throw-p, 0) * -1s);
-  }
-  .agents-grid .agent-card:nth-child(even) {
-    animation: card-from-left 1s linear both;
-    animation-play-state: paused;
-    animation-delay: calc(var(--throw-p, 0) * -1s);
+  /* Initial state overridé par JS — neutraliser les règles de base */
+  .agents-grid .agent-card,
+  .agents-grid .agent-card.visible {
+    opacity: 0 !important;
+    animation: none !important;
   }
 
   /* Hide pre-contact CTA on mobile */
@@ -3807,25 +3802,46 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── AGENT CARDS — scroll scrub (marche dans les deux sens, tous navigateurs) ── */
+/* ── AGENT CARDS — scroll-scrub direct (inline styles, rAF loop pour iOS) ── */
 (function() {
   if (window.innerWidth > 600) return;
   const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
-  if (!cards.length) return;
+  const section = document.querySelector('.agents-section');
+  if (!cards.length || !section) return;
+
+  /* État initial — inline styles pour écraser tout le cascade CSS */
+  cards.forEach((card, i) => {
+    const dir = i % 2 === 0 ? 1 : -1;
+    card.style.opacity = '0';
+    card.style.transform = `translateX(${dir * 72}%) rotate(${dir * 13}deg) scale(0.84)`;
+    card.style.transition = 'none';
+  });
 
   function update() {
     const vh = window.innerHeight;
-    cards.forEach(card => {
+    cards.forEach((card, i) => {
       const rect = card.getBoundingClientRect();
-      /* 0 = carte hors écran en bas, 1 = animation terminée (carte à 38% depuis le haut) */
+      /* p: 0 = carte hors écran, 1 = animation terminée */
       const p = Math.max(0, Math.min(1, (vh - rect.top) / (vh * 0.62)));
-      card.style.setProperty('--throw-p', p.toFixed(3));
+      const dir = i % 2 === 0 ? 1 : -1;
+      card.style.opacity = p;
+      card.style.transform = p >= 0.999
+        ? 'none'
+        : `translateX(${(dir * 72 * (1 - p)).toFixed(1)}%) rotate(${(dir * 13 * (1 - p)).toFixed(2)}deg) scale(${(0.84 + 0.16 * p).toFixed(3)})`;
     });
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  update();
+  /* Boucle rAF active tant que la section est visible — couvre l'inertie iOS */
+  let rafId = null;
+  function loop() { update(); rafId = requestAnimationFrame(loop); }
+  function stop() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  const obs = new IntersectionObserver(entries => {
+    entries[0].isIntersecting ? loop() : stop();
+  }, { threshold: 0 });
+  obs.observe(section);
+
+  update(); /* état initial immédiat */
 })();
 
 /* ── TILT CARDS ── */
