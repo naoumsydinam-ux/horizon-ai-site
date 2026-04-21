@@ -94,9 +94,11 @@
   background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316) !important;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-/* ── SMOOTH SCROLL MOMENTUM ── */
+/* ── SMOOTH SCROLL — tous appareils ── */
 html { scroll-behavior: smooth; overflow-x: clip; }
-* { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body { background: var(--c-bg); color: var(--c-text); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip; }
 
 /* SCROLL BAR */
@@ -3997,29 +3999,16 @@ window.closeMobileNav = function() {
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 })();
 
-/* ── SMOOTH ANCHOR SCROLL ── */
+/* ── SMOOTH ANCHOR SCROLL — natif (hardware-accelerated, tous appareils) ── */
 (function() {
-  function easeInOutQuart(t) {
-    return t < 0.5 ? 8*t*t*t*t : 1 - Math.pow(-2*t + 2, 4) / 2;
-  }
-  function smoothTo(to, duration) {
-    const from = window.scrollY;
-    const dist = to - from;
-    if (Math.abs(dist) < 2) return;
-    const dur = duration || Math.min(Math.max(Math.abs(dist) * 0.35, 480), 1100);
-    let t0 = null;
-    function step(ts) {
-      if (!t0) t0 = ts;
-      const p = Math.min((ts - t0) / dur, 1);
-      window.scrollTo(0, from + dist * easeInOutQuart(p));
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
+  function smoothTo(to) {
+    window.scrollTo({ top: Math.max(0, to), behavior: 'smooth' });
   }
   document.addEventListener('click', e => {
     const a = e.target.closest('a[href^="#"]');
     if (!a) return;
     const id = a.getAttribute('href');
+    if (!id || id === '#') return;
     const target = document.querySelector(id);
     if (!target) return;
     e.preventDefault();
