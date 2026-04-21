@@ -280,26 +280,66 @@ section { padding: 5.5rem 1.5rem; }
 
 /* SOLUTION */
 .solution-section { background: var(--c-surface); }
-/* ── BOUNCE CARDS ── */
+/* ── BOUNCE CARDS (bento La Solution) ── */
 .sol-bc-header { margin-bottom: 2.5rem; }
 .bc-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; margin-bottom: 1rem; }
 .bc-col-4 { grid-column: span 12; }
 .bc-col-8 { grid-column: span 12; }
 @media (min-width: 768px) { .bc-col-4 { grid-column: span 4; } .bc-col-8 { grid-column: span 8; } }
-.bounce-card { position: relative; min-height: 300px; cursor: pointer; overflow: hidden; border-radius: 1.25rem; background: var(--c-surface-2); padding: 2rem; transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 250ms; border: 1px solid var(--c-border); }
-.bounce-card:hover { transform: scale(0.95) rotate(-1deg); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
-.bc-title { text-align: center; font-size: clamp(1.2rem,2vw,1.5rem); font-weight: 600; font-family: var(--font-display); color: var(--c-text); margin: 0 auto; }
-.bc-panel { position: absolute; bottom: 0; left: 1rem; right: 1rem; top: 7rem; transform: translateY(2rem); border-radius: 1rem 1rem 0 0; padding: 1.5rem; transition: transform 250ms ease; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; }
-.bounce-card:hover .bc-panel { transform: translateY(1rem) rotate(2deg); }
-.bc-panel-violet { background: linear-gradient(135deg, #7C3AED, #4F46E5); }
-.bc-panel-amber  { background: linear-gradient(135deg, #D97706, #EA580C); }
-.bc-panel-green  { background: linear-gradient(135deg, #059669, #10B981); }
-.bc-panel-pink   { background: linear-gradient(135deg, #DB2777, #EF4444); }
-.bc-panel-label { font-size: 0.65rem; font-weight: 600; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; font-family: var(--font-mono); }
-.bc-panel-stat { font-size: 2.8rem; font-weight: 700; color: #fff; font-family: var(--font-mono); line-height: 1; }
-.bc-panel-desc { font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.8); text-align: center; }
-.bc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin-top: 0.25rem; }
-.bc-tag { background: rgba(255,255,255,0.2); color: #fff; font-size: 0.62rem; font-weight: 700; font-family: var(--font-mono); padding: 0.22rem 0.6rem; border-radius: 100px; letter-spacing: 0.06em; }
+
+/* Card base */
+.bounce-card {
+  position: relative; min-height: 320px; cursor: pointer; overflow: hidden;
+  border-radius: 1.5rem; background: var(--c-surface-2);
+  padding: 1.75rem 1.75rem 0;
+  transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 300ms;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.bounce-card:hover { transform: scale(0.95) rotate(-1deg); box-shadow: 0 28px 70px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.3); }
+/* dot-grid background */
+.bounce-card::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.035) 1px, transparent 1px); background-size: 22px 22px; border-radius: inherit; pointer-events: none; z-index: 0; }
+/* top content */
+.bc-card-top { position: relative; z-index: 1; }
+/* icon chip */
+.bc-icon { width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.9rem; flex-shrink: 0; }
+.bc-icon-violet { background: rgba(109,40,217,0.18); border: 1px solid rgba(109,40,217,0.45); color: #A78BFA; }
+.bc-icon-amber  { background: rgba(217,119,6,0.18);  border: 1px solid rgba(217,119,6,0.45);  color: #FCD34D; }
+.bc-icon-green  { background: rgba(5,150,105,0.18);  border: 1px solid rgba(5,150,105,0.45);  color: #34D399; }
+.bc-icon-pink   { background: rgba(219,39,119,0.18); border: 1px solid rgba(219,39,119,0.45); color: #F472B6; }
+/* title & description */
+.bc-title { font-size: clamp(1.1rem,2.2vw,1.4rem); font-weight: 700; font-family: var(--font-display); color: var(--c-text); margin-bottom: 0.45rem; line-height: 1.2; }
+.bc-desc  { font-size: 0.78rem; color: var(--c-text-muted); line-height: 1.6; }
+
+/* ── PANEL (slide-up on hover) ── */
+.bc-panel {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 215px;
+  transform: translateY(calc(100% - 66px));
+  border-radius: 1.25rem 1.25rem 0 0;
+  transition: transform 300ms cubic-bezier(0.34,1.56,0.64,1);
+  overflow: hidden;
+}
+.bounce-card:hover .bc-panel { transform: translateY(10px) rotate(1.5deg); }
+/* gradient per panel */
+.bc-panel-violet { background: radial-gradient(ellipse at 85% 10%, rgba(255,255,255,0.18) 0%, transparent 55%), linear-gradient(140deg, #4C1D95 0%, #6D28D9 45%, #4338CA 100%); }
+.bc-panel-amber  { background: radial-gradient(ellipse at 85% 10%, rgba(255,255,255,0.18) 0%, transparent 55%), linear-gradient(140deg, #78350F 0%, #D97706 45%, #F59E0B 100%); }
+.bc-panel-green  { background: radial-gradient(ellipse at 85% 10%, rgba(255,255,255,0.18) 0%, transparent 55%), linear-gradient(140deg, #064E3B 0%, #059669 50%, #34D399 100%); }
+.bc-panel-pink   { background: radial-gradient(ellipse at 85% 10%, rgba(255,255,255,0.18) 0%, transparent 55%), linear-gradient(140deg, #831843 0%, #DB2777 50%, #F43F5E 100%); }
+/* decorative orbs inside panel */
+.bc-panel::before { content: ''; position: absolute; width: 210px; height: 210px; border-radius: 50%; background: rgba(255,255,255,0.07); top: -90px; right: -50px; pointer-events: none; }
+.bc-panel::after  { content: ''; position: absolute; width: 90px;  height: 90px;  border-radius: 50%; background: rgba(255,255,255,0.05); bottom: -25px; left: -20px; pointer-events: none; }
+/* peek bar (visible when not hovered) */
+.bc-panel-peek { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.25rem 0; font-size: 0.58rem; font-family: var(--font-mono); color: rgba(255,255,255,0.65); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.bc-peek-arrow { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; transition: transform 300ms; }
+.bounce-card:hover .bc-peek-arrow { transform: translateY(-3px); }
+/* content zone inside panel */
+.bc-panel-body { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.6rem 1.25rem 1rem; gap: 0.45rem; height: calc(100% - 2.2rem); }
+.bc-panel-stat  { font-size: 3.6rem; font-weight: 800; color: #fff; font-family: var(--font-mono); line-height: 1; text-shadow: 0 2px 24px rgba(0,0,0,0.25); }
+.bc-panel-label { font-size: 0.58rem; font-weight: 700; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.12em; text-align: center; font-family: var(--font-mono); }
+.bc-panel-sub   { font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.82); text-align: center; }
+/* pill tags */
+.bc-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; }
+.bc-tag  { background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22); color: #fff; font-size: 0.62rem; font-weight: 600; font-family: var(--font-mono); padding: 0.22rem 0.6rem; border-radius: 100px; letter-spacing: 0.05em; }
 .solution-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3.5rem; }
 .sol-card { background: var(--c-bg); border: 1px solid var(--c-border-strong); border-radius: var(--radius-lg); padding: 1.75rem; }
 .sol-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem;  }
@@ -2766,26 +2806,50 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
     <div class="bc-row reveal">
       <div class="bc-col-4">
         <div class="bounce-card">
-          <h3 class="bc-title">Zéro disruption</h3>
+          <div class="bc-card-top">
+            <div class="bc-icon bc-icon-violet">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <h3 class="bc-title">Zéro disruption</h3>
+            <p class="bc-desc">S'intègre à vos outils existants. Rien à changer pour vos équipes.</p>
+          </div>
           <div class="bc-panel bc-panel-violet">
-            <span class="bc-panel-label">S'intègre à vos outils</span>
-            <div class="bc-tags">
-              <span class="bc-tag">CRM</span>
-              <span class="bc-tag">Slack</span>
-              <span class="bc-tag">Drive</span>
-              <span class="bc-tag">HubSpot</span>
-              <span class="bc-tag">Notion</span>
+            <div class="bc-panel-peek">
+              <span>Compatibilités</span>
+              <span class="bc-peek-arrow">↑</span>
+            </div>
+            <div class="bc-panel-body">
+              <div class="bc-tags">
+                <span class="bc-tag">CRM</span>
+                <span class="bc-tag">Slack</span>
+                <span class="bc-tag">Drive</span>
+                <span class="bc-tag">HubSpot</span>
+                <span class="bc-tag">Notion</span>
+                <span class="bc-tag">Zapier</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="bc-col-8">
         <div class="bounce-card">
-          <h3 class="bc-title">ROI visible en 30 jours</h3>
+          <div class="bc-card-top">
+            <div class="bc-icon bc-icon-amber">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+            </div>
+            <h3 class="bc-title">ROI visible en 30 jours</h3>
+            <p class="bc-desc">Un tableau de bord simple montre le temps et l'argent récupérés — dès la première semaine.</p>
+          </div>
           <div class="bc-panel bc-panel-amber">
-            <span class="bc-panel-label">Temps récupéré ce mois</span>
-            <span class="bc-panel-stat">+127h</span>
-            <span class="bc-panel-desc">par équipe de 5 personnes</span>
+            <div class="bc-panel-peek">
+              <span>Résultats moyens</span>
+              <span class="bc-peek-arrow">↑</span>
+            </div>
+            <div class="bc-panel-body">
+              <span class="bc-panel-label">Temps récupéré ce mois</span>
+              <span class="bc-panel-stat">+127h</span>
+              <span class="bc-panel-sub">par équipe de 5 personnes</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2794,21 +2858,45 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
     <div class="bc-row reveal reveal-delay-1">
       <div class="bc-col-8">
         <div class="bounce-card">
-          <h3 class="bc-title">Opérationnel en 72h</h3>
+          <div class="bc-card-top">
+            <div class="bc-icon bc-icon-green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3 class="bc-title">Opérationnel en 72h</h3>
+            <p class="bc-desc">Vos agents déployés et actifs en 3 jours. Sans formation lourde, sans intégration complexe.</p>
+          </div>
           <div class="bc-panel bc-panel-green">
-            <span class="bc-panel-label">Tâches automatisées aujourd'hui</span>
-            <span class="bc-panel-stat">47</span>
-            <span class="bc-panel-desc">relances · rapports · CRM · leads</span>
+            <div class="bc-panel-peek">
+              <span>Aujourd'hui</span>
+              <span class="bc-peek-arrow">↑</span>
+            </div>
+            <div class="bc-panel-body">
+              <span class="bc-panel-label">Tâches automatisées</span>
+              <span class="bc-panel-stat">47</span>
+              <span class="bc-panel-sub">relances · rapports · CRM · leads</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="bc-col-4">
         <div class="bounce-card">
-          <h3 class="bc-title">Vos équipes aux commandes</h3>
+          <div class="bc-card-top">
+            <div class="bc-icon bc-icon-pink">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="bc-title">Vos équipes aux commandes</h3>
+            <p class="bc-desc">Les agents exécutent. Vos équipes décident. L'humain reste au centre.</p>
+          </div>
           <div class="bc-panel bc-panel-pink">
-            <span class="bc-panel-label">Les agents exécutent</span>
-            <span class="bc-panel-stat" style="font-size:1.5rem;">Vous décidez</span>
-            <span class="bc-panel-desc">L'humain au centre, toujours</span>
+            <div class="bc-panel-peek">
+              <span>Notre promesse</span>
+              <span class="bc-peek-arrow">↑</span>
+            </div>
+            <div class="bc-panel-body">
+              <span class="bc-panel-label">Philosophie</span>
+              <span class="bc-panel-stat" style="font-size:2rem;letter-spacing:-0.03em;line-height:1.1;">Human<br>First</span>
+              <span class="bc-panel-sub">L'IA augmente, l'humain décide</span>
+            </div>
           </div>
         </div>
       </div>
