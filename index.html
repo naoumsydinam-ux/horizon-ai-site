@@ -2264,6 +2264,78 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   .form-note { padding-bottom: 1.25rem; }
 }
 
+/* ── WORD SCROLL SECTION (Ce qu'on fait) ── */
+.word-scroll-section { height: 420vh; position: relative; background: var(--c-bg); }
+.ws-sticky {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.ws-header { position: absolute; top: 5.5rem; left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
+.ws-stage  { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; text-align: center; }
+.ws-before, .ws-after {
+  font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+  font-weight: 300; font-family: var(--font-display);
+  color: rgba(255,255,255,0.35); letter-spacing: -0.01em;
+}
+.ws-words-container {
+  position: relative;
+  height: clamp(4rem, 13vw, 11rem);
+  min-width: 70vw;
+  display: flex; align-items: center; justify-content: center;
+}
+.ws-word {
+  position: absolute;
+  font-size: clamp(3.2rem, 11vw, 9.5rem);
+  font-weight: 800; font-family: var(--font-display);
+  letter-spacing: -0.04em; white-space: nowrap;
+  opacity: 0; will-change: opacity, transform, filter;
+  background: linear-gradient(135deg, #fff 45%, rgba(255,255,255,0.5));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.ws-descs-container {
+  position: relative; height: 2rem; min-width: 50vw;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1.25rem;
+}
+.ws-desc {
+  position: absolute; font-size: clamp(0.85rem, 1.6vw, 1.1rem);
+  color: var(--c-text-muted); text-align: center;
+  opacity: 0; white-space: nowrap; will-change: opacity, transform;
+}
+.ws-progress-bar {
+  position: absolute; bottom: 3.5rem;
+  width: min(320px, 60vw); height: 2px;
+  background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;
+}
+.ws-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #6D28D9, #EC4899, #F97316); border-radius: 2px; will-change: width; }
+.ws-dots { position: absolute; bottom: 2.5rem; display: flex; gap: 0.55rem; align-items: center; }
+.ws-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); will-change: background, transform; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.ws-hint {
+  position: absolute; bottom: 1.75rem; right: 2.5rem;
+  display: flex; align-items: center; gap: 0.55rem;
+  font-size: 0.58rem; font-family: var(--font-mono);
+  color: rgba(255,255,255,0.18); letter-spacing: 0.12em; text-transform: uppercase;
+  transition: opacity 0.6s;
+}
+.ws-hint-arrow {
+  width: 13px; height: 13px;
+  border-right: 1.5px solid rgba(255,255,255,0.18);
+  border-bottom: 1.5px solid rgba(255,255,255,0.18);
+  transform: rotate(45deg);
+  animation: ws-bounce 2s ease-in-out infinite;
+}
+@keyframes ws-bounce {
+  0%,100% { transform: rotate(45deg) translate(0,0); }
+  50%      { transform: rotate(45deg) translate(3px,3px); }
+}
+@media (max-width: 640px) {
+  .ws-before, .ws-after { font-size: 1rem; }
+  .ws-descs-container { min-width: 90vw; }
+  .ws-desc { white-space: normal; text-align: center; }
+}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
@@ -3018,106 +3090,46 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
 </section>
 
 <!-- NOS SOLUTIONS — HOVER SLIDER -->
-<section class="hslider-section" id="solutions">
-  <div class="hslider-inner">
+<section class="word-scroll-section" id="solutions">
+  <div class="ws-sticky">
 
-    <div class="hslider-left">
-      <span class="section-tag reveal">Ce qu'on fait</span>
-      <h2 class="hslider-title reveal">Ce que vos agents<br>font <span class="grad-text-slow">à votre place</span></h2>
-      <p class="hslider-sub reveal">Les services défilent automatiquement — appuyez pour en savoir plus.</p>
-
-      <div class="hslider-items" id="hslider-items">
-        <div class="hslider-item" data-index="0">
-          <span class="hslider-num">01</span>
-          <div class="hslider-item-body">
-            <span class="hslider-text" data-text="Support client automatisé">Support client automatisé</span>
-            <span class="hslider-desc">Triage, réponse et escalade automatiques 24h/7 — zéro ticket sans réponse.</span>
-          </div>
-        </div>
-        <div class="hslider-item" data-index="1">
-          <span class="hslider-num">02</span>
-          <div class="hslider-item-body">
-            <span class="hslider-text" data-text="Relances &amp; prospection">Relances &amp; prospection</span>
-            <span class="hslider-desc">Séquences personnalisées envoyées au bon moment, sans aucune action manuelle.</span>
-          </div>
-        </div>
-        <div class="hslider-item" data-index="2">
-          <span class="hslider-num">03</span>
-          <div class="hslider-item-body">
-            <span class="hslider-text" data-text="Traitement de documents">Traitement de documents</span>
-            <span class="hslider-desc">Factures extraites, rapprochées et archivées en quelques secondes.</span>
-          </div>
-        </div>
-        <div class="hslider-item" data-index="3">
-          <span class="hslider-num">04</span>
-          <div class="hslider-item-body">
-            <span class="hslider-text" data-text="Reporting automatique">Reporting automatique</span>
-            <span class="hslider-desc">Synthèse multi-canaux générée et envoyée chaque lundi à 8h.</span>
-          </div>
-        </div>
-        <div class="hslider-item" data-index="4">
-          <span class="hslider-num">05</span>
-          <div class="hslider-item-body">
-            <span class="hslider-text" data-text="Onboarding RH">Onboarding RH</span>
-            <span class="hslider-desc">Comptes créés, documents envoyés et planning généré dès la signature.</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Dots de navigation — visibles uniquement sur mobile -->
-      <div class="hslider-dots" id="hslider-dots" aria-hidden="true">
-        <span class="hslider-dot" data-index="0"></span>
-        <span class="hslider-dot" data-index="1"></span>
-        <span class="hslider-dot" data-index="2"></span>
-        <span class="hslider-dot" data-index="3"></span>
-        <span class="hslider-dot" data-index="4"></span>
-      </div>
+    <div class="ws-header">
+      <span class="section-tag">Ce qu'on fait</span>
     </div>
 
-    <div class="hslider-right">
-      <div class="hslider-img-wrap" id="hslider-img-wrap">
-
-        <div class="hslider-img" data-index="0">
-          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&fm=jpg&q=85&fit=crop" alt="Support client" loading="lazy">
-          <div class="hslider-img-label">
-            <strong>−80% de tickets non traités</strong>
-            <span>Triage, réponse et escalade automatiques 24h/7</span>
-          </div>
-        </div>
-
-        <div class="hslider-img" data-index="1">
-          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&fm=jpg&q=85&fit=crop" alt="Prospection commerciale" loading="lazy">
-          <div class="hslider-img-label">
-            <strong>+35% de taux de conversion</strong>
-            <span>Leads scorés, enrichis et relancés au bon moment</span>
-          </div>
-        </div>
-
-        <div class="hslider-img" data-index="2">
-          <img src="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=900&fm=jpg&q=85&fit=crop" alt="Traitement documents" loading="lazy">
-          <div class="hslider-img-label">
-            <strong>12h / semaine récupérées</strong>
-            <span>Factures extraites, rapprochées et archivées sans intervention</span>
-          </div>
-        </div>
-
-        <div class="hslider-img" data-index="3">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&fm=jpg&q=85&fit=crop" alt="Reporting" loading="lazy">
-          <div class="hslider-img-label">
-            <strong>Rapport chaque lundi à 8h</strong>
-            <span>Collecte multi-canaux, synthèse et envoi automatique</span>
-          </div>
-        </div>
-
-        <div class="hslider-img" data-index="4">
-          <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=900&fm=jpg&q=85&fit=crop" alt="Onboarding RH" loading="lazy">
-          <div class="hslider-img-label">
-            <strong>3h d'admin éliminées / recrutement</strong>
-            <span>Comptes créés, docs envoyés, planning généré automatiquement</span>
-          </div>
-        </div>
-
+    <div class="ws-stage">
+      <p class="ws-before">Horizon AI</p>
+      <div class="ws-words-container">
+        <div class="ws-word" data-i="0">Automatise</div>
+        <div class="ws-word" data-i="1">Libère</div>
+        <div class="ws-word" data-i="2">Accélère</div>
+        <div class="ws-word" data-i="3">Transforme</div>
+        <div class="ws-word" data-i="4">Optimise</div>
       </div>
+      <p class="ws-after">votre entreprise</p>
+    </div>
+
+    <div class="ws-descs-container">
+      <div class="ws-desc" data-i="0">vos tâches répétitives en 72h</div>
+      <div class="ws-desc" data-i="1">vos équipes pour ce qui compte vraiment</div>
+      <div class="ws-desc" data-i="2">votre croissance sans recruter</div>
+      <div class="ws-desc" data-i="3">vos processus en avantage compétitif</div>
+      <div class="ws-desc" data-i="4">chaque flux, document et relance</div>
+    </div>
+
+    <div class="ws-progress-bar"><div class="ws-progress-fill" id="ws-fill"></div></div>
+
+    <div class="ws-dots">
+      <div class="ws-dot" data-i="0"></div>
+      <div class="ws-dot" data-i="1"></div>
+      <div class="ws-dot" data-i="2"></div>
+      <div class="ws-dot" data-i="3"></div>
+      <div class="ws-dot" data-i="4"></div>
+    </div>
+
+    <div class="ws-hint" id="ws-hint">
+      <span>Défiler</span>
+      <div class="ws-hint-arrow"></div>
     </div>
 
   </div>
@@ -3682,77 +3694,81 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   if (firstDash) { animateBars(firstDash); animateFunnel(firstDash); animateCounts(firstDash); }
 })();
 
-/* ── HSLIDER — Auto-cycle au scroll ── */
+/* ── WORD SCROLL — Ce qu'on fait (scroll-driven, Apple-style) ── */
 (function() {
-  const items   = document.querySelectorAll('.hslider-item');
-  const imgs    = document.querySelectorAll('.hslider-img');
-  const dots    = document.querySelectorAll('.hslider-dot');
-  const section = document.querySelector('.hslider-section');
+  const section  = document.getElementById('solutions');
+  if (!section) return;
 
-  let cycleTimer = null;
-  let cycleIdx   = 0;
-  let active     = false;
+  const wordEls = section.querySelectorAll('.ws-word');
+  const descEls = section.querySelectorAll('.ws-desc');
+  const dotEls  = section.querySelectorAll('.ws-dot');
+  const fill    = document.getElementById('ws-fill');
+  const hint    = document.getElementById('ws-hint');
+  const N       = wordEls.length;
 
-  function stopCycle() { clearInterval(cycleTimer); cycleTimer = null; }
+  let target  = 0; // scroll progress 0→1
+  let current = 0; // lerp-smoothed progress
 
-  function activate(idx) {
-    cycleIdx = idx;
-    items.forEach((it, i) => it.classList.toggle('active', i === idx));
-    imgs.forEach((im, i)  => im.classList.toggle('active', i === idx));
-    dots.forEach((d, i)   => d.classList.toggle('active', i === idx));
+  function lerp(a, b, t) { return a + (b - a) * t; }
+
+  function getProgress() {
+    const rect  = section.getBoundingClientRect();
+    const range = section.offsetHeight - window.innerHeight;
+    return Math.max(0, Math.min(1, -rect.top / range));
   }
 
-  function startCycle() {
-    stopCycle();
-    cycleTimer = setInterval(() => {
-      cycleIdx = (cycleIdx + 1) % items.length;
-      activate(cycleIdx);
-    }, 3500);
-  }
+  function render() {
+    /* LERP — on top of Lenis for extra buttery feel */
+    current = lerp(current, target, 0.055);
 
-  /* Desktop : hover pause → reprend quand souris quitte la section */
-  items.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      stopCycle();
-      activate(parseInt(item.dataset.index));
-    });
-    item.addEventListener('click', () => {
-      stopCycle();
-      activate(parseInt(item.dataset.index));
-    });
-  });
-  if (section) {
-    section.addEventListener('mouseleave', () => { if (active) startCycle(); });
-  }
+    const raw = current * (N - 1); // 0 → N-1
 
-  /* Dots : tap */
-  dots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      stopCycle();
-      activate(parseInt(dot.dataset.index));
-    });
-  });
-
-  /* Démarre quand la section entre dans le viewport : active item 0 puis cycle */
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        active = true;
-        cycleIdx = 0;
-        activate(0);
-        startCycle();
+    /* Words */
+    wordEls.forEach((el, i) => {
+      const dist = raw - i;
+      const abs  = Math.abs(dist);
+      if (abs >= 1.05) {
+        el.style.opacity   = '0';
+        el.style.transform = `translateY(${dist > 0 ? -90 : 90}px) scale(0.88)`;
+        el.style.filter    = 'blur(18px)';
       } else {
-        active = false;
-        stopCycle();
-        /* Réinitialise pour la prochaine visite */
-        items.forEach(it => it.classList.remove('active'));
-        imgs.forEach(im => im.classList.remove('active'));
-        dots.forEach(d  => d.classList.remove('active'));
-        cycleIdx = 0;
+        const t  = 1 - abs;
+        const ty = dist * -80;
+        const bl = (1 - t) * 16;
+        const sc = 0.86 + t * 0.14;
+        el.style.opacity   = t;
+        el.style.transform = `translateY(${ty}px) scale(${sc})`;
+        el.style.filter    = bl > 0.2 ? `blur(${bl}px)` : 'none';
       }
     });
-  }, { threshold: 0.2 });
-  if (section) obs.observe(section);
+
+    /* Descriptions — slightly tighter window */
+    descEls.forEach((el, i) => {
+      const dist = raw - i;
+      const abs  = Math.abs(dist);
+      const t    = abs < 0.75 ? 1 - abs / 0.75 : 0;
+      el.style.opacity   = t;
+      el.style.transform = `translateY(${dist * -22}px)`;
+    });
+
+    /* Progress bar */
+    if (fill) fill.style.width = `${current * 100}%`;
+
+    /* Dots */
+    dotEls.forEach((dot, i) => {
+      const near = Math.abs(raw - i) < 0.45;
+      dot.style.background = near ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.2)';
+      dot.style.transform  = near ? 'scale(1.7)' : 'scale(1)';
+    });
+
+    /* Scroll hint fades on first scroll */
+    if (hint) hint.style.opacity = current > 0.04 ? '0' : '1';
+
+    requestAnimationFrame(render);
+  }
+
+  window.addEventListener('scroll', () => { target = getProgress(); }, { passive: true });
+  render();
 })();
 
 /* ── TESTIMONIALS — Mobile auto-cycle + desktop scroll ── */
