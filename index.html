@@ -769,10 +769,10 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .rd-node { transition: transform 300ms var(--ease); }
 .rd-node-bg, .rd-node svg { transition: background 500ms ease, border-color 500ms ease, stroke 500ms ease, filter 500ms ease; }
 
-/* Default DIMMED state — all nodes grey until the line reaches them */
+/* Default DIMMED state — nodes visible but grey */
 .rd-nbg-1, .rd-nbg-2, .rd-nbg-3, .rd-nbg-4 {
-  background: rgba(255,255,255,0.03);
-  border: 2px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.04);
+  border: 2px solid rgba(0,0,0,0.12);
 }
 .rd-node svg { stroke: var(--c-text-muted) !important; filter: saturate(0); }
 
@@ -2399,16 +2399,16 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 <section class="roadmap-section" id="roadmap">
   <div class="roadmap-glow" aria-hidden="true"></div>
   <div class="roadmap-header">
-    <div class="roadmap-tag reveal"><span class="roadmap-tag-dot"></span>Notre processus</div>
-    <h2 class="roadmap-title reveal">De zéro à <span class="grad-text">opérationnel en 72h</span></h2>
-    <p class="roadmap-subtitle reveal">Un processus simple, transparent, sans jargon. Vous savez exactement ce qui se passe à chaque étape.</p>
+    <div class="roadmap-tag"><span class="roadmap-tag-dot"></span>Notre processus</div>
+    <h2 class="roadmap-title">De zéro à <span class="grad-text">opérationnel en 72h</span></h2>
+    <p class="roadmap-subtitle">Un processus simple, transparent, sans jargon. Vous savez exactement ce qui se passe à chaque étape.</p>
   </div>
 
   <div class="timeline">
     <div class="timeline-line" aria-hidden="true"><div class="timeline-line-fill" id="timeline-fill" style="height: 0%;"></div></div>
 
     <!-- ÉTAPE 1 — carte gauche -->
-    <div class="rd-step" data-step="1" style="transition-delay: 0ms;">
+    <div class="rd-step" data-step="1">
       <div class="rd-col-card">
         <div class="rd-card">
           <span class="rd-num">Étape 01</span>
@@ -2430,7 +2430,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     </div>
 
     <!-- ÉTAPE 2 — carte droite -->
-    <div class="rd-step" data-step="2" style="transition-delay: 80ms;">
+    <div class="rd-step" data-step="2">
       <div class="rd-col-spacer"></div>
       <div class="rd-col-node">
         <div class="rd-node"><div class="rd-node-ring rd-ring-2"></div><div class="rd-node-bg rd-nbg-2"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
@@ -2452,7 +2452,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     </div>
 
     <!-- ÉTAPE 3 — carte gauche -->
-    <div class="rd-step" data-step="3" style="transition-delay: 160ms;">
+    <div class="rd-step" data-step="3">
       <div class="rd-col-card">
         <div class="rd-card">
           <span class="rd-num">Étape 03</span>
@@ -2474,7 +2474,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     </div>
 
     <!-- ÉTAPE 4 — carte droite -->
-    <div class="rd-step" data-step="4" style="transition-delay: 240ms;">
+    <div class="rd-step" data-step="4">
       <div class="rd-col-spacer"></div>
       <div class="rd-col-node">
         <div class="rd-node"><div class="rd-node-ring rd-ring-4"></div><div class="rd-node-bg rd-nbg-4"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="position:relative;z-index:1"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
@@ -3104,12 +3104,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   const rdEnd = document.getElementById('roadmap-end');
   const rdNodes = document.querySelectorAll('.rd-node');
 
-  const rdObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); rdObs.unobserve(e.target); }
-    });
-  }, { threshold: 0.25, rootMargin: '0px 0px -80px 0px' });
-  rdSteps.forEach((s, i) => { s.style.transitionDelay = (i * 120) + 'ms'; rdObs.observe(s); });
+  /* Les steps sont toujours visibles — pas d'animation d'apparition */
 
   let rdTicking = false;
   function updateRdLine() {
