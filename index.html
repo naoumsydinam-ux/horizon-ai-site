@@ -703,44 +703,123 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
   .logo-cloud-title { font-size: 0.72rem; }
 }
 .mobile-nav { display: none; position: fixed; top: 68px; left: 0; right: 0; background: rgba(10,10,10,0.98); backdrop-filter: blur(14px); padding: 1.5rem;  z-index: 800; flex-direction: column; }
-.contact-section { background: var(--c-bg); padding: 5.5rem 1.5rem; border-top: 1px solid var(--c-border); }
-.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: start; margin-top: 3rem; }
-.contact-info p { font-size: 0.9rem; color: var(--c-text-muted); line-height: 1.75; font-weight: 400; margin-bottom: 2rem; }
-.contact-promises { display: flex; flex-direction: column; gap: 0.85rem; }
-.contact-promise { display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--c-text-muted); }
-.contact-promise svg { flex-shrink: 0; }
-.contact-form { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg); padding: 2.5rem; }
+/* ── CONTACT SECTION ── */
+.contact-section {
+  background: linear-gradient(160deg, #0D0F12 0%, #14162B 60%, #0D0F12 100%);
+  padding: 6rem 1.5rem 5rem;
+  border-top: none;
+  position: relative;
+  overflow: hidden;
+}
+.contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #3B82F6, #8B5CF6, #EC4899, transparent);
+}
+.contact-section::after {
+  content: '';
+  position: absolute;
+  bottom: -200px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4.5rem; align-items: start; margin-top: 3rem; position: relative; z-index: 1; }
+.contact-section .section-tag { background: rgba(139,92,246,0.15); color: #A78BFA; border-color: rgba(139,92,246,0.3); }
+.contact-section .section-title { color: #F8F9FA; }
+.contact-info > p { font-size: 0.9rem; color: rgba(255,255,255,0.55); line-height: 1.75; font-weight: 400; margin-bottom: 2rem; }
+
+/* Stats row */
+.contact-stats { display: flex; gap: 0; margin: 2rem 0; border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-md); overflow: hidden; }
+.contact-stat { flex: 1; padding: 1.1rem 1rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.07); }
+.contact-stat:last-child { border-right: none; }
+.contact-stat-num { display: block; font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, #3B82F6, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 0.3rem; }
+.contact-stat-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em; line-height: 1.4; }
+
+/* Mini testimonial */
+.contact-testimonial { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); padding: 1.25rem 1.5rem 1.25rem 1.75rem; margin: 0.5rem 0 2rem; position: relative; }
+.contact-testimonial::before { content: '"'; position: absolute; top: -0.6rem; left: 1.25rem; font-size: 3.5rem; color: rgba(139,92,246,0.35); font-family: Georgia, serif; line-height: 1; }
+.contact-testimonial-text { font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 1rem; font-style: italic; }
+.contact-testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+.contact-testimonial-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #3B82F6, #8B5CF6); display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; color: white; flex-shrink: 0; }
+.contact-testimonial-author strong { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.85); font-weight: 600; }
+.contact-testimonial-author span { font-size: 0.68rem; color: rgba(255,255,255,0.38); font-family: var(--font-mono); }
+
+/* Promises */
+.contact-promises { display: flex; flex-direction: column; }
+.contact-promise { display: flex; align-items: center; gap: 0.75rem; font-size: 0.82rem; color: rgba(255,255,255,0.55); padding: 0.55rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.contact-promise:last-child { border-bottom: none; }
+.promise-icon { width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; line-height: 1; }
+.promise-icon-green { background: rgba(34,197,94,0.18); color: #22C55E; }
+.promise-icon-blue  { background: rgba(59,130,246,0.18); color: #60A5FA; }
+.promise-icon-purple { background: rgba(139,92,246,0.2); color: #A78BFA; }
+.promise-icon-orange { background: rgba(249,115,22,0.18); color: #FB923C; }
+
+/* Form card */
+.contact-form {
+  background: #FFFFFF;
+  border: none;
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
+  position: relative;
+}
+.contact-form::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316, #8B5CF6, #3B82F6);
+  background-size: 300% 100%;
+  animation: gradient-shift 4s ease infinite;
+  z-index: 2;
+}
+
+/* Form header inside card */
+.form-header { background: #F8FAFC; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 1.4rem 2rem 1.25rem; text-align: center; }
+.form-header-badge { display: inline-flex; align-items: center; gap: 0.45rem; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 100px; padding: 0.28rem 0.8rem; font-size: 0.68rem; font-weight: 600; color: #16A34A; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.7rem; }
+.form-header-dot { width: 6px; height: 6px; border-radius: 50%; background: #22C55E; animation: contact-pulse 2s ease-in-out infinite; flex-shrink: 0; }
+@keyframes contact-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.4; transform:scale(1.4); } }
+.form-header-title { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: #0D0F12; line-height: 1.3; margin-bottom: 0.3rem; }
+.form-header-sub { font-size: 0.68rem; color: #6B7280; font-family: var(--font-mono); letter-spacing: 0.05em; }
+
+/* Form fields */
 .contact-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+#form-wrapper { padding: 1.6rem 2rem 0; }
 .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
 .form-group:last-of-type { margin-bottom: 1.5rem; }
-.form-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--c-text-muted); font-family: var(--font-mono); }
+.form-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #374151; font-family: var(--font-mono); }
 .form-input, .form-select, .form-textarea {
-  background: var(--c-bg);
-  border: 1px solid var(--c-border-strong);
+  background: #F8FAFC;
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: var(--radius-md);
-  color: var(--c-text);
+  color: #0D0F12;
   font-family: var(--font-body);
   font-size: 0.9rem;
   padding: 0.8rem 1rem;
-  transition: border-color 200ms, box-shadow 200ms;
+  transition: border-color 200ms, box-shadow 200ms, background 200ms;
   width: 100%;
   outline: none;
   -webkit-appearance: none;
 }
-.form-input::placeholder, .form-textarea::placeholder { color: var(--c-surface-3); }
+.form-input::placeholder, .form-textarea::placeholder { color: #9CA3AF; }
 .form-input:focus, .form-select:focus, .form-textarea:focus {
   border-color: transparent;
-  box-shadow: 0 0 0 2px rgba(139,92,246,0.5);
+  box-shadow: 0 0 0 2.5px rgba(139,92,246,0.4);
+  background: #FFFFFF;
 }
 .form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
 .form-select option { background: #FFFFFF; color: #0D0F12; }
 .form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
-.form-submit { width: 100%; justify-content: center; font-size: 0.88rem; }
-.form-note { text-align: center; margin-top: 0.75rem; font-size: 0.72rem; color: var(--c-text-muted); font-family: var(--font-mono); }
-.form-success { display: none; text-align: center; padding: 2rem; }
+.form-submit { width: 100%; justify-content: center; font-size: 0.9rem; padding: 0.9rem 1.5rem; }
+.form-note { text-align: center; margin-top: 0.75rem; padding-bottom: 1.75rem; font-size: 0.68rem; color: #9CA3AF; font-family: var(--font-mono); }
+.form-success { display: none; text-align: center; padding: 3rem 2rem; }
 .form-success svg { margin: 0 auto 1rem; display: block; }
-.form-success h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
-.form-success p { font-size: 0.875rem; color: var(--c-text-muted); }
+.form-success h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #0D0F12; }
+.form-success p { font-size: 0.875rem; color: #6B7280; }
 
 /* ── BACK TO TOP ── */
 #back-to-top {
@@ -1193,14 +1272,15 @@ nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,0.06); }
 .cta-orb-1 { background: rgba(124,58,237,0.06) !important; }
 .cta-orb-2 { background: rgba(59,130,246,0.05) !important; }
 
-/* Contact */
-.contact-section { background: var(--c-surface-2); }
-.contact-info p { color: var(--c-text-muted); }
-.contact-promise { color: var(--c-text-muted); }
-.form-input, .form-textarea, .form-select { background: var(--c-surface); border: 1px solid var(--c-border-strong); color: var(--c-text); }
-.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.08); }
-.form-label { color: var(--c-text-muted); }
-.form-note { color: var(--c-text-muted); }
+/* Contact — stays dark in both themes; form card stays white */
+.contact-section { background: linear-gradient(160deg, #0D0F12 0%, #14162B 60%, #0D0F12 100%) !important; }
+.contact-form { background: #FFFFFF !important; }
+.form-input, .form-textarea, .form-select { background: #F8FAFC !important; border-color: rgba(0,0,0,0.1) !important; color: #0D0F12 !important; }
+.form-input:focus, .form-textarea:focus, .form-select:focus { background: #FFFFFF !important; box-shadow: 0 0 0 2.5px rgba(139,92,246,0.4) !important; }
+.form-label { color: #374151 !important; }
+.form-note { color: #9CA3AF !important; }
+.form-success h3 { color: #0D0F12 !important; }
+.form-success p { color: #6B7280 !important; }
 
 /* Logo cloud */
 .logo-cloud-section { background: var(--c-bg); border-color: var(--c-border); }
@@ -1919,11 +1999,55 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     animation: none !important;
     opacity: 1 !important;
   }
+}
+
+/* ── AGENTS — sticky stack on mobile ── */
+@media (max-width: 600px) {
+  .agents-section { padding-bottom: 1.5rem; }
+  .agents-head {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: #F0F2F5;
+    padding-bottom: 1.75rem;
+    margin-bottom: 0;
+    will-change: transform;
+  }
+  .agents-head .section-desc { display: none; }
+  .agents-grid { gap: 1rem; }
+  .agents-grid .agent-card {
+    position: sticky;
+    background: #ffffff !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 380ms ease;
+  }
+  /* Replace card-enter (has translateY) with opacity-only fade on mobile */
+  .agents-grid .agent-card.visible {
+    animation: none !important;
+    opacity: 1 !important;
+  }
   /* Top offsets set by JS from actual heading height — z-index only here */
   .agents-grid .agent-card:nth-child(1) { z-index: 11; }
   .agents-grid .agent-card:nth-child(2) { z-index: 12; }
   .agents-grid .agent-card:nth-child(3) { z-index: 13; }
   .agents-grid .agent-card:nth-child(4) { z-index: 25; }
+
+  /* Hide pre-contact CTA on mobile */
+  .cta-final { display: none; }
+
+  /* Contact section — mobile */
+  .contact-section { padding: 3.5rem 1.25rem 3rem; }
+  .contact-grid { grid-template-columns: 1fr !important; gap: 2.5rem; margin-top: 2rem; }
+  .contact-stats { margin: 1.5rem 0; }
+  .contact-stat-num { font-size: 1.3rem; }
+  .contact-testimonial { padding: 1rem 1.25rem 1rem 1.5rem; }
+  .contact-form { border-radius: 16px; }
+  .form-header { padding: 1.2rem 1.25rem 1rem; }
+  #form-wrapper { padding: 1.25rem 1.25rem 0; }
+  .contact-form-row { grid-template-columns: 1fr !important; }
+  .form-note { padding-bottom: 1.25rem; }
 }
 
 </style>
@@ -2996,30 +3120,74 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 <section class="contact-section" id="contact">
   <div class="section-inner">
     <div class="contact-grid">
+
+      <!-- LEFT: value proposition -->
       <div class="contact-info reveal">
-        <span class="section-tag">Contact</span>
-        <h2 class="section-title">Parlons de<br><span class="grad-text">votre activité</span></h2>
-        <p>2 minutes pour décrire votre situation. Notre équipe vous répond sous 4h avec une première analyse de votre potentiel d'automatisation.</p>
+        <span class="section-tag">Audit Gratuit</span>
+        <h2 class="section-title">Identifiez vos 3 gains<br><span class="grad-text">en 30 minutes</span></h2>
+        <p>Décrivez votre situation en 2 min. Nos experts vous répondent sous 4h avec une estimation précise des heures et euros récupérables.</p>
+
+        <!-- Stats -->
+        <div class="contact-stats">
+          <div class="contact-stat">
+            <span class="contact-stat-num">47+</span>
+            <span class="contact-stat-label">entreprises<br>automatisées</span>
+          </div>
+          <div class="contact-stat">
+            <span class="contact-stat-num">4h</span>
+            <span class="contact-stat-label">délai de<br>réponse max</span>
+          </div>
+          <div class="contact-stat">
+            <span class="contact-stat-num">×3.2</span>
+            <span class="contact-stat-label">ROI moyen<br>sur 6 mois</span>
+          </div>
+        </div>
+
+        <!-- Testimonial -->
+        <div class="contact-testimonial">
+          <p class="contact-testimonial-text">L'audit a identifié 8h d'économies hebdomadaires pour notre équipe. Mis en place en 2 semaines, sans aucune disruption.</p>
+          <div class="contact-testimonial-author">
+            <div class="contact-testimonial-avatar">SL</div>
+            <div>
+              <strong>Sophie Laurent</strong>
+              <span>DRH · Groupe Medicis</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Promises -->
         <div class="contact-promises">
           <div class="contact-promise">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="promise-icon promise-icon-green">✓</div>
             Réponse garantie sous 4h ouvrées
           </div>
           <div class="contact-promise">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="promise-icon promise-icon-blue">✓</div>
             Audit de 30 min offert, sans engagement
           </div>
           <div class="contact-promise">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="promise-icon promise-icon-purple">✓</div>
             Vos données ne sont jamais revendues
           </div>
           <div class="contact-promise">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div class="promise-icon promise-icon-orange">✓</div>
             Zéro relance commerciale sans accord
           </div>
         </div>
       </div>
+
+      <!-- RIGHT: form -->
       <div class="contact-form reveal reveal-delay-1">
+        <!-- Form header -->
+        <div class="form-header">
+          <div class="form-header-badge">
+            <span class="form-header-dot"></span>
+            3 créneaux disponibles cette semaine
+          </div>
+          <h3 class="form-header-title">Obtenez votre analyse<br>personnalisée gratuitement</h3>
+          <p class="form-header-sub">Gratuit · Sans engagement · 30 min chrono</p>
+        </div>
+
         <div id="form-wrapper">
           <div class="contact-form-row">
             <div class="form-group">
@@ -3046,21 +3214,22 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="f-message">Quel est votre principal défi opérationnel ?</label>
+            <label class="form-label" for="f-message">Votre principal défi opérationnel</label>
             <textarea class="form-textarea" id="f-message" placeholder="Ex : Mon équipe passe 3h par jour à relancer les factures impayées et mettre à jour le CRM manuellement..."></textarea>
           </div>
           <button class="btn-primary form-submit" id="form-btn" type="button">
-            Envoyer ma demande d'audit
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+            Réserver mon audit gratuit →
           </button>
           <p class="form-note">Sans engagement · Réponse sous 4h · 100% gratuit</p>
         </div>
+
         <div class="form-success" id="form-success">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#A78BFA"><circle cx="12" cy="12" r="10"></circle><polyline points="20 6 9 17 4 12" stroke="#A78BFA"></polyline></svg>
           <h3>Message envoyé !</h3>
           <p>Nous vous répondons dans les 4 heures ouvrées avec une première analyse de votre potentiel d'automatisation.</p>
         </div>
       </div>
+
     </div>
   </div>
 </section>
