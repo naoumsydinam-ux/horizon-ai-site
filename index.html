@@ -1703,7 +1703,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5rem;
-  align-items: center;
+  align-items: start;
 }
 .hslider-left { display: flex; flex-direction: column; align-items: flex-start; }
 .hslider-title {
@@ -1797,7 +1797,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 .hslider-item:hover::after { width: 100%; }
 
 /* Right — image stack */
-.hslider-right { position: relative; }
+.hslider-right { position: sticky; top: 5rem; }
 .hslider-img-wrap {
   position: relative;
   width: 100%;
