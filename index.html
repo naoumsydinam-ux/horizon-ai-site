@@ -1963,34 +1963,6 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-section { padding: 3.5rem 1.25rem 4.5rem; }
 }
 
-/* ── AGENT CARDS — MOBILE STICKY STACK ── */
-@media (max-width: 600px) {
-  .agents-section { padding-bottom: 1.5rem; }
-  .agents-head {
-    position: sticky;
-    top: 68px;
-    z-index: 20;
-    background: #F0F2F5;
-    padding-bottom: 1.75rem;
-    margin-bottom: 0;
-    will-change: transform; /* own GPU layer → no flash when cards slide over it */
-  }
-  .agents-head .section-desc { display: none; }
-  .agents-grid { gap: 1rem; }
-  .agents-grid .agent-card {
-    position: sticky;
-    background: #ffffff !important;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
-    will-change: transform; /* GPU layer prevents compositing flash */
-    opacity: 0;
-    transition: opacity 380ms ease;
-  }
-  /* On mobile sticky cards, replace translateY card-enter with a simple opacity fade */
-  .agents-grid .agent-card.visible {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-}
 
 /* ── AGENTS — sticky stack on mobile ── */
 @media (max-width: 600px) {
@@ -2002,7 +1974,6 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     background: #F0F2F5;
     padding-bottom: 1.75rem;
     margin-bottom: 0;
-    will-change: transform;
   }
   .agents-head .section-desc { display: none; }
   .agents-grid { gap: 1rem; }
@@ -2010,13 +1981,10 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     position: sticky;
     background: #ffffff !important;
     box-shadow: 0 4px 16px rgba(0,0,0,0.09);
-    opacity: 0;
-    transition: opacity 300ms ease;
+    opacity: 1;
   }
-  /* Replace card-enter (has translateY) with opacity-only fade on mobile */
   .agents-grid .agent-card.visible {
     animation: none !important;
-    opacity: 1 !important;
   }
   /* Top offsets set by JS from actual heading height — z-index only here */
   .agents-grid .agent-card:nth-child(1) { z-index: 11; }
