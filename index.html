@@ -1617,7 +1617,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   margin-top: 0.3rem;
 }
 
-/* Barre de progression synchronisée avec le timer JS (1.8s) */
+/* Barre de progression synchronisée avec le timer JS (3.5s) */
 @keyframes hslider-progress {
   from { width: 0%; }
   to   { width: 100%; }
@@ -1631,7 +1631,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   background: linear-gradient(90deg, #7C3AED, #EC4899);
 }
 .hslider-item.active::after {
-  animation: hslider-progress 1.8s linear forwards;
+  animation: hslider-progress 3.5s linear forwards;
 }
 .hslider-item:hover::after { width: 100%; }
 
@@ -3143,7 +3143,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     cycleTimer = setInterval(() => {
       cycleIdx = (cycleIdx + 1) % items.length;
       activate(cycleIdx);
-    }, 1800);
+    }, 3500);
   }
 
   /* Desktop : hover pause → reprend quand souris quitte la section */
