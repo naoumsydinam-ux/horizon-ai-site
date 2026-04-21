@@ -367,7 +367,8 @@ section { padding: 5.5rem 1.5rem; }
 .testimonial-text { font-size: 0.82rem; line-height: 1.65; color: var(--c-text-muted); margin-bottom: 1rem; font-weight: 400; }
 .testimonial-result { display: inline-flex; align-items: center; border-radius: 100px; padding: 0.25rem 0.75rem; font-size: 0.68rem; font-weight: 600; color: var(--c-text); margin-bottom: 1rem; font-family: var(--font-mono); background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1), rgba(236,72,153,0.1)); border: 1px solid rgba(139,92,246,0.25); }
 .testimonial-author { display: flex; align-items: center; gap: 0.85rem; }
-.testimonial-avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-weight: 700; font-size: 0.78rem; color: #fff; background: var(--c-surface-3); border: 1px solid var(--c-border-strong); flex-shrink: 0; }
+.testimonial-avatar { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; border: 2px solid transparent; background: linear-gradient(var(--c-bg),var(--c-bg)) padding-box, linear-gradient(135deg,#3B82F6,#8B5CF6,#EC4899) border-box; flex-shrink: 0; }
+.testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
 .author-info strong { display: block; font-size: 0.88rem; font-weight: 600; }
 .author-info span { font-size: 0.78rem; color: var(--c-text-muted); }
 .testimonials-cta { text-align: center; margin-top: 3.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
@@ -3014,7 +3015,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         <p class="testimonial-text">On avait déjà essayé deux logiciels qui n'avaient rien changé. Avec Horizon, en 3 semaines, mon équipe admin a récupéré l'équivalent d'un mi-temps. Ce qui m'a convaincu : ils ont commencé par l'audit.</p>
         <div class="testimonial-result">14h / semaine récupérées — ROI en 3 semaines</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">MB</div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc B." loading="lazy"></div>
           <div class="author-info">
             <strong>Marc B.</strong>
             <span>Directeur Général · Cabinet RH · 45 salariés</span>
@@ -3027,7 +3028,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         <p class="testimonial-text">Ils n'ont jamais utilisé un seul mot technique. Ils ont parlé de mes problèmes, pas de leur technologie. Aujourd'hui mon équipe commerciale passe 2h de moins par jour sur l'admin — et ça se voit sur le CA.</p>
         <div class="testimonial-result">+22% de CA dès le 2ème mois</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">SL</div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie L." loading="lazy"></div>
           <div class="author-info">
             <strong>Sophie L.</strong>
             <span>Directrice Générale · Distribution B2B · 80 salariés</span>
@@ -3040,7 +3041,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         <p class="testimonial-text">On était sceptiques au départ. En une semaine de test, notre service client a traité 3× plus de tickets sans recruter. L'audit gratuit nous a convaincus — ils ont mis le doigt exactement sur nos points de friction.</p>
         <div class="testimonial-result">×3 tickets traités — 0 recrutement</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">TR</div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Thomas R." loading="lazy"></div>
           <div class="author-info">
             <strong>Thomas R.</strong>
             <span>COO · SaaS B2B · 120 salariés</span>
@@ -3053,7 +3054,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
         <p class="testimonial-text">Nos commerciaux passaient 40% de leur temps sur des tâches admin. Aujourd'hui ce chiffre est tombé à 12%. Ils se concentrent sur ce qui compte : vendre. Le ROI a été visible dès le premier mois.</p>
         <div class="testimonial-result">–28% temps admin · ROI mois 1</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar" aria-hidden="true">AC</div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Amélie C." loading="lazy"></div>
           <div class="author-info">
             <strong>Amélie C.</strong>
             <span>Directrice Commerciale · Industrie · 200 salariés</span>
