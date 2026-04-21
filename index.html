@@ -1894,7 +1894,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
 /* ── AGENT CARDS — MOBILE STICKY STACK ── */
 @media (max-width: 600px) {
-  .agents-section { padding-bottom: 5rem; }
+  .agents-section { padding-bottom: 1.5rem; }
   /* Heading sticks below nav so title stays visible while cards stack */
   .agents-head {
     position: sticky;
@@ -3576,9 +3576,31 @@ window.closeMobileNav = function() {
 
 /* ── AGENT CARD STACK (mobile scroll-driven scale) ── */
 (function() {
-  const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
+  const section = document.querySelector('.agents-section');
+  const grid    = document.querySelector('.agents-grid');
+  const cards   = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
   if (!cards.length) return;
   const tops = [232, 310, 388, 466]; // must match CSS top values
+
+  /* Collapse the blank scroll gap that appears after all cards are stacked.
+     Each buried card's full height stays in the document flow even when stuck,
+     so we subtract exactly the excess from the grid's margin-bottom. */
+  function trimExcess() {
+    if (window.innerWidth > 600 || !section || !grid) { if (grid) grid.style.marginBottom = ''; return; }
+    grid.style.marginBottom = '';
+    const heading = section.querySelector('.agents-head');
+    const padTop  = parseFloat(getComputedStyle(section).paddingTop) || 56;
+    const headH   = heading ? heading.offsetHeight : 133;
+    const GAP = 16;
+    let card4Offset = padTop + headH;
+    for (let i = 0; i < cards.length - 1; i++) card4Offset += cards[i].offsetHeight + GAP;
+    const minH = card4Offset + cards[cards.length - 1].offsetHeight + 40;
+    const diff = section.offsetHeight - minH;
+    if (diff > 0) grid.style.marginBottom = -diff + 'px';
+  }
+
+  requestAnimationFrame(() => requestAnimationFrame(trimExcess));
+  window.addEventListener('resize', trimExcess, { passive: true });
 
   function update() {
     if (window.innerWidth > 600) { cards.forEach(c => c.style.transform = ''); return; }
