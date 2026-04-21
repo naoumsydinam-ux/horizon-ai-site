@@ -2921,10 +2921,16 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
 
 <script>
-/* ── TABDASH — Tab switching + animations ── */
+/* ── TABDASH — Tab switching + auto-cycle au scroll ── */
 (function() {
-  const tabs   = document.querySelectorAll('.tabdash-tab');
-  const dashes = document.querySelectorAll('.tabdash-dash');
+  const tabs    = document.querySelectorAll('.tabdash-tab');
+  const dashes  = document.querySelectorAll('.tabdash-dash');
+  const section = document.querySelector('.tabdash-section');
+
+  let cycleTimer  = null;
+  let resumeTimer = null;
+  let currentIdx  = 0;
+  let sectionActive = false;
 
   function animateBars(dash) {
     dash.querySelectorAll('.td-bar').forEach(bar => {
@@ -2949,40 +2955,60 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
       function step(ts) {
         if (!start) start = ts;
         const p = Math.min((ts - start) / duration, 1);
-        const ease = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(ease * target) + suffix;
+        el.textContent = Math.round((1 - Math.pow(1 - p, 3)) * target) + suffix;
         if (p < 1) requestAnimationFrame(step);
       }
       el.textContent = '0' + suffix;
       requestAnimationFrame(step);
     });
   }
-  function animateDash(dash) {
-    animateBars(dash);
-    animateFunnel(dash);
-    animateCounts(dash);
-  }
   function activateTab(idx) {
+    currentIdx = idx;
     tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
     dashes.forEach((d, i) => {
       const wasActive = d.classList.contains('active');
       d.classList.toggle('active', i === idx);
-      if (i === idx && !wasActive) animateDash(d);
+      if (i === idx && !wasActive) { animateBars(d); animateFunnel(d); animateCounts(d); }
     });
   }
-  let hoverTimer = null;
+
+  function stopCycle() { clearInterval(cycleTimer); cycleTimer = null; }
+  function startCycle() {
+    stopCycle();
+    cycleTimer = setInterval(() => {
+      activateTab((currentIdx + 1) % tabs.length);
+    }, 3500);
+  }
+
+  /* Clic : pause + reprise après 7s */
   tabs.forEach(tab => {
-    tab.addEventListener('mouseenter', () => {
-      clearTimeout(hoverTimer);
-      hoverTimer = setTimeout(() => activateTab(+tab.dataset.tab), 300);
-    });
     tab.addEventListener('click', () => {
-      clearTimeout(hoverTimer);
+      stopCycle();
+      clearTimeout(resumeTimer);
       activateTab(+tab.dataset.tab);
+      resumeTimer = setTimeout(() => { if (sectionActive) startCycle(); }, 7000);
+    });
+    tab.addEventListener('mouseenter', () => {
+      stopCycle();
+      clearTimeout(resumeTimer);
+    });
+    tab.addEventListener('mouseleave', () => {
+      if (sectionActive) startCycle();
     });
   });
+
+  /* Démarre au scroll, s'arrête quand on quitte la section */
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { sectionActive = true;  startCycle(); }
+      else                  { sectionActive = false; stopCycle(); clearTimeout(resumeTimer); }
+    });
+  }, { threshold: 0.25 });
+  if (section) obs.observe(section);
+
+  /* Animation initiale du 1er dashboard */
   const firstDash = document.getElementById('tabdash-0');
-  if (firstDash) animateDash(firstDash);
+  if (firstDash) { animateBars(firstDash); animateFunnel(firstDash); animateCounts(firstDash); }
 })();
 
 /* ── HSLIDER — Auto-cycle au scroll ── */
