@@ -3615,26 +3615,9 @@ window.closeMobileNav = function() {
   requestAnimationFrame(() => requestAnimationFrame(setup));
   window.addEventListener('resize', () => {
     if (grid) grid.style.marginBottom = '';
-    cards.forEach(c => { c.style.top = ''; c.style.transform = ''; });
+    cards.forEach(c => c.style.top = '');
     requestAnimationFrame(() => requestAnimationFrame(setup));
   }, { passive: true });
-
-  /* Scale buried cards slightly for depth */
-  function update() {
-    if (window.innerWidth > 600 || !tops.length) { cards.forEach(c => c.style.transform = ''); return; }
-    cards.forEach((card, i) => {
-      const isStuck = card.getBoundingClientRect().top <= tops[i] + 2;
-      if (!isStuck) { card.style.transform = ''; return; }
-      let above = 0;
-      for (let j = i + 1; j < cards.length; j++) {
-        if (cards[j].getBoundingClientRect().top <= tops[j] + 2) above++;
-      }
-      card.style.transform = above ? `scale(${1 - above * 0.025})` : '';
-    });
-  }
-
-  window.addEventListener('scroll', update, { passive: true });
-  update();
 })();
 
 /* ── TILT CARDS ── */
