@@ -3505,6 +3505,37 @@ window.closeMobileNav = function() {
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 })();
 
+/* ── SMOOTH ANCHOR SCROLL ── */
+(function() {
+  function easeInOutQuart(t) {
+    return t < 0.5 ? 8*t*t*t*t : 1 - Math.pow(-2*t + 2, 4) / 2;
+  }
+  function smoothTo(to, duration) {
+    const from = window.scrollY;
+    const dist = to - from;
+    if (Math.abs(dist) < 2) return;
+    const dur = duration || Math.min(Math.max(Math.abs(dist) * 0.35, 480), 1100);
+    let t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      const p = Math.min((ts - t0) / dur, 1);
+      window.scrollTo(0, from + dist * easeInOutQuart(p));
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href');
+    const target = document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    smoothTo(target.getBoundingClientRect().top + window.scrollY - 80);
+  });
+  window.__smoothTo = smoothTo;
+})();
+
 /* ── BACK TO TOP ── */
 (function() {
   const btn = document.getElementById('back-to-top');
@@ -3512,7 +3543,7 @@ window.closeMobileNav = function() {
   window.addEventListener('scroll', () => {
     btn.classList.toggle('visible', scrollY > 400);
   }, { passive: true });
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  btn.addEventListener('click', () => window.__smoothTo ? window.__smoothTo(0, 900) : window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 
 /* ── FAQ ── */
