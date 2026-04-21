@@ -398,9 +398,13 @@ section { padding: 5.5rem 1.5rem; }
   initial-value: 0deg;
 }
 
-/* ── CARD THROW — agent cards mobile ── */
-@keyframes card-throw {
-  from { opacity: 0; transform: translateX(70%) rotate(13deg) scale(0.84); }
+/* ── CARD THROW — agent cards mobile (droite / gauche alternés) ── */
+@keyframes card-from-right {
+  from { opacity: 0; transform: translateX(72%) rotate(13deg) scale(0.84); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes card-from-left {
+  from { opacity: 0; transform: translateX(-72%) rotate(-13deg) scale(0.84); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -1976,30 +1980,30 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-head .section-desc { display: none; }
   .agents-grid { gap: 1.25rem; }
 
-  /* État initial — caché avant animation */
-  .agents-grid .agent-card {
-    opacity: 0;
-    transform: translateX(70%) rotate(13deg) scale(0.84);
-  }
+  /* État initial pour le fallback (odd=droite, even=gauche) */
+  .agents-grid .agent-card:nth-child(odd)  { opacity: 0; transform: translateX(72%)  rotate(13deg)  scale(0.84); }
+  .agents-grid .agent-card:nth-child(even) { opacity: 0; transform: translateX(-72%) rotate(-13deg) scale(0.84); }
 
-  /* ── Scroll-driven : chaque carte s'anime avec le scroll (Chrome 115+, Safari 18+) ── */
+  /* ── Scroll-driven : suit le scroll dans les deux sens ── */
   @supports (animation-timeline: view()) {
-    .agents-grid .agent-card {
-      animation: card-throw linear both;
+    .agents-grid .agent-card:nth-child(odd) {
+      animation: card-from-right linear both;
       animation-timeline: view();
-      animation-range: entry 30% entry 75%;
+      animation-range: entry 5% entry 62%;
+    }
+    .agents-grid .agent-card:nth-child(even) {
+      animation: card-from-left linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 62%;
     }
   }
 
-  /* ── Fallback : déclenchement classique au scroll (50% visible) ── */
+  /* ── Fallback : déclenchement à 45% visible, droite/gauche alternés ── */
   @supports not (animation-timeline: view()) {
-    .agents-section.cards-dealt .agents-grid .agent-card {
-      animation: card-throw 1s cubic-bezier(0.22,1,0.36,1) both;
-    }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(1) { animation-delay:   0ms; }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(2) { animation-delay: 220ms; }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(3) { animation-delay: 440ms; }
-    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(4) { animation-delay: 660ms; }
+    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(1) { animation: card-from-right 1s cubic-bezier(0.22,1,0.36,1) both; animation-delay:   0ms; }
+    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(2) { animation: card-from-left  1s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 220ms; }
+    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(3) { animation: card-from-right 1s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 440ms; }
+    .agents-section.cards-dealt .agents-grid .agent-card:nth-child(4) { animation: card-from-left  1s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 660ms; }
   }
 
   /* Hide pre-contact CTA on mobile */
