@@ -372,47 +372,74 @@ section { padding: 5.5rem 1.5rem; }
 }
 .testimonials-dot.active { background: #7C3AED; width: 20px; }
 
-/* ── ANIMATION entrée carte ── */
-@keyframes testi-slide-in {
-  from { opacity: 0; transform: translateX(28px); }
-  to   { opacity: 1; transform: translateX(0); }
+/* ── ANIMATIONS MOBILE TESTIMONIALS ── */
+@keyframes testi-card-in {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+@keyframes testi-stars-pop {
+  from { opacity: 0; transform: scale(0.4) translateY(6px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+@keyframes testi-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
 }
 
-/* ── CAROUSEL MOBILE ── */
+/* ── CARTE MOBILE — une à la fois ── */
 @media (max-width: 768px) {
+  .testimonials-section { padding: 3.5rem 1.25rem 4rem; }
+
   .testimonials-grid {
-    grid-template-columns: unset !important;
-    display: flex !important;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 0.85rem;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-    padding: 0.5rem 1.5rem 1rem;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    margin-top: 2rem;
+    display: block !important;
+    overflow: visible !important;
+    margin: 1.75rem 0 0 !important;
+    padding: 0 !important;
   }
-  .testimonials-grid::-webkit-scrollbar { display: none; }
+
   .testimonial-card {
-    flex: 0 0 86% !important;
-    scroll-snap-align: start;
-    padding: 1.5rem !important;
-    animation: testi-slide-in 550ms var(--ease) both;
+    display: none;
+    width: 100%;
+    padding: 2rem !important;
+    border-radius: 20px !important;
+    border: 2px solid var(--c-border) !important;
   }
-  .testimonial-card:nth-child(2) { animation-delay: 110ms; }
+
+  .testimonial-card.tc-active {
+    display: block;
+    animation: testi-card-in 580ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    border: 2px solid transparent !important;
+    background:
+      linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
+      linear-gradient(135deg, #7C3AED, #EC4899) border-box !important;
+    box-shadow: 0 16px 60px rgba(124,58,237,0.18) !important;
+  }
+
+  .testimonial-card.tc-active .testimonial-stars {
+    display: block;
+    animation: testi-stars-pop 500ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Barre de progression */
+  .testi-progress {
+    display: none;
+    height: 3px;
+    background: rgba(124,58,237,0.12);
+    border-radius: 100px;
+    margin: 1.25rem 0 0;
+    overflow: hidden;
+  }
+  .testi-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #7C3AED, #EC4899);
+    border-radius: 100px;
+  }
+  .testi-progress-fill.running {
+    animation: testi-progress 5s linear forwards;
+  }
+
   .testimonials-dots { display: flex; }
-}
-@media (max-width: 480px) {
-  .testimonials-grid {
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    gap: 0.75rem;
-  }
-  .testimonial-card { flex: 0 0 84% !important; }
 }
 
 /* FAQ */
@@ -3202,27 +3229,86 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   if (section) obs.observe(section);
 })();
 
-/* ── TESTIMONIALS — Carousel dots ── */
+/* ── TESTIMONIALS — Mobile auto-cycle + desktop scroll ── */
 (function() {
-  const grid = document.querySelector('.testimonials-grid');
-  const dots = document.querySelectorAll('.testimonials-dot');
-  if (!grid || !dots.length) return;
+  const grid    = document.querySelector('.testimonials-grid');
+  const cards   = document.querySelectorAll('.testimonial-card');
+  const dots    = document.querySelectorAll('.testimonials-dot');
+  const section = document.querySelector('.testimonials-section');
+  if (!grid || !cards.length) return;
 
-  function updateDots() {
-    const cardW = (grid.querySelector('.testimonial-card')?.offsetWidth || 0) + 14;
-    const idx = cardW > 0 ? Math.round(grid.scrollLeft / cardW) : 0;
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  let currentIdx = 0, cycleTimer = null, sectionActive = false;
+  let progressFill = null;
+
+  function isMobile() { return window.innerWidth <= 768; }
+
+  function activateCard(idx) {
+    currentIdx = idx;
+    cards.forEach((c, i) => c.classList.toggle('tc-active', i === idx));
+    dots.forEach((d, i)  => d.classList.toggle('active', i === idx));
+    if (progressFill) {
+      progressFill.classList.remove('running');
+      void progressFill.offsetWidth;
+      if (sectionActive) progressFill.classList.add('running');
+    }
   }
 
-  grid.addEventListener('scroll', updateDots, { passive: true });
+  function startCycle() {
+    clearInterval(cycleTimer);
+    cycleTimer = setInterval(() => activateCard((currentIdx + 1) % cards.length), 5000);
+  }
+  function stopCycle() { clearInterval(cycleTimer); cycleTimer = null; }
+
+  function initMobile() {
+    if (!document.querySelector('.testi-progress')) {
+      const prog = document.createElement('div');
+      prog.className = 'testi-progress';
+      progressFill = document.createElement('div');
+      progressFill.className = 'testi-progress-fill';
+      prog.appendChild(progressFill);
+      const dotsEl = document.getElementById('testimonials-dots');
+      if (dotsEl) dotsEl.parentNode.insertBefore(prog, dotsEl);
+    } else {
+      progressFill = document.querySelector('.testi-progress-fill');
+    }
+    document.querySelector('.testi-progress').style.display = 'block';
+    activateCard(0);
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && isMobile()) {
+        sectionActive = true;
+        if (!document.querySelector('.tc-active')) initMobile();
+        startCycle();
+      } else {
+        sectionActive = false;
+        stopCycle();
+      }
+    });
+  }, { threshold: 0.3 });
+  if (section) obs.observe(section);
+
+  if (isMobile()) initMobile();
 
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
       const idx = parseInt(dot.dataset.index);
-      const card = grid.querySelectorAll('.testimonial-card')[idx];
-      if (card) card.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      if (isMobile()) {
+        stopCycle(); activateCard(idx); startCycle();
+      } else {
+        const card = cards[idx];
+        if (card) card.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+      }
     });
   });
+
+  grid.addEventListener('scroll', () => {
+    if (isMobile()) return;
+    const cardW = (cards[0]?.offsetWidth || 0) + 14;
+    const idx = cardW > 0 ? Math.round(grid.scrollLeft / cardW) : 0;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }, { passive: true });
 })();
 
 /* ── ROADMAP TIMELINE ── */
