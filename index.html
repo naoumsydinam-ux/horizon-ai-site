@@ -1474,19 +1474,37 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 /* Masquer les graphiques sur mobile étroit — KPIs + feed uniquement */
 @media (max-width: 560px) {
   .td-chart-panel { display: none; }
-  .td-feed-panel { padding: 0.85rem; }
-  .td-kpi { padding: 0.75rem 0.85rem; }
-  .td-kpi-val { font-size: 1.2rem; }
-  .td-kpi-label { font-size: 0.64rem; }
-  .td-kpi-delta { font-size: 0.64rem; }
+  .td-feed-panel { padding: 0.65rem; }
+  .td-kpi { padding: 0.5rem 0.6rem; }
+  .td-kpi-val { font-size: 1.1rem; }
+  .td-kpi-label { font-size: 0.6rem; }
+  .td-kpi-delta { font-size: 0.6rem; }
   .td-feed-text { font-size: 0.7rem; }
   .td-feed-time { font-size: 0.62rem; }
   .td-badge { font-size: 0.62rem; padding: 0.08rem 0.32rem; }
 }
 
 @media (max-width: 480px) {
-  .tabdash-tabs { border-radius: 12px; }
+  /* Section moins haute */
+  .tabdash-section { padding: 2rem 1rem 2.5rem !important; }
+  .tabdash-sub { font-size: 0.85rem !important; margin-bottom: 1rem !important; }
+  .tabdash-tabs { margin-bottom: 0.75rem !important; border-radius: 12px; }
   .tabdash-tab { font-size: 0.75rem; padding: 0.45rem 0.6rem; }
+  /* Topbar ultra compact */
+  .td-topbar { padding: 0.4rem 0.75rem !important; }
+  /* KPIs : 3 colonnes en 1 seule ligne */
+  .td-kpis { grid-template-columns: repeat(3, 1fr) !important; }
+  .td-kpi:last-child { grid-column: auto !important; border-top: none !important; border-right: none !important; }
+  .td-kpi:nth-child(2) { border-right: 1px solid var(--c-border) !important; }
+  .td-kpi { padding: 0.4rem 0.4rem !important; }
+  .td-kpi-val { font-size: 0.88rem !important; }
+  .td-kpi-label { font-size: 0.5rem !important; letter-spacing: 0.02em !important; }
+  .td-kpi-delta { font-size: 0.5rem !important; }
+  /* Feed : 4 items max, gap réduit */
+  .td-feed-item:nth-child(n+5) { display: none !important; }
+  .td-feed { gap: 0.3rem !important; }
+  .td-feed-panel { padding: 0.55rem !important; }
+  .td-panel-title { margin-bottom: 0.35rem !important; }
 }
 
 
