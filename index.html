@@ -2279,6 +2279,13 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   font-weight: 300; font-family: var(--font-display);
   color: rgba(255,255,255,0.35); letter-spacing: -0.01em;
 }
+.ws-brand-grad {
+  font-weight: 700;
+  background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6, #FB923C);
+  background-size: 300% 300%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  animation: gradient-shift 12s ease infinite;
+}
 .ws-words-container {
   position: relative;
   height: clamp(4rem, 13vw, 11rem);
@@ -3100,13 +3107,12 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
     </div>
 
     <div class="ws-stage">
-      <p class="ws-before">Horizon AI</p>
+      <p class="ws-before"><span class="ws-brand-grad">Horizon AI</span></p>
       <div class="ws-words-container">
         <div class="ws-word" data-i="0">Automatise</div>
         <div class="ws-word" data-i="1">Libère</div>
         <div class="ws-word" data-i="2">Accélère</div>
         <div class="ws-word" data-i="3">Transforme</div>
-        <div class="ws-word" data-i="4">Optimise</div>
       </div>
       <p class="ws-after">votre entreprise</p>
     </div>
@@ -3116,7 +3122,6 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
       <div class="ws-desc" data-i="1">vos équipes pour ce qui compte vraiment</div>
       <div class="ws-desc" data-i="2">votre croissance sans recruter</div>
       <div class="ws-desc" data-i="3">vos processus en avantage compétitif</div>
-      <div class="ws-desc" data-i="4">chaque flux, document et relance</div>
     </div>
 
     <div class="ws-progress-bar"><div class="ws-progress-fill" id="ws-fill"></div></div>
@@ -3126,7 +3131,6 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
       <div class="ws-dot" data-i="1"></div>
       <div class="ws-dot" data-i="2"></div>
       <div class="ws-dot" data-i="3"></div>
-      <div class="ws-dot" data-i="4"></div>
     </div>
 
     <div class="ws-hint" id="ws-hint">
