@@ -758,24 +758,23 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .promise-icon-orange { background: rgba(249,115,22,0.12);  color: #F97316; }
 
 /* Form card */
+/* Wrapper spinning border */
+.cf-spin-wrap {
+  --tc-angle: 0deg;
+  border-radius: calc(var(--radius-lg) + 2px);
+  padding: 2px;
+  background: conic-gradient(from var(--tc-angle) at 50% 50%,
+    #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%);
+  animation: tc-border-spin 4s linear infinite;
+  box-shadow: 0 8px 40px rgba(139,92,246,0.18);
+}
 .contact-form {
   background: var(--c-surface);
-  border: 1px solid var(--c-border);
+  border: none;
   border-radius: var(--radius-lg);
   padding: 0;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   position: relative;
-}
-.contact-form::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316, #8B5CF6, #3B82F6);
-  background-size: 300% 100%;
-  animation: gradient-shift 18s ease infinite;
-  z-index: 2;
 }
 
 /* Form header inside card */
@@ -3302,7 +3301,8 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
       </div>
 
       <!-- RIGHT: form -->
-      <div class="contact-form reveal reveal-delay-1">
+      <div class="cf-spin-wrap reveal reveal-delay-1">
+      <div class="contact-form">
         <div class="cf-glow" aria-hidden="true"></div>
         <div class="cf-border-glow" aria-hidden="true"></div>
         <!-- Form header -->
@@ -3367,6 +3367,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
           <p>Nous vous répondons dans les 4 heures ouvrées avec une première analyse de votre potentiel d'automatisation.</p>
         </div>
       </div>
+      </div><!-- /cf-spin-wrap -->
 
     </div>
   </div>
