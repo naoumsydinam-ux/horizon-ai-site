@@ -172,12 +172,6 @@ nav.scrolled { background: rgba(248,249,251,0.95); backdrop-filter: blur(14px); 
   50%  { background-position: 100% 50%; }
   100% { background-position: 0%   50%; }
 }
-@keyframes frame-elastic-fill {
-  0%   { opacity: 0;    transform: scale(0.9); }
-  28%  { opacity: 0.72; transform: scale(1.02); }
-  58%  { opacity: 0.5;  transform: scale(1.0); }
-  100% { opacity: 0;    transform: scale(1.0); }
-}
 .video-frame {
   position: relative;
   max-width: 820px;
@@ -197,20 +191,6 @@ nav.scrolled { background: rgba(248,249,251,0.95); backdrop-filter: blur(14px); 
   box-shadow:
     0 0 50px rgba(124,58,237,0.18),
     0 28px 64px rgba(0,0,0,0.15);
-}
-.video-frame::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 21px;
-  background: linear-gradient(135deg, #7C3AED, #EC4899, #3B82F6);
-  opacity: 0;
-  z-index: 5;
-  pointer-events: none;
-  transform: scale(0.9);
-}
-.video-frame.frame-pop::after {
-  animation: frame-elastic-fill 1.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
 }
 .video-wrap {
   position: relative;
@@ -982,6 +962,27 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
   padding: 0.85rem 2rem; font-size: 0.95rem; font-weight: 600;
   border-radius: 100px; border: 1px solid rgba(139,92,246,0.25);
   transition: border-color 300ms, box-shadow 300ms;
+  position: relative; overflow: hidden;
+}
+.rd-end-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #7C3AED, #EC4899, #3B82F6);
+  opacity: 0;
+  transform: scale(0.82);
+  border-radius: inherit;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes badge-elastic-fill {
+  0%   { opacity: 0;    transform: scale(0.82); }
+  28%  { opacity: 0.72; transform: scale(1.04); }
+  58%  { opacity: 0.48; transform: scale(1.0); }
+  100% { opacity: 0;    transform: scale(1.0); }
+}
+.rd-end-badge.badge-pop::after {
+  animation: badge-elastic-fill 1.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
 }
 .rd-end-badge:hover { border-color: rgba(139,92,246,0.5); box-shadow: 0 8px 30px rgba(139,92,246,0.15); }
 .rd-end-icon {
@@ -3559,19 +3560,19 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── VIDEO FRAME — elastic fill au scroll ── */
+/* ── ROADMAP END BADGE — elastic fill au scroll ── */
 (function() {
-  const frame = document.querySelector('.video-frame');
-  if (!frame) return;
+  const badge = document.querySelector('.rd-end-badge');
+  if (!badge) return;
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        frame.classList.add('frame-pop');
-        obs.unobserve(frame);
+        badge.classList.add('badge-pop');
+        obs.unobserve(badge);
       }
     });
   }, { threshold: 0.5 });
-  obs.observe(frame);
+  obs.observe(badge);
 })();
 
 /* ── TILT CARDS ── */
