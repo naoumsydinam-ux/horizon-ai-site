@@ -1892,29 +1892,37 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-section { padding: 3.5rem 1.25rem 4.5rem; }
 }
 
-/* ── AGENT CARDS — MOBILE STACK ANIMATION ── */
+/* ── AGENT CARDS — MOBILE STICKY STACK ── */
 @media (max-width: 600px) {
-  .agents-section { padding-bottom: 4rem; }
-  .agents-grid { display: flex !important; flex-direction: column; gap: 0; }
-  /* Reset sticky, set up animation base state */
-  .agents-grid .agent-card {
-    position: relative !important;
-    top: auto !important;
-    background: #ffffff !important;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
-    opacity: 0;
-    transform: translateY(72px);
-    transition: opacity 520ms cubic-bezier(0.22,1,0.36,1), transform 520ms cubic-bezier(0.22,1,0.36,1);
+  .agents-section { padding-bottom: 5rem; }
+  /* Heading sticks below nav so title stays visible while cards stack */
+  .agents-head {
+    position: sticky;
+    top: 68px;
+    z-index: 20;
+    background: #F0F2F5;
+    padding-bottom: 1.25rem;
+    margin-bottom: 0;
   }
-  /* Block card-enter from revealObs so our animation runs instead */
-  .agents-grid .agent-card.visible { animation: none !important; opacity: 0 !important; }
-  /* Final state when JS adds .stack-in */
-  .agents-grid .agent-card.stack-in { opacity: 1 !important; transform: translateY(0) !important; }
-  /* Ascending z-index: card 4 ends up on top */
-  .agents-grid .agent-card:nth-child(1) { z-index: 11; }
-  .agents-grid .agent-card:nth-child(2) { z-index: 12; }
-  .agents-grid .agent-card:nth-child(3) { z-index: 13; }
-  .agents-grid .agent-card:nth-child(4) { z-index: 14; }
+  /* Hide description on mobile to keep heading compact */
+  .agents-head .section-desc { display: none; }
+  .agents-grid { gap: 1rem; }
+  .agents-grid .agent-card {
+    position: sticky;
+    background: #ffffff !important;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
+    transition: transform 260ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms;
+  }
+  /* Top offsets start below the sticky heading (~190px from top) */
+  .agents-grid .agent-card:nth-child(1) { top: 200px; z-index: 11; }
+  .agents-grid .agent-card:nth-child(2) { top: 278px; z-index: 12; }
+  .agents-grid .agent-card:nth-child(3) { top: 356px; z-index: 13; }
+  .agents-grid .agent-card:nth-child(4) { top: 434px; z-index: 14; }
+  /* No entrance stagger on mobile */
+  .agents-grid .agent-card:nth-child(1).visible,
+  .agents-grid .agent-card:nth-child(2).visible,
+  .agents-grid .agent-card:nth-child(3).visible,
+  .agents-grid .agent-card:nth-child(4).visible { animation-delay: 0ms; }
 }
 
 </style>
@@ -2766,9 +2774,11 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 <!-- AGENTS IA MONITORING -->
 <section class="agents-section">
   <div class="section-inner">
-    <span class="section-tag reveal">Sous le capot</span>
-    <h2 class="section-title reveal">Quatre agents veillent<br><span class="grad-text">en permanence pour vous</span></h2>
-    <p class="section-desc reveal">Chaque agent surveille un domaine critique de votre déploiement — en temps réel, sans intervention.</p>
+    <div class="agents-head">
+      <span class="section-tag reveal">Sous le capot</span>
+      <h2 class="section-title reveal">Quatre agents veillent<br><span class="grad-text">en permanence pour vous</span></h2>
+      <p class="section-desc reveal">Chaque agent surveille un domaine critique de votre déploiement — en temps réel, sans intervention.</p>
+    </div>
 
     <div class="agents-grid">
 
@@ -3564,46 +3574,28 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── AGENT CARD STACK (mobile — triggered on section enter) ── */
+/* ── AGENT CARD STACK (mobile scroll-driven scale) ── */
 (function() {
-  const grid = document.querySelector('.agents-grid');
-  if (!grid) return;
-  const cards = Array.from(grid.querySelectorAll('.agent-card'));
+  const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
   if (!cards.length) return;
+  const tops = [200, 278, 356, 434]; // must match CSS top values
 
-  const PEEK = 78; // px of previous card's header visible above the next card
-
-  function isMobile() { return window.innerWidth <= 600; }
-
-  /* Negative margin-top so each card overlaps the previous (only header peeks) */
-  function applyMargins() {
-    if (!isMobile()) { cards.forEach(c => c.style.marginTop = ''); return; }
-    for (let i = 1; i < cards.length; i++) {
-      const h = cards[i - 1].offsetHeight;
-      if (h > 0) cards[i].style.marginTop = -(h - PEEK) + 'px';
-    }
+  function update() {
+    if (window.innerWidth > 600) { cards.forEach(c => c.style.transform = ''); return; }
+    cards.forEach((card, i) => {
+      const isStuck = card.getBoundingClientRect().top <= tops[i] + 2;
+      if (!isStuck) { card.style.transform = ''; return; }
+      let above = 0;
+      for (let j = i + 1; j < cards.length; j++) {
+        if (cards[j].getBoundingClientRect().top <= tops[j] + 2) above++;
+      }
+      card.style.transform = above ? `scale(${1 - above * 0.025})` : '';
+    });
   }
 
-  /* Stagger each card in, card 1 first → card 4 last (lands on top) */
-  function triggerStack() {
-    if (!isMobile()) return;
-    applyMargins();
-    cards.forEach((card, i) => setTimeout(() => card.classList.add('stack-in'), i * 270));
-  }
-
-  /* Apply compact layout immediately so section isn't huge before animation */
-  requestAnimationFrame(() => requestAnimationFrame(applyMargins));
-
-  window.addEventListener('resize', () => {
-    cards.forEach(c => { c.style.marginTop = ''; c.classList.remove('stack-in'); });
-    requestAnimationFrame(() => requestAnimationFrame(() => { applyMargins(); if (isMobile()) cards.forEach(c => c.classList.add('stack-in')); }));
-  }, { passive: true });
-
-  /* Trigger animation when grid enters viewport */
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting && isMobile()) { triggerStack(); obs.unobserve(e.target); } });
-  }, { threshold: 0.15 });
-  obs.observe(grid);
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', () => { cards.forEach(c => c.style.transform = ''); update(); }, { passive: true });
+  update();
 })();
 
 /* ── TILT CARDS ── */
