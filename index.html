@@ -1917,7 +1917,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
 /* ── AGENTS — gradient border cards (fond blanc) ── */
 .agent-card {
-  border: 2px solid transparent;
+  background: #fff;
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   display: flex;
@@ -1925,44 +1925,55 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   gap: 1rem;
   transition: box-shadow 400ms, transform 350ms var(--ease);
   position: relative;
-  overflow: hidden;
+}
+/* Bordure dégradée via pseudo-element + mask (cross-browser) */
+.agent-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 .agent-card:hover { transform: translateY(-5px); }
 
+.agents-grid .agent-card:nth-child(1)::before {
+  background: linear-gradient(135deg, #22C55E 0%, #10B981 100%);
+}
 .agents-grid .agent-card:nth-child(1) {
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(135deg, #22C55E 0%, #10B981 100%) border-box;
   box-shadow: 0 2px 16px rgba(0,0,0,0.05);
 }
 .agents-grid .agent-card:nth-child(1):hover {
   box-shadow: 0 14px 48px rgba(34,197,94,0.18), 0 2px 8px rgba(0,0,0,0.05);
 }
 
+.agents-grid .agent-card:nth-child(2)::before {
+  background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+}
 .agents-grid .agent-card:nth-child(2) {
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(135deg, #3B82F6 0%, #6366F1 100%) border-box;
   box-shadow: 0 2px 16px rgba(0,0,0,0.05);
 }
 .agents-grid .agent-card:nth-child(2):hover {
   box-shadow: 0 14px 48px rgba(59,130,246,0.18), 0 2px 8px rgba(0,0,0,0.05);
 }
 
+.agents-grid .agent-card:nth-child(3)::before {
+  background: linear-gradient(135deg, #F97316 0%, #F59E0B 100%);
+}
 .agents-grid .agent-card:nth-child(3) {
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(135deg, #F97316 0%, #F59E0B 100%) border-box;
   box-shadow: 0 2px 16px rgba(0,0,0,0.05);
 }
 .agents-grid .agent-card:nth-child(3):hover {
   box-shadow: 0 14px 48px rgba(249,115,22,0.18), 0 2px 8px rgba(0,0,0,0.05);
 }
 
+.agents-grid .agent-card:nth-child(4)::before {
+  background: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+}
 .agents-grid .agent-card:nth-child(4) {
-  background:
-    linear-gradient(#fff, #fff) padding-box,
-    linear-gradient(135deg, #7C3AED 0%, #EC4899 100%) border-box;
   box-shadow: 0 2px 16px rgba(0,0,0,0.05);
 }
 .agents-grid .agent-card:nth-child(4):hover {
