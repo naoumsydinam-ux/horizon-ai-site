@@ -813,6 +813,59 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .form-select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
 .form-select option { background: var(--c-surface); color: var(--c-text); }
 .form-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+/* ── Prompt IA style ── */
+.form-prompt-box {
+  position: relative;
+  background: linear-gradient(135deg, rgba(59,130,246,0.03), rgba(139,92,246,0.04));
+  border: 1.5px solid rgba(139,92,246,0.22);
+  border-radius: 14px;
+  padding: 0.9rem 0.9rem 3rem;
+  margin-bottom: 1rem;
+  transition: border-color 250ms, box-shadow 250ms;
+}
+.form-prompt-box:focus-within {
+  border-color: #8B5CF6;
+  box-shadow: 0 0 0 3px rgba(139,92,246,0.08);
+}
+.form-prompt-header {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+.form-prompt-icon {
+  width: 22px; height: 22px;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.form-prompt-label-text {
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--c-text-muted); font-family: var(--font-mono);
+}
+.form-prompt-textarea {
+  width: 100%; border: none; background: transparent;
+  resize: none; font-size: 0.88rem; color: var(--c-text);
+  line-height: 1.65; min-height: 90px;
+  outline: none; font-family: inherit;
+}
+.form-prompt-textarea::placeholder { color: var(--c-surface-3); }
+.form-prompt-footer {
+  position: absolute; bottom: 0.7rem; left: 0.9rem; right: 0.9rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.form-prompt-hint { font-size: 0.62rem; color: var(--c-text-muted); font-family: var(--font-mono); }
+.form-prompt-send {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; flex-shrink: 0;
+  transition: transform 200ms, opacity 200ms;
+  box-shadow: 0 2px 8px rgba(139,92,246,0.3);
+}
+.form-prompt-send:hover { transform: scale(1.08); }
 .form-submit { width: 100%; justify-content: center; font-size: 0.9rem; padding: 0.9rem 1.5rem; }
 .form-note { text-align: center; margin-top: 0.75rem; padding-bottom: 1.75rem; font-size: 0.68rem; color: var(--c-text-muted); font-family: var(--font-mono); }
 .form-success { display: none; text-align: center; padding: 3rem 2rem; }
@@ -3249,9 +3302,20 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
               <option value="200+">200+ salariés</option>
             </select>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="f-message">Votre principal défi opérationnel</label>
-            <textarea class="form-textarea" id="f-message" placeholder="Ex : Mon équipe passe 3h par jour à relancer les factures impayées et mettre à jour le CRM manuellement..."></textarea>
+          <div class="form-prompt-box">
+            <div class="form-prompt-header">
+              <div class="form-prompt-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <span class="form-prompt-label-text">Décrivez votre défi opérationnel</span>
+            </div>
+            <textarea class="form-prompt-textarea" id="f-message" rows="4" placeholder="Ex : Mon équipe passe 3h par jour à relancer les factures impayées et mettre à jour le CRM manuellement…"></textarea>
+            <div class="form-prompt-footer">
+              <span class="form-prompt-hint">Plus c'est précis, plus l'analyse sera pertinente</span>
+              <button class="form-prompt-send" type="button" title="Envoyer" tabindex="-1">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
           </div>
           <button class="btn-primary form-submit" id="form-btn" type="button">
             Réserver mon audit gratuit →
