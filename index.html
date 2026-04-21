@@ -1891,6 +1891,24 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   gap: 1.25rem;
   margin-top: 3rem;
 }
+
+/* ── AGENTS — sticky heading desktop ── */
+@media (min-width: 1000px) {
+  .agents-section .section-inner {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .agents-head {
+    position: sticky;
+    top: 96px;
+  }
+  .agents-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 0;
+  }
+}
 .agent-card {
   background: #FFFFFF;
   border: 1px solid var(--c-border);
