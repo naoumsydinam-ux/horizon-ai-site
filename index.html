@@ -2264,6 +2264,47 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   .form-note { padding-bottom: 1.25rem; }
 }
 
+/* ── CAPOT SECTION — scroll-driven border illumination ── */
+.capot-section { height: 320vh; position: relative; background: var(--c-bg); }
+.capot-sticky {
+  position: sticky; top: 0; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 1.5rem; overflow: hidden;
+}
+.capot-header { text-align: center; margin-bottom: 2rem; }
+.capot-header .section-title { font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; }
+.capot-header .section-desc  { margin-top: 0.5rem; }
+.capot-prog-wrap {
+  width: min(260px, 55vw); height: 2px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 2px; overflow: hidden;
+  margin: 1.25rem auto 0;
+}
+.capot-prog-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22C55E, #3B82F6, #F97316, #7C3AED); border-radius: 2px; }
+.capot-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem; width: 100%; max-width: 880px;
+}
+.capot-card {
+  background: var(--c-surface);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 1.25rem;
+  padding: 1.25rem 1.35rem;
+  will-change: transform, border-color, box-shadow;
+  transform-origin: center;
+}
+.capot-card::before { display: none !important; }
+.capot-card:hover   { transform: none !important; box-shadow: none !important; }
+.capot-card .agent-score-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-top: 0.6rem; }
+.capot-card .agent-score-fill { height: 100%; border-radius: 2px; width: 0%; transition: width 1.2s cubic-bezier(0.22,1,0.36,1); }
+.capot-card.cap-lit .agent-score-fill { width: var(--score-w, 80%); }
+@media (max-width: 680px) {
+  .capot-section { height: auto; }
+  .capot-sticky  { position: static; height: auto; padding: 4rem 1.25rem 3rem; }
+  .capot-grid    { grid-template-columns: 1fr; }
+}
+
 /* ── WORD SCROLL SECTION (Ce qu'on fait) ── */
 .word-scroll-section { height: 420vh; position: relative; background: var(--c-bg); }
 .ws-sticky {
@@ -3167,19 +3208,19 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   </div>
 </section>
 
-<!-- AGENTS IA MONITORING -->
-<section class="agents-section">
-  <div class="section-inner">
-    <div class="agents-head">
-      <span class="section-tag reveal">Sous le capot</span>
-      <h2 class="section-title reveal">Quatre agents veillent<br><span class="grad-text">en permanence pour vous</span></h2>
-      <p class="section-desc reveal">Agents utilisés par nos partenaires et bien d'autres encore.</p>
+<!-- AGENTS IA MONITORING — scroll-driven border illumination -->
+<section class="capot-section" id="capot">
+  <div class="capot-sticky">
+    <div class="capot-header">
+      <span class="section-tag">Sous le capot</span>
+      <h2 class="section-title">Quatre agents veillent<br><span class="grad-text">en permanence pour vous</span></h2>
+      <p class="section-desc">Agents utilisés par nos partenaires et bien d'autres encore.</p>
+      <div class="capot-prog-wrap"><div class="capot-prog-fill" id="capot-fill"></div></div>
     </div>
+    <div class="capot-grid">
 
-    <div class="agents-grid">
-
-      <!-- Agent Sécurité -->
-      <div class="agent-card reveal">
+      <!-- Card 0 — Sécurité -->
+      <div class="capot-card" data-color="34,197,94" data-score-w="100" style="--score-w:100%">
         <div class="agent-header">
           <div class="agent-icon" style="background:linear-gradient(135deg,rgba(34,197,94,0.18),rgba(16,185,129,0.32))">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -3202,8 +3243,8 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         </div>
       </div>
 
-      <!-- Agent SEO -->
-      <div class="agent-card reveal">
+      <!-- Card 1 — SEO -->
+      <div class="capot-card" data-color="59,130,246" data-score-w="87" style="--score-w:87%">
         <div class="agent-header">
           <div class="agent-icon" style="background:linear-gradient(135deg,rgba(59,130,246,0.18),rgba(99,102,241,0.32))">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -3222,12 +3263,12 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         </div>
         <div class="agent-score">
           <div class="agent-score-top"><span class="agent-score-val" style="color:#3B82F6">87</span><span class="agent-score-label">/ 100 · Score SEO</span></div>
-          <div class="agent-score-bar"><div class="agent-score-fill" style="background:linear-gradient(90deg,#3B82F6,#6366F1);width:87%"></div></div>
+          <div class="agent-score-bar"><div class="agent-score-fill" style="background:linear-gradient(90deg,#3B82F6,#6366F1)"></div></div>
         </div>
       </div>
 
-      <!-- Agent Performance -->
-      <div class="agent-card reveal">
+      <!-- Card 2 — Performance -->
+      <div class="capot-card" data-color="249,115,22" data-score-w="94" style="--score-w:94%">
         <div class="agent-header">
           <div class="agent-icon" style="background:linear-gradient(135deg,rgba(249,115,22,0.18),rgba(245,158,11,0.32))">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -3246,12 +3287,12 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         </div>
         <div class="agent-score">
           <div class="agent-score-top"><span class="agent-score-val" style="color:#F97316">94</span><span class="agent-score-label">/ 100 · Score performance</span></div>
-          <div class="agent-score-bar"><div class="agent-score-fill" style="background:linear-gradient(90deg,#F97316,#F59E0B);width:94%"></div></div>
+          <div class="agent-score-bar"><div class="agent-score-fill" style="background:linear-gradient(90deg,#F97316,#F59E0B)"></div></div>
         </div>
       </div>
 
-      <!-- Agent Design -->
-      <div class="agent-card reveal">
+      <!-- Card 3 — Design -->
+      <div class="capot-card" data-color="124,58,237" data-score-w="91" style="--score-w:91%">
         <div class="agent-header">
           <div class="agent-icon" style="background:linear-gradient(135deg,rgba(124,58,237,0.18),rgba(236,72,153,0.32))">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
@@ -3270,7 +3311,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         </div>
         <div class="agent-score">
           <div class="agent-score-top"><span class="agent-score-val" style="color:#7C3AED">91</span><span class="agent-score-label">/ 100 · Score UX</span></div>
-          <div class="agent-score-bar"><div class="agent-score-fill" style="background:linear-gradient(90deg,#7C3AED,#EC4899);width:91%"></div></div>
+          <div class="agent-score-bar"><div class="agent-score-fill" style="background:linear-gradient(90deg,#7C3AED,#EC4899)"></div></div>
         </div>
       </div>
 
@@ -4144,95 +4185,101 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── AGENT CARDS — sticky scroll desktop (≥1000px) ── */
+/* ── CAPOT SECTION — scroll-driven border illumination ── */
 (function() {
-  if (window.innerWidth < 1000) return;
-  const section = document.querySelector('.agents-section');
-  const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
-  if (!section || !cards.length) return;
+  const section = document.getElementById('capot');
+  if (!section) return;
 
-  cards.forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(44px) scale(0.96)';
-    card.style.transition = 'opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1)';
-  });
+  const isMobile = window.matchMedia('(max-width: 680px)').matches;
+  const cards = Array.from(section.querySelectorAll('.capot-card'));
+  const fill  = document.getElementById('capot-fill');
+  const N     = cards.length;
 
-  const thresholds = [0.08, 0.20, 0.32, 0.44];
-  const shown = [false, false, false, false];
+  /* Per-card glow state (lerped) */
+  const glows = new Float32Array(N);
+  const litOnce = new Array(N).fill(false);
 
-  function update() {
-    const rect = section.getBoundingClientRect();
-    const scrollable = section.offsetHeight - window.innerHeight;
-    if (scrollable <= 0) {
-      cards.forEach((c, i) => { if (!shown[i]) reveal(c, i); });
-      return;
-    }
-    const progress = Math.max(0, Math.min(1, -rect.top / scrollable));
-    cards.forEach((card, i) => {
-      if (progress >= thresholds[i] && !shown[i]) reveal(card, i);
-    });
+  function ease(t) {
+    /* cubic-bezier(0.22, 1, 0.36, 1) approximated */
+    return 1 - Math.pow(1 - t, 3);
   }
 
-  function reveal(card, i) {
-    shown[i] = true;
-    card.style.opacity = '1';
-    card.style.transform = 'none';
-    card.classList.add('ac-revealed');
+  function getProgress() {
+    if (isMobile) return 1; /* static layout — light all cards */
+    const rect  = section.getBoundingClientRect();
+    const range = section.offsetHeight - window.innerHeight;
+    return Math.max(0, Math.min(1, -rect.top / range));
   }
 
+  function applyGlow(card, glow, rgb) {
+    const a1 = (glow * 0.55 + 0.06).toFixed(3);
+    const a2 = (glow * 0.28).toFixed(3);
+    const a3 = (glow * 0.14).toFixed(3);
+    const a4 = (glow * 0.06).toFixed(3);
+    const sc = (1 + glow * 0.012).toFixed(4);
+    card.style.borderColor = `rgba(${rgb},${a1})`;
+    card.style.boxShadow   = `0 0 28px rgba(${rgb},${a2}), 0 0 64px rgba(${rgb},${a3}), inset 0 0 18px rgba(${rgb},${a4})`;
+    card.style.transform   = `scale(${sc})`;
+  }
+
+  function triggerScoreBars(card) {
+    card.classList.add('cap-lit');
+  }
+
+  let displayFill = 0;
   let rafId = null;
-  function loop() { update(); rafId = requestAnimationFrame(loop); }
-  function stop() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  function loop() {
+    const progress = getProgress();
+    let anyGlowing = false;
+
+    cards.forEach((card, i) => {
+      const rgb = card.dataset.color || '255,255,255';
+      /* Each card occupies 1/N of the total scroll range */
+      const start = i / N;
+      const end   = (i + 1) / N;
+      const raw   = Math.max(0, Math.min(1, (progress - start) / (1 / N)));
+      const target = ease(raw);
+
+      glows[i] += (target - glows[i]) * 0.07;
+      if (glows[i] > 0.005) anyGlowing = true;
+
+      applyGlow(card, glows[i], rgb);
+
+      /* Trigger score bar animation once glow crosses threshold */
+      if (glows[i] > 0.5 && !litOnce[i]) {
+        litOnce[i] = true;
+        triggerScoreBars(card);
+      }
+    });
+
+    /* Smooth progress bar */
+    displayFill += (progress - displayFill) * 0.07;
+    if (fill) fill.style.width = `${displayFill * 100}%`;
+
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function start() { if (!rafId) { loop(); } }
+  function stop()  { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+  /* On mobile show all cards lit immediately */
+  if (isMobile) {
+    cards.forEach((card, i) => {
+      const rgb = card.dataset.color || '255,255,255';
+      applyGlow(card, 1, rgb);
+      triggerScoreBars(card);
+    });
+    if (fill) fill.style.width = '100%';
+    return;
+  }
 
   const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) { if (!rafId) loop(); }
-    else stop();
-  }, { threshold: 0 });
-  obs.observe(section);
-  update();
-})();
-
-/* ── AGENT CARDS — scroll-scrub direct (inline styles, rAF loop pour iOS) ── */
-(function() {
-  if (window.innerWidth > 600) return;
-  const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
-  const section = document.querySelector('.agents-section');
-  if (!cards.length || !section) return;
-
-  /* État initial — inline styles pour écraser tout le cascade CSS */
-  cards.forEach((card, i) => {
-    const dir = i % 2 === 0 ? 1 : -1;
-    card.style.opacity = '0';
-    card.style.transform = `translateX(${dir * 72}%) rotate(${dir * 13}deg) scale(0.84)`;
-    card.style.transition = 'none';
-  });
-
-  function update() {
-    const vh = window.innerHeight;
-    cards.forEach((card, i) => {
-      const rect = card.getBoundingClientRect();
-      /* p: 0 = carte hors écran, 1 = animation terminée */
-      const p = Math.max(0, Math.min(1, (vh - rect.top) / (vh * 0.62)));
-      const dir = i % 2 === 0 ? 1 : -1;
-      card.style.opacity = p;
-      card.style.transform = p >= 0.999
-        ? 'none'
-        : `translateX(${(dir * 72 * (1 - p)).toFixed(1)}%) rotate(${(dir * 13 * (1 - p)).toFixed(2)}deg) scale(${(0.84 + 0.16 * p).toFixed(3)})`;
-    });
-  }
-
-  /* Boucle rAF active tant que la section est visible — couvre l'inertie iOS */
-  let rafId = null;
-  function loop() { update(); rafId = requestAnimationFrame(loop); }
-  function stop() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
-
-  const obs = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) { if (!rafId) loop(); }
-    else stop();
+    if (entries[0].isIntersecting) start(); else stop();
   }, { threshold: 0 });
   obs.observe(section);
 
-  update();
+  start();
 })();
 
 /* ── CONTACT FORM — spotlight cursor ── */
