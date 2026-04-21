@@ -400,34 +400,6 @@ section { padding: 5.5rem 1.5rem; }
 
 /* ── ANIMATIONS MOBILE TESTIMONIALS ── */
 @keyframes tc-border-spin { to { --tc-angle: 360deg; } }
-@keyframes tc-float {
-  0%,100% { transform: translateY(0px);  box-shadow: 0 20px 60px rgba(124,58,237,0.22), 0 4px 16px rgba(0,0,0,0.07); }
-  50%     { transform: translateY(-9px); box-shadow: 0 32px 80px rgba(124,58,237,0.32), 0 8px 24px rgba(0,0,0,0.08); }
-}
-@keyframes tc-throw-left {
-  from { opacity: 1; transform: translateX(0)     rotate(0deg)  scale(1);    filter: blur(0); }
-  to   { opacity: 0; transform: translateX(-110%) rotate(-8deg) scale(0.88); filter: blur(6px); }
-}
-@keyframes tc-throw-right {
-  from { opacity: 1; transform: translateX(0)    rotate(0deg) scale(1);    filter: blur(0); }
-  to   { opacity: 0; transform: translateX(110%) rotate(8deg) scale(0.88); filter: blur(6px); }
-}
-@keyframes tc-spring-in {
-  0%   { opacity: 0; transform: translateX(90px)  rotate(4deg)   scale(0.9);    filter: blur(10px); }
-  65%  { opacity: 1; transform: translateX(-6px)  rotate(-1deg)  scale(1.02);   filter: blur(0); }
-  80%  { transform: translateX(3px)   rotate(0.5deg)  scale(0.99); }
-  100% { transform: translateX(0)     rotate(0deg)    scale(1); }
-}
-@keyframes tc-spring-in-rev {
-  0%   { opacity: 0; transform: translateX(-90px) rotate(-4deg)  scale(0.9);    filter: blur(10px); }
-  65%  { opacity: 1; transform: translateX(6px)   rotate(1deg)   scale(1.02);   filter: blur(0); }
-  80%  { transform: translateX(-3px)  rotate(-0.5deg) scale(0.99); }
-  100% { transform: translateX(0)     rotate(0deg)    scale(1); }
-}
-@keyframes tc-item-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 @keyframes testi-progress {
   from { width: 0%; }
   to   { width: 100%; }
@@ -435,13 +407,13 @@ section { padding: 5.5rem 1.5rem; }
 
 /* ── CARTE MOBILE ── */
 @media (max-width: 768px) {
-  .testimonials-section { padding: 3.5rem 1.25rem 4rem; }
+  .testimonials-section { padding: 4.5rem 1.25rem 5rem; }
 
   .testimonials-grid {
     display: block !important;
     position: relative !important;
     overflow: visible !important;
-    margin: 1.75rem 0 0 !important;
+    margin: 2.25rem 0 0 !important;
     padding: 0 !important;
   }
 
@@ -461,7 +433,7 @@ section { padding: 5.5rem 1.5rem; }
   .author-info strong { font-size: 0.8rem !important; }
   .author-info span   { font-size: 0.7rem !important; }
 
-  /* Carte active : bordure tournante + spring in */
+  /* Carte active : bordure tournante uniquement */
   .testimonial-card.tc-active {
     --tc-angle: 0deg;
     display: block;
@@ -472,40 +444,8 @@ section { padding: 5.5rem 1.5rem; }
       linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
       conic-gradient(from var(--tc-angle) at 50% 50%,
         #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%) border-box !important;
-    animation: tc-border-spin 4s linear infinite, tc-spring-in 680ms cubic-bezier(0.22,1,0.36,1) both;
+    animation: tc-border-spin 4s linear infinite;
   }
-  .testimonial-card.tc-active.tc-from-left {
-    animation: tc-border-spin 4s linear infinite, tc-spring-in-rev 680ms cubic-bezier(0.22,1,0.36,1) both !important;
-  }
-  /* Float après l'entrée */
-  .testimonial-card.tc-floating {
-    animation: tc-border-spin 4s linear infinite, tc-float 5s ease-in-out infinite !important;
-  }
-
-  /* Carte qui sort */
-  .testimonial-card.tc-exiting {
-    display: block !important;
-    position: absolute !important;
-    top: 0; left: 0; right: 0;
-    z-index: 1;
-    pointer-events: none !important;
-    border: 2px solid transparent !important;
-    background:
-      linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
-      conic-gradient(from var(--tc-angle) at 50% 50%,
-        #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%) border-box !important;
-    animation: tc-throw-left 380ms cubic-bezier(0.4,0,1,1) forwards !important;
-  }
-  .testimonial-card.tc-exiting.tc-to-right {
-    animation: tc-throw-right 380ms cubic-bezier(0.4,0,1,1) forwards !important;
-  }
-
-  /* Reveal séquentiel du contenu */
-  .testimonial-card.tc-active .testimonial-stars  { animation: tc-item-in 400ms  40ms  cubic-bezier(0.22,1,0.36,1) both; }
-  .testimonial-card.tc-active .testimonial-quote  { animation: tc-item-in 400ms  110ms cubic-bezier(0.22,1,0.36,1) both; }
-  .testimonial-card.tc-active .testimonial-text   { animation: tc-item-in 400ms  190ms cubic-bezier(0.22,1,0.36,1) both; }
-  .testimonial-card.tc-active .testimonial-result { animation: tc-item-in 400ms  290ms cubic-bezier(0.22,1,0.36,1) both; }
-  .testimonial-card.tc-active .testimonial-author { animation: tc-item-in 400ms  370ms cubic-bezier(0.22,1,0.36,1) both; }
 
   /* Barre de progression */
   .testi-progress {
@@ -513,7 +453,7 @@ section { padding: 5.5rem 1.5rem; }
     height: 2px;
     background: rgba(124,58,237,0.1);
     border-radius: 100px;
-    margin: 1.25rem 0 0;
+    margin: 1.75rem 0 0;
     overflow: hidden;
   }
   .testi-progress-fill {
@@ -529,7 +469,7 @@ section { padding: 5.5rem 1.5rem; }
     display: none;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
   }
   .testi-counter-num {
     font-family: var(--font-mono);
@@ -1711,26 +1651,32 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 }
 
 @media (max-width: 480px) {
-  /* Section moins haute */
-  .tabdash-section { padding: 2rem 1rem 2.5rem !important; }
-  .tabdash-sub { font-size: 0.85rem !important; margin-bottom: 1rem !important; }
-  .tabdash-tabs { margin-bottom: 0.75rem !important; border-radius: 12px; }
-  .tabdash-tab { font-size: 0.75rem; padding: 0.45rem 0.6rem; }
-  /* Topbar ultra compact */
-  .td-topbar { padding: 0.4rem 0.75rem !important; }
+  /* Section — plus d'air vertical et horizontal */
+  .tabdash-section { padding: 2.75rem 1.25rem 3.25rem !important; }
+  /* Titre : espace entre tag et titre, titre et sous-titre */
+  .tabdash-title { margin: 0.85rem 0 0.6rem !important; }
+  .tabdash-sub { font-size: 0.88rem !important; margin-bottom: 1.5rem !important; line-height: 1.65 !important; }
+  /* Tabs — plus de respiration avant la card */
+  .tabdash-tabs { margin-bottom: 1rem !important; border-radius: 12px; }
+  .tabdash-tab { font-size: 0.75rem; padding: 0.48rem 0.65rem; }
+  /* Topbar compact mais lisible */
+  .td-topbar { padding: 0.5rem 0.85rem !important; }
   /* KPIs : 3 colonnes en 1 seule ligne */
   .td-kpis { grid-template-columns: repeat(3, 1fr) !important; }
   .td-kpi:last-child { grid-column: auto !important; border-top: none !important; border-right: none !important; }
   .td-kpi:nth-child(2) { border-right: 1px solid var(--c-border) !important; }
-  .td-kpi { padding: 0.4rem 0.4rem !important; }
-  .td-kpi-val { font-size: 0.88rem !important; }
-  .td-kpi-label { font-size: 0.5rem !important; letter-spacing: 0.02em !important; }
-  .td-kpi-delta { font-size: 0.5rem !important; }
-  /* Feed : 4 items max, gap réduit */
+  .td-kpi { padding: 0.5rem 0.45rem !important; }
+  .td-kpi-val { font-size: 0.92rem !important; }
+  .td-kpi-label { font-size: 0.52rem !important; letter-spacing: 0.02em !important; }
+  .td-kpi-delta { font-size: 0.52rem !important; }
+  /* Feed — items plus aérés */
   .td-feed-item:nth-child(n+5) { display: none !important; }
-  .td-feed { gap: 0.3rem !important; }
-  .td-feed-panel { padding: 0.55rem !important; }
-  .td-panel-title { margin-bottom: 0.35rem !important; }
+  .td-feed { gap: 0.4rem !important; }
+  .td-feed-panel { padding: 0.65rem !important; }
+  .td-panel-title { margin-bottom: 0.4rem !important; font-size: 0.7rem !important; }
+  .td-feed-text { font-size: 0.73rem !important; }
+  .td-feed-time { font-size: 0.63rem !important; }
+  .td-badge { font-size: 0.63rem; padding: 0.1rem 0.35rem; }
 }
 
 
@@ -3560,7 +3506,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   if (!grid || !cards.length) return;
 
   let currentIdx = 0, cycleTimer = null, sectionActive = false;
-  let progressFill = null, counterEl = null, floatTimer = null;
+  let progressFill = null, counterEl = null;
 
   function isMobile() { return window.innerWidth <= 768; }
 
@@ -3572,28 +3518,14 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     }
     const oldIdx = currentIdx;
     if (oldIdx === idx && cards[idx].classList.contains('tc-active')) return;
-    const goingForward = direction !== 'prev';
     currentIdx = idx;
 
-    /* Stop floating on old card */
-    clearTimeout(floatTimer);
+    /* Hide old card instantly (becomes display:none) */
     const oldCard = cards[oldIdx];
-    if (oldCard) {
-      oldCard.classList.remove('tc-active', 'tc-floating', 'tc-from-left');
-      oldCard.classList.add('tc-exiting');
-      if (!goingForward) oldCard.classList.add('tc-to-right');
-      setTimeout(() => { oldCard.classList.remove('tc-exiting', 'tc-to-right'); }, 340);
-    }
+    if (oldCard) oldCard.classList.remove('tc-active');
 
-    const newCard = cards[idx];
-    newCard.classList.remove('tc-exiting', 'tc-floating', 'tc-from-left');
-    if (!goingForward) newCard.classList.add('tc-from-left');
-    newCard.classList.add('tc-active');
-
-    /* Add floating after entrance animation completes */
-    floatTimer = setTimeout(() => {
-      newCard.classList.add('tc-floating');
-    }, 560);
+    /* Show new card with spinning border */
+    cards[idx].classList.add('tc-active');
 
     updateCounter();
     resetProgress();
