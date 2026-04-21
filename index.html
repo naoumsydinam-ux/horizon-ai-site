@@ -507,16 +507,87 @@ section { padding: 5.5rem 1.5rem; }
 }
 
 /* FAQ */
-.faq-section { background: var(--c-bg);  }
-.faq-list { max-width: 720px; margin: 3.5rem auto 0; display: flex; flex-direction: column; gap: 0.5rem; }
-.faq-item { border: 1px solid var(--c-border); border-radius: var(--radius-md); overflow: hidden; transition: border-color 250ms; }
-.faq-item.open { border-color: transparent; background: linear-gradient(var(--c-bg), var(--c-bg)) padding-box, linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316) border-box; }
-.faq-q { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 1.5rem; cursor: pointer; font-weight: 500; font-size: 0.9rem; user-select: none; min-height: 44px; }
-.faq-chevron { width: 18px; height: 18px; flex-shrink: 0; color: var(--c-text-muted); transition: transform 300ms var(--ease), color 200ms; }
-.faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--c-text); }
-.faq-a { max-height: 0; overflow: hidden; transition: max-height 400ms var(--ease); }
-.faq-a-inner { padding: 0 1.5rem 1.5rem; font-size: 0.875rem; color: var(--c-text-muted); line-height: 1.75; font-weight: 400; }
-.faq-item.open .faq-a { max-height: 300px; }
+.faq-section {
+  background: #F4F6F9;
+  padding: 6rem 1.5rem 7rem;
+  position: relative;
+  overflow: hidden;
+}
+.faq-section::before {
+  content: '?';
+  position: absolute;
+  top: -3rem; right: 4%;
+  font-size: 22rem; font-weight: 900;
+  font-family: var(--font-display);
+  color: rgba(139,92,246,0.045);
+  line-height: 1; pointer-events: none; user-select: none;
+}
+.faq-section .section-title { margin-bottom: 0.5rem; }
+.faq-section .section-desc-faq {
+  text-align: center; color: var(--c-text-muted);
+  font-size: 0.92rem; margin-bottom: 0;
+}
+.faq-list {
+  max-width: 760px; margin: 3rem auto 0;
+  display: flex; flex-direction: column; gap: 0.75rem;
+  counter-reset: faq-counter;
+}
+.faq-item {
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,0.07);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 300ms, box-shadow 300ms, transform 200ms;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  counter-increment: faq-counter;
+}
+.faq-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+}
+.faq-item.open {
+  border-color: transparent;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316) border-box;
+  box-shadow: 0 8px 32px rgba(139,92,246,0.13);
+  transform: translateY(-2px);
+}
+.faq-q {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.3rem 1.5rem; cursor: pointer;
+  font-weight: 600; font-size: 0.92rem;
+  user-select: none; min-height: 44px;
+}
+.faq-q::before {
+  content: counter(faq-counter, decimal-leading-zero);
+  font-family: var(--font-mono); font-size: 0.68rem;
+  font-weight: 700; color: #C4CAD4;
+  min-width: 1.6rem; flex-shrink: 0;
+  transition: color 250ms;
+}
+.faq-item.open .faq-q::before { color: #8B5CF6; }
+.faq-q span { flex: 1; }
+.faq-chevron {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: #F0F2F5; border-radius: 50%; padding: 4px;
+  color: var(--c-text-muted);
+  transition: transform 320ms var(--ease), background 250ms, color 250ms;
+}
+.faq-item:hover .faq-chevron { background: #E8EAED; }
+.faq-item.open .faq-chevron {
+  transform: rotate(180deg);
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  color: #fff;
+}
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 420ms var(--ease); }
+.faq-a-inner {
+  padding: 0 1.5rem 1.4rem 4.1rem;
+  font-size: 0.875rem; color: var(--c-text-muted);
+  line-height: 1.78; font-weight: 400;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding-top: 1rem;
+}
+.faq-item.open .faq-a { max-height: 320px; }
 
 /* CTA FINAL */
 .cta-final { background: var(--c-bg); padding: 6rem 1.5rem; position: relative; overflow: hidden; }
@@ -3172,9 +3243,10 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
 <!-- FAQ -->
 <section class="faq-section">
-  <div class="section-inner">
-    <span class="section-tag reveal">Questions</span>
-    <h2 class="section-title reveal" style="text-align:center;">On répond franchement.</h2>
+  <div class="section-inner" style="text-align:center;">
+    <span class="section-tag reveal">Questions fréquentes</span>
+    <h2 class="section-title reveal" style="text-align:center;">On répond <span class="grad-text">franchement.</span></h2>
+    <p class="section-desc-faq reveal">Tout ce que vous voulez savoir avant de vous lancer.</p>
     <div class="faq-list">
       <div class="faq-item">
         <div class="faq-q" role="button" tabindex="0" aria-expanded="false">
