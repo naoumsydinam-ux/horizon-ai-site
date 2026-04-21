@@ -3551,6 +3551,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   function updateRdLine() {
     const tl = document.querySelector('.timeline');
     if (!tl || !lineFill) { rdTicking = false; return; }
+    /* ── Batch all reads first, then all writes ── */
     const rect = tl.getBoundingClientRect();
     const vh = window.innerHeight;
     const startPoint = vh * 0.75;
@@ -3558,20 +3559,17 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     const totalDistance = rect.height + (startPoint - endPoint);
     const scrolled = startPoint - rect.top;
     const pct = Math.min(100, Math.max(0, (scrolled / totalDistance) * 100));
-    lineFill.style.height = pct + '%';
-
     const fillBottomPx = rect.top + (rect.height * pct / 100);
-    rdNodes.forEach(node => {
-      const nodeRect = node.getBoundingClientRect();
-      const nodeCenter = nodeRect.top + nodeRect.height / 2;
-      const parentStep = node.closest('.rd-step');
-      if (fillBottomPx >= nodeCenter) {
-        node.classList.add('lit');
-        if (parentStep) parentStep.classList.add('lit');
-      } else {
-        node.classList.remove('lit');
-        if (parentStep) parentStep.classList.remove('lit');
-      }
+    /* Read all node positions before any writes */
+    const nodeData = Array.from(rdNodes).map(node => {
+      const nr = node.getBoundingClientRect();
+      return { node, parentStep: node.closest('.rd-step'), lit: fillBottomPx >= nr.top + nr.height / 2 };
+    });
+    /* Write phase — no more reads after this */
+    lineFill.style.height = pct + '%';
+    nodeData.forEach(({ node, parentStep, lit }) => {
+      node.classList.toggle('lit', lit);
+      if (parentStep) parentStep.classList.toggle('lit', lit);
     });
     rdTicking = false;
   }
@@ -3586,31 +3584,34 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     node.addEventListener('mouseenter', () => { node.style.transition = 'transform 200ms var(--ease)'; node.style.transform = 'scale(1.15) rotate(10deg)'; });
     node.addEventListener('mouseleave', () => { node.style.transition = 'transform 500ms cubic-bezier(0.34,1.56,0.64,1)'; node.style.transform = 'scale(1) rotate(0deg)'; });
   });
-  document.querySelectorAll('.rd-card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - 0.5;
-      const y = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `translateY(-3px) perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
-      card.style.transition = 'none';
+  if (!('ontouchstart' in window)) {
+    document.querySelectorAll('.rd-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `translateY(-3px) perspective(600px) rotateY(${x * 5}deg) rotateX(${-y * 5}deg)`;
+        card.style.transition = 'none';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform 400ms cubic-bezier(0.16,1,0.3,1), border-color 300ms, box-shadow 300ms';
+      });
     });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.transition = 'transform 400ms cubic-bezier(0.16,1,0.3,1), border-color 300ms, box-shadow 300ms';
-    });
-  });
+  }
 })();
 
 /* ── SCROLL PROGRESS BAR ── */
 (function() {
   const scrollBar = document.getElementById('scroll-bar');
   if (!scrollBar) return;
+  const d = document.documentElement;
   function updateSB() {
-    const d = document.documentElement;
-    scrollBar.style.width = (d.scrollHeight - innerHeight > 0 ? (scrollY / (d.scrollHeight - innerHeight)) * 100 : 0) + '%';
-    requestAnimationFrame(updateSB);
+    const max = d.scrollHeight - innerHeight;
+    scrollBar.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
   }
-  requestAnimationFrame(updateSB);
+  window.addEventListener('scroll', updateSB, { passive: true });
+  updateSB();
 })();
 
 /* ── NAV ── */
@@ -3795,6 +3796,7 @@ window.closeMobileNav = function() {
 
 /* ── TILT CARDS ── */
 (function() {
+  if ('ontouchstart' in window) return; /* skip on touch devices */
   document.querySelectorAll('.tilt').forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const r = card.getBoundingClientRect();
