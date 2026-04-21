@@ -734,10 +734,7 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
   grid-template-columns: 1fr 72px 1fr;
   align-items: start;
   margin-bottom: 4rem; position: relative;
-  opacity: 0; transform: translateY(32px);
-  transition: opacity 550ms var(--ease), transform 550ms var(--ease);
 }
-.rd-step.visible { opacity: 1; transform: translateY(0); }
 .rd-step:last-child { margin-bottom: 0; }
 
 /* odd steps: card left, node center, spacer right */
@@ -765,7 +762,7 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .rd-node:hover { transform: scale(1.1) rotate(8deg); }
 .rd-node-bg   { position: absolute; inset: 0; border-radius: 50%; }
 .rd-node-ring { position: absolute; inset: -6px; border-radius: 50%; opacity: 0; transition: opacity 400ms; }
-.rd-step.visible .rd-node-ring { opacity: 1; animation: ring-spin 3s linear infinite; }
+.rd-node.lit .rd-node-ring { opacity: 1; animation: ring-spin 3s linear infinite; }
 @keyframes ring-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 .rd-node-label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--c-text-muted); margin-top: 0.4rem; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; text-align: center; }
 /* NODE — dimmed by default, lit up when the timeline fill reaches them */
@@ -2519,7 +2516,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
       <p class="hslider-sub reveal">Les services défilent automatiquement — appuyez pour en savoir plus.</p>
 
       <div class="hslider-items" id="hslider-items">
-        <div class="hslider-item active" data-index="0">
+        <div class="hslider-item" data-index="0">
           <span class="hslider-num">01</span>
           <span class="hslider-text" data-text="Support client automatisé">Support client automatisé</span>
         </div>
@@ -2543,7 +2540,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
       <!-- Dots de navigation — visibles uniquement sur mobile -->
       <div class="hslider-dots" id="hslider-dots" aria-hidden="true">
-        <span class="hslider-dot active" data-index="0"></span>
+        <span class="hslider-dot" data-index="0"></span>
         <span class="hslider-dot" data-index="1"></span>
         <span class="hslider-dot" data-index="2"></span>
         <span class="hslider-dot" data-index="3"></span>
@@ -2554,7 +2551,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     <div class="hslider-right">
       <div class="hslider-img-wrap" id="hslider-img-wrap">
 
-        <div class="hslider-img active" data-index="0">
+        <div class="hslider-img" data-index="0">
           <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&fm=jpg&q=85&fit=crop" alt="Support client" loading="lazy">
           <div class="hslider-img-label">
             <strong>−80% de tickets non traités</strong>
@@ -3055,11 +3052,23 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     });
   });
 
-  /* Démarre quand la section entre dans le viewport, s'arrête en sortie */
+  /* Démarre quand la section entre dans le viewport : active item 0 puis cycle */
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) { active = true; startCycle(); }
-      else { active = false; stopCycle(); }
+      if (e.isIntersecting) {
+        active = true;
+        cycleIdx = 0;
+        activate(0);
+        startCycle();
+      } else {
+        active = false;
+        stopCycle();
+        /* Réinitialise pour la prochaine visite */
+        items.forEach(it => it.classList.remove('active'));
+        imgs.forEach(im => im.classList.remove('active'));
+        dots.forEach(d  => d.classList.remove('active'));
+        cycleIdx = 0;
+      }
     });
   }, { threshold: 0.2 });
   if (section) obs.observe(section);
