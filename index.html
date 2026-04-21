@@ -1913,11 +1913,11 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     box-shadow: 0 6px 24px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.06);
     transition: transform 260ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms;
   }
-  /* Top offsets start well below the sticky heading */
-  .agents-grid .agent-card:nth-child(1) { top: 232px; z-index: 11; }
-  .agents-grid .agent-card:nth-child(2) { top: 310px; z-index: 12; }
-  .agents-grid .agent-card:nth-child(3) { top: 388px; z-index: 13; }
-  .agents-grid .agent-card:nth-child(4) { top: 466px; z-index: 14; }
+  /* Top offsets set by JS from actual heading height — z-index only here */
+  .agents-grid .agent-card:nth-child(1) { z-index: 11; }
+  .agents-grid .agent-card:nth-child(2) { z-index: 12; }
+  .agents-grid .agent-card:nth-child(3) { z-index: 13; }
+  .agents-grid .agent-card:nth-child(4) { z-index: 14; }
   /* No entrance stagger on mobile */
   .agents-grid .agent-card:nth-child(1).visible,
   .agents-grid .agent-card:nth-child(2).visible,
@@ -3574,36 +3574,53 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── AGENT CARD STACK (mobile scroll-driven scale) ── */
+/* ── AGENT CARD STACK (mobile — dynamic tops from heading height) ── */
 (function() {
   const section = document.querySelector('.agents-section');
   const grid    = document.querySelector('.agents-grid');
+  const heading = section && section.querySelector('.agents-head');
   const cards   = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
   if (!cards.length) return;
-  const tops = [232, 310, 388, 466]; // must match CSS top values
 
-  /* Collapse the blank scroll gap that appears after all cards are stacked.
-     Each buried card's full height stays in the document flow even when stuck,
-     so we subtract exactly the excess from the grid's margin-bottom. */
+  const NAV_H = 68;
+  const PEEK  = 78;
+  let   tops  = [];
+
+  /* Compute sticky tops from actual rendered heading height */
+  function calcTops() {
+    if (window.innerWidth > 600) { cards.forEach(c => c.style.top = ''); return; }
+    const headingH = heading ? heading.offsetHeight : 160;
+    const base = NAV_H + headingH + 10;
+    tops = cards.map((_, i) => base + i * PEEK);
+    cards.forEach((card, i) => card.style.top = tops[i] + 'px');
+  }
+
+  /* Collapse the blank scroll gap after all cards are stacked */
   function trimExcess() {
     if (window.innerWidth > 600 || !section || !grid) { if (grid) grid.style.marginBottom = ''; return; }
     grid.style.marginBottom = '';
-    const heading = section.querySelector('.agents-head');
-    const padTop  = parseFloat(getComputedStyle(section).paddingTop) || 56;
-    const headH   = heading ? heading.offsetHeight : 133;
+    const padTop   = parseFloat(getComputedStyle(section).paddingTop) || 56;
+    const headingH = heading ? heading.offsetHeight : 160;
     const GAP = 16;
-    let card4Offset = padTop + headH;
+    let card4Offset = padTop + headingH;
     for (let i = 0; i < cards.length - 1; i++) card4Offset += cards[i].offsetHeight + GAP;
     const minH = card4Offset + cards[cards.length - 1].offsetHeight + 40;
     const diff = section.offsetHeight - minH;
     if (diff > 0) grid.style.marginBottom = -diff + 'px';
   }
 
-  requestAnimationFrame(() => requestAnimationFrame(trimExcess));
-  window.addEventListener('resize', trimExcess, { passive: true });
+  function setup() { calcTops(); trimExcess(); }
 
+  requestAnimationFrame(() => requestAnimationFrame(setup));
+  window.addEventListener('resize', () => {
+    if (grid) grid.style.marginBottom = '';
+    cards.forEach(c => { c.style.top = ''; c.style.transform = ''; });
+    requestAnimationFrame(() => requestAnimationFrame(setup));
+  }, { passive: true });
+
+  /* Scale buried cards slightly for depth */
   function update() {
-    if (window.innerWidth > 600) { cards.forEach(c => c.style.transform = ''); return; }
+    if (window.innerWidth > 600 || !tops.length) { cards.forEach(c => c.style.transform = ''); return; }
     cards.forEach((card, i) => {
       const isStuck = card.getBoundingClientRect().top <= tops[i] + 2;
       if (!isStuck) { card.style.transform = ''; return; }
@@ -3616,7 +3633,6 @@ window.closeMobileNav = function() {
   }
 
   window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', () => { cards.forEach(c => c.style.transform = ''); update(); }, { passive: true });
   update();
 })();
 
