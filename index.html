@@ -2290,12 +2290,13 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   font-size: clamp(3.2rem, 11vw, 9.5rem);
   font-weight: 800; font-family: var(--font-display);
   letter-spacing: -0.04em; white-space: nowrap;
-  opacity: 0; will-change: opacity, transform, filter;
-  background: linear-gradient(135deg, #fff 45%, rgba(255,255,255,0.5));
+  opacity: 0; will-change: opacity, transform;
+  background: linear-gradient(135deg, #fff 50%, rgba(255,255,255,0.55));
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  pointer-events: none;
 }
 .ws-descs-container {
-  position: relative; height: 2rem; min-width: 50vw;
+  position: relative; height: 2.2rem; min-width: 50vw;
   display: flex; align-items: center; justify-content: center;
   margin-top: 1.25rem;
 }
@@ -2303,6 +2304,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   position: absolute; font-size: clamp(0.85rem, 1.6vw, 1.1rem);
   color: var(--c-text-muted); text-align: center;
   opacity: 0; white-space: nowrap; will-change: opacity, transform;
+  pointer-events: none;
 }
 .ws-progress-bar {
   position: absolute; bottom: 3.5rem;
@@ -3694,81 +3696,106 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   if (firstDash) { animateBars(firstDash); animateFunnel(firstDash); animateCounts(firstDash); }
 })();
 
-/* ── WORD SCROLL — Ce qu'on fait (scroll-driven, Apple-style) ── */
+/* ── WORD SCROLL — zones stables + transitions CSS (non agressive) ── */
 (function() {
-  const section  = document.getElementById('solutions');
+  const section = document.getElementById('solutions');
   if (!section) return;
 
-  const wordEls = section.querySelectorAll('.ws-word');
-  const descEls = section.querySelectorAll('.ws-desc');
-  const dotEls  = section.querySelectorAll('.ws-dot');
+  const wordEls = Array.from(section.querySelectorAll('.ws-word'));
+  const descEls = Array.from(section.querySelectorAll('.ws-desc'));
+  const dotEls  = Array.from(section.querySelectorAll('.ws-dot'));
   const fill    = document.getElementById('ws-fill');
   const hint    = document.getElementById('ws-hint');
   const N       = wordEls.length;
 
-  let target  = 0; // scroll progress 0→1
-  let current = 0; // lerp-smoothed progress
+  const EASE    = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+  const DUR_IN  = 480;  // ms — entrée
+  const DUR_OUT = 320;  // ms — sortie
+  const TY      = 16;   // px — déplacement vertical max
 
-  function lerp(a, b, t) { return a + (b - a) * t; }
+  let zone     = -1;   // zone active courante
+  let scrollP  = 0;    // progression scroll brute
+  let displayP = 0;    // progression pour la barre (lissée)
 
-  function getProgress() {
+  /* ── Helpers ── */
+  function getScrollProgress() {
     const rect  = section.getBoundingClientRect();
     const range = section.offsetHeight - window.innerHeight;
     return Math.max(0, Math.min(1, -rect.top / range));
   }
 
-  function render() {
-    /* LERP — on top of Lenis for extra buttery feel */
-    current = lerp(current, target, 0.055);
-
-    const raw = current * (N - 1); // 0 → N-1
-
-    /* Words */
-    wordEls.forEach((el, i) => {
-      const dist = raw - i;
-      const abs  = Math.abs(dist);
-      if (abs >= 1.05) {
-        el.style.opacity   = '0';
-        el.style.transform = `translateY(${dist > 0 ? -90 : 90}px) scale(0.88)`;
-        el.style.filter    = 'blur(18px)';
-      } else {
-        const t  = 1 - abs;
-        const ty = dist * -80;
-        const bl = (1 - t) * 16;
-        const sc = 0.86 + t * 0.14;
-        el.style.opacity   = t;
-        el.style.transform = `translateY(${ty}px) scale(${sc})`;
-        el.style.filter    = bl > 0.2 ? `blur(${bl}px)` : 'none';
-      }
-    });
-
-    /* Descriptions — slightly tighter window */
-    descEls.forEach((el, i) => {
-      const dist = raw - i;
-      const abs  = Math.abs(dist);
-      const t    = abs < 0.75 ? 1 - abs / 0.75 : 0;
-      el.style.opacity   = t;
-      el.style.transform = `translateY(${dist * -22}px)`;
-    });
-
-    /* Progress bar */
-    if (fill) fill.style.width = `${current * 100}%`;
-
-    /* Dots */
-    dotEls.forEach((dot, i) => {
-      const near = Math.abs(raw - i) < 0.45;
-      dot.style.background = near ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.2)';
-      dot.style.transform  = near ? 'scale(1.7)' : 'scale(1)';
-    });
-
-    /* Scroll hint fades on first scroll */
-    if (hint) hint.style.opacity = current > 0.04 ? '0' : '1';
-
-    requestAnimationFrame(render);
+  function setStyle(el, props, transition) {
+    if (transition !== undefined) el.style.transition = transition;
+    Object.assign(el.style, props);
   }
 
-  window.addEventListener('scroll', () => { target = getProgress(); }, { passive: true });
-  render();
+  /* Cache le mot idx vers la direction toDir ('up'|'down') */
+  function hideWord(idx, toDir) {
+    const ty  = toDir === 'up' ? -TY : TY;
+    const tr  = `opacity ${DUR_OUT}ms ${EASE}, transform ${DUR_OUT}ms ${EASE}`;
+    setStyle(wordEls[idx], { opacity: '0', transform: `translateY(${ty}px)` }, tr);
+    if (descEls[idx]) setStyle(descEls[idx], { opacity: '0', transform: `translateY(${Math.round(ty * 0.5)}px)` }, tr);
+  }
+
+  /* Affiche le mot idx entrant depuis la direction fromDir ('up'|'down') */
+  function showWord(idx, fromDir) {
+    const ty  = fromDir === 'down' ? TY : -TY;
+    const wEl = wordEls[idx];
+    const dEl = descEls[idx];
+
+    /* 1. Place le mot hors écran instantanément (sans transition) */
+    setStyle(wEl, { opacity: '0', transform: `translateY(${ty}px)`, filter: 'blur(3px)' }, 'none');
+    if (dEl) setStyle(dEl, { opacity: '0', transform: `translateY(${Math.round(ty * 0.5)}px)` }, 'none');
+
+    /* 2. Double RAF : déclenche la transition vers la position visible */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      /* Micro-blur se dissipe en 120ms, le reste en DUR_IN */
+      const tr = `opacity ${DUR_IN}ms ${EASE}, transform ${DUR_IN}ms ${EASE}, filter 120ms ease`;
+      setStyle(wEl, { opacity: '1', transform: 'translateY(0px)', filter: 'none' }, tr);
+      if (dEl) setStyle(dEl, { opacity: '1', transform: 'translateY(0px)' }, `opacity ${DUR_IN}ms ${EASE}, transform ${DUR_IN}ms ${EASE}`);
+    }));
+  }
+
+  /* Change de zone active */
+  function activateZone(newZone) {
+    if (newZone === zone) return;
+    const dir = newZone > zone ? 'forward' : 'backward';
+    const old = zone;
+    zone = newZone;
+
+    /* Cache l'ancien mot */
+    if (old >= 0) hideWord(old, dir === 'forward' ? 'up' : 'down');
+
+    /* Montre le nouveau mot */
+    showWord(newZone, dir === 'forward' ? 'down' : 'up');
+
+    /* Mise à jour des points */
+    dotEls.forEach((d, i) => {
+      d.style.background = i === newZone ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.2)';
+      d.style.transform  = i === newZone ? 'scale(1.8)' : 'scale(1)';
+    });
+  }
+
+  /* Boucle RAF — uniquement pour la barre de progression et le hint */
+  function loop() {
+    /* Zone basée sur le scroll réel (pas de lerp → snap immédiat) */
+    const targetZone = Math.min(N - 1, Math.round(scrollP * (N - 1)));
+    activateZone(targetZone);
+
+    /* Barre lissée */
+    displayP += (scrollP - displayP) * 0.08;
+    if (fill) fill.style.width = `${displayP * 100}%`;
+
+    /* Hint disparaît au premier scroll */
+    if (hint) hint.style.opacity = scrollP > 0.03 ? '0' : '1';
+
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('scroll', () => { scrollP = getScrollProgress(); }, { passive: true });
+
+  activateZone(0); /* Premier mot visible dès le chargement */
+  loop();
 })();
 
 /* ── TESTIMONIALS — Mobile auto-cycle + desktop scroll ── */
