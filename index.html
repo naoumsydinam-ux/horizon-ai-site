@@ -1892,6 +1892,27 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   .agents-section { padding: 3.5rem 1.25rem 4.5rem; }
 }
 
+/* ── AGENT CARDS — MOBILE STICKY STACK ── */
+@media (max-width: 600px) {
+  .agents-section { padding-bottom: 5rem; }
+  .agents-grid { gap: 1rem; }
+  .agents-grid .agent-card {
+    position: sticky;
+    top: 80px;
+    transform-origin: top center;
+    transition: transform 240ms cubic-bezier(0.22,1,0.36,1), box-shadow 300ms, border-color 300ms;
+  }
+  .agents-grid .agent-card:nth-child(1) { z-index: 11; }
+  .agents-grid .agent-card:nth-child(2) { z-index: 12; }
+  .agents-grid .agent-card:nth-child(3) { z-index: 13; }
+  .agents-grid .agent-card:nth-child(4) { z-index: 14; }
+  /* No entrance stagger on mobile — each card fades as it enters */
+  .agents-grid .agent-card:nth-child(1).visible { animation-delay: 0ms; }
+  .agents-grid .agent-card:nth-child(2).visible { animation-delay: 0ms; }
+  .agents-grid .agent-card:nth-child(3).visible { animation-delay: 0ms; }
+  .agents-grid .agent-card:nth-child(4).visible { animation-delay: 0ms; }
+}
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <body>
@@ -3537,6 +3558,37 @@ window.closeMobileNav = function() {
     document.getElementById('form-wrapper').style.display = 'none';
     document.getElementById('form-success').style.display = 'flex';
   });
+})();
+
+/* ── AGENT CARD STACK (mobile scroll-driven) ── */
+(function() {
+  const cards = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
+  if (!cards.length) return;
+  const STICKY_TOP = 80;
+
+  function update() {
+    if (window.innerWidth > 600) {
+      cards.forEach(c => { c.style.transform = ''; });
+      return;
+    }
+    cards.forEach((card, i) => {
+      const top = card.getBoundingClientRect().top;
+      const isStuck = top <= STICKY_TOP + 2;
+      if (!isStuck) { card.style.transform = ''; return; }
+      let above = 0;
+      for (let j = i + 1; j < cards.length; j++) {
+        if (cards[j].getBoundingClientRect().top <= STICKY_TOP + 2) above++;
+      }
+      if (above === 0) { card.style.transform = ''; return; }
+      const scale = 1 - above * 0.035;
+      const ty    = above * -7;
+      card.style.transform = `scale(${scale}) translateY(${ty}px)`;
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', () => { cards.forEach(c => c.style.transform = ''); update(); }, { passive: true });
+  update();
 })();
 
 /* ── TILT CARDS ── */
