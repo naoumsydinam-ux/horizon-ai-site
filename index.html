@@ -3657,6 +3657,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
     tab.addEventListener('mouseenter', () => {
       stopCycle();
       clearTimeout(resumeTimer);
+      activateTab(+tab.dataset.tab);
     });
     tab.addEventListener('mouseleave', () => {
       if (sectionActive) startCycle();
