@@ -398,6 +398,14 @@ section { padding: 5.5rem 1.5rem; }
   initial-value: 0deg;
 }
 
+/* ── CARD THROW — agent cards mobile ── */
+@keyframes card-throw {
+  0%   { opacity: 0; transform: translateX(75%) translateY(-20px) rotate(14deg) scale(0.82); filter: blur(5px); }
+  55%  { opacity: 1; transform: translateX(-8px) translateY(4px) rotate(-2deg) scale(1.03);  filter: blur(0); }
+  76%  { transform: translateX(4px) translateY(-2px) rotate(1deg) scale(0.99); }
+  100% { opacity: 1; transform: none; }
+}
+
 /* ── ANIMATIONS MOBILE TESTIMONIALS ── */
 @keyframes tc-border-spin { to { --tc-angle: 360deg; } }
 @keyframes testi-progress {
@@ -1964,33 +1972,24 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 }
 
 
-/* ── AGENTS — sticky stack on mobile ── */
+/* ── AGENTS — card throw on mobile ── */
 @media (max-width: 600px) {
-  .agents-section { padding-bottom: 1.5rem; }
-  .agents-head {
-    position: sticky;
-    top: 68px;
-    z-index: 20;
-    background: #F0F2F5;
-    padding-bottom: 1.75rem;
-    margin-bottom: 0;
-  }
+  .agents-section { padding-bottom: 2.5rem; }
   .agents-head .section-desc { display: none; }
-  .agents-grid { gap: 1rem; }
+  .agents-grid { gap: 1.25rem; }
+  /* Cartes cachées avant le lancer */
   .agents-grid .agent-card {
-    position: sticky;
-    background: #ffffff !important;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.09);
-    opacity: 1;
+    opacity: 0;
+    transform: translateX(75%) rotate(14deg) scale(0.82);
   }
-  .agents-grid .agent-card.visible {
-    animation: none !important;
+  /* Lancer déclenché quand la section entre dans le viewport */
+  .agents-section.cards-dealt .agents-grid .agent-card {
+    animation: card-throw 580ms cubic-bezier(0.22,1,0.36,1) both;
   }
-  /* Top offsets set by JS from actual heading height — z-index only here */
-  .agents-grid .agent-card:nth-child(1) { z-index: 11; }
-  .agents-grid .agent-card:nth-child(2) { z-index: 12; }
-  .agents-grid .agent-card:nth-child(3) { z-index: 13; }
-  .agents-grid .agent-card:nth-child(4) { z-index: 25; }
+  .agents-section.cards-dealt .agents-grid .agent-card:nth-child(1) { animation-delay:   0ms; }
+  .agents-section.cards-dealt .agents-grid .agent-card:nth-child(2) { animation-delay: 160ms; }
+  .agents-section.cards-dealt .agents-grid .agent-card:nth-child(3) { animation-delay: 320ms; }
+  .agents-section.cards-dealt .agents-grid .agent-card:nth-child(4) { animation-delay: 480ms; }
 
   /* Hide pre-contact CTA on mobile */
   .cta-final { display: none; }
@@ -3807,49 +3806,18 @@ window.closeMobileNav = function() {
   });
 })();
 
-/* ── AGENT CARD STACK (mobile — dynamic tops from heading height) ── */
+/* ── AGENT CARDS — card-throw animation on mobile ── */
 (function() {
+  if (window.innerWidth > 600) return;
   const section = document.querySelector('.agents-section');
-  const grid    = document.querySelector('.agents-grid');
-  const heading = section && section.querySelector('.agents-head');
-  const cards   = Array.from(document.querySelectorAll('.agents-grid .agent-card'));
-  if (!cards.length) return;
-
-  const NAV_H = 68;
-  const PEEK  = 78;
-  let   tops  = [];
-
-  /* Compute sticky tops from actual rendered heading height */
-  function calcTops() {
-    if (window.innerWidth > 600) { cards.forEach(c => c.style.top = ''); return; }
-    const headingH = heading ? heading.offsetHeight : 160;
-    const base = NAV_H + headingH + 10;
-    tops = cards.map((_, i) => base + i * PEEK);
-    cards.forEach((card, i) => card.style.top = tops[i] + 'px');
-  }
-
-  /* Collapse the blank scroll gap after all cards are stacked */
-  function trimExcess() {
-    if (window.innerWidth > 600 || !section || !grid) { if (grid) grid.style.marginBottom = ''; return; }
-    grid.style.marginBottom = '';
-    const padTop   = parseFloat(getComputedStyle(section).paddingTop) || 56;
-    const headingH = heading ? heading.offsetHeight : 160;
-    const GAP = 16;
-    let card4Offset = padTop + headingH;
-    for (let i = 0; i < cards.length - 1; i++) card4Offset += cards[i].offsetHeight + GAP;
-    const minH = card4Offset + cards[cards.length - 1].offsetHeight + 40;
-    const diff = section.offsetHeight - minH;
-    if (diff > 0) grid.style.marginBottom = -diff + 'px';
-  }
-
-  function setup() { calcTops(); trimExcess(); }
-
-  requestAnimationFrame(() => requestAnimationFrame(setup));
-  window.addEventListener('resize', () => {
-    if (grid) grid.style.marginBottom = '';
-    cards.forEach(c => c.style.top = '');
-    requestAnimationFrame(() => requestAnimationFrame(setup));
-  }, { passive: true });
+  if (!section) return;
+  const obs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      section.classList.add('cards-dealt');
+      obs.disconnect();
+    }
+  }, { threshold: 0.15 });
+  obs.observe(section);
 })();
 
 /* ── TILT CARDS ── */
