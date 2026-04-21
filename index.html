@@ -1289,16 +1289,30 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   display: inline-flex; gap: 0.25rem;
   background: var(--c-surface); border: 1px solid var(--c-border);
   border-radius: 100px; padding: 0.3rem; margin-bottom: 2rem;
+  position: relative;
+}
+.tabdash-pill {
+  position: absolute;
+  background: #7C3AED;
+  border-radius: 100px;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.35);
+  transition: left 400ms cubic-bezier(0.4, 0, 0.2, 1),
+              top  400ms cubic-bezier(0.4, 0, 0.2, 1),
+              width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+              height 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
 }
 .tabdash-tab {
   font-size: 0.82rem; font-weight: 500;
   padding: 0.45rem 1.1rem; border-radius: 100px;
   border: none; background: transparent;
   color: var(--c-text-muted); cursor: pointer;
-  transition: all 250ms; white-space: nowrap;
+  transition: color 250ms; white-space: nowrap;
+  position: relative; z-index: 1;
 }
-.tabdash-tab.active { background: #7C3AED; color: white; box-shadow: 0 2px 8px rgba(124,58,237,0.3); }
-.tabdash-tab:hover:not(.active) { color: var(--c-text); background: var(--c-surface-2); }
+.tabdash-tab.active { background: transparent; color: white; box-shadow: none; }
+.tabdash-tab:hover:not(.active) { color: var(--c-text); }
 
 /* Viewport — taille fixe, pas full width */
 .tabdash-viewport {
@@ -1986,6 +2000,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     <p class="tabdash-sub reveal">Opérationnel en 72h. ROI garanti dès le 1er mois. Données hébergées en France.</p>
 
     <div class="tabdash-tabs reveal" id="tabdash-tabs">
+      <span class="tabdash-pill" id="tabdash-pill"></span>
       <button class="tabdash-tab active" data-tab="0">Support client</button>
       <button class="tabdash-tab" data-tab="1">Prospection</button>
       <button class="tabdash-tab" data-tab="2">Facturation</button>
@@ -2975,9 +2990,20 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
       requestAnimationFrame(step);
     });
   }
+  const pill = document.getElementById('tabdash-pill');
+  function movePill(tab) {
+    if (!pill) return;
+    const cr = tab.closest('.tabdash-tabs').getBoundingClientRect();
+    const tr = tab.getBoundingClientRect();
+    pill.style.left   = (tr.left - cr.left) + 'px';
+    pill.style.top    = (tr.top  - cr.top)  + 'px';
+    pill.style.width  = tr.width  + 'px';
+    pill.style.height = tr.height + 'px';
+  }
   function activateTab(idx) {
     currentIdx = idx;
     tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
+    movePill(tabs[idx]);
     dashes.forEach((d, i) => {
       const wasActive = d.classList.contains('active');
       d.classList.toggle('active', i === idx);
@@ -3018,6 +3044,13 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     });
   }, { threshold: 0.25 });
   if (section) obs.observe(section);
+
+  /* Position initiale de la bulle (sans transition) */
+  if (pill && tabs[0]) {
+    pill.style.transition = 'none';
+    movePill(tabs[0]);
+    requestAnimationFrame(() => { pill.style.transition = ''; });
+  }
 
   /* Animation initiale du 1er dashboard */
   const firstDash = document.getElementById('tabdash-0');
