@@ -1296,10 +1296,6 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   background: #7C3AED;
   border-radius: 100px;
   box-shadow: 0 2px 8px rgba(124,58,237,0.35);
-  transition: left 400ms cubic-bezier(0.4, 0, 0.2, 1),
-              top  400ms cubic-bezier(0.4, 0, 0.2, 1),
-              width 400ms cubic-bezier(0.4, 0, 0.2, 1),
-              height 400ms cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 0;
 }
@@ -2991,14 +2987,48 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     });
   }
   const pill = document.getElementById('tabdash-pill');
-  function movePill(tab) {
+  let pillLeft = 0, pillWidth = 0;
+
+  function movePill(tab, instant) {
     if (!pill) return;
-    const cr = tab.closest('.tabdash-tabs').getBoundingClientRect();
-    const tr = tab.getBoundingClientRect();
-    pill.style.left   = (tr.left - cr.left) + 'px';
-    pill.style.top    = (tr.top  - cr.top)  + 'px';
-    pill.style.width  = tr.width  + 'px';
-    pill.style.height = tr.height + 'px';
+    const cr  = tab.closest('.tabdash-tabs').getBoundingClientRect();
+    const tr  = tab.getBoundingClientRect();
+    const newLeft = tr.left - cr.left;
+    const newTop  = tr.top  - cr.top;
+    const newW    = tr.width;
+    const newH    = tr.height;
+
+    if (instant) {
+      pill.style.transition = 'none';
+      pill.style.left = newLeft + 'px'; pill.style.top  = newTop  + 'px';
+      pill.style.width = newW   + 'px'; pill.style.height = newH  + 'px';
+      pillLeft = newLeft; pillWidth = newW;
+      return;
+    }
+
+    const goRight = newLeft > pillLeft;
+
+    /* Phase 1 — étirement vers la cible */
+    pill.style.transition = 'left 170ms ease-in, width 170ms ease-in, top 170ms ease, height 170ms ease';
+    if (goRight) {
+      pill.style.left  = pillLeft + 'px';
+      pill.style.width = (newLeft + newW - pillLeft) + 'px';
+    } else {
+      pill.style.left  = newLeft + 'px';
+      pill.style.width = (pillLeft + pillWidth - newLeft) + 'px';
+    }
+    pill.style.top    = newTop + 'px';
+    pill.style.height = newH   + 'px';
+
+    /* Phase 2 — rétraction sur la cible avec léger rebond */
+    setTimeout(() => {
+      pill.style.transition = 'left 200ms cubic-bezier(0.34,1.5,0.64,1), width 200ms cubic-bezier(0.34,1.5,0.64,1), top 200ms ease, height 200ms ease';
+      pill.style.left  = newLeft + 'px';
+      pill.style.width = newW    + 'px';
+      pill.style.top   = newTop  + 'px';
+      pill.style.height = newH   + 'px';
+      pillLeft = newLeft; pillWidth = newW;
+    }, 175);
   }
   function activateTab(idx) {
     currentIdx = idx;
@@ -3045,11 +3075,9 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   }, { threshold: 0.25 });
   if (section) obs.observe(section);
 
-  /* Position initiale de la bulle (sans transition) */
+  /* Position initiale de la bulle (sans animation) */
   if (pill && tabs[0]) {
-    pill.style.transition = 'none';
-    movePill(tabs[0]);
-    requestAnimationFrame(() => { pill.style.transition = ''; });
+    requestAnimationFrame(() => movePill(tabs[0], true));
   }
 
   /* Animation initiale du 1er dashboard */
