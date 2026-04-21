@@ -404,14 +404,7 @@ section { padding: 5.5rem 1.5rem; }
   0%,100% { transform: translateY(0px);  box-shadow: 0 20px 60px rgba(124,58,237,0.22), 0 4px 16px rgba(0,0,0,0.07); }
   50%     { transform: translateY(-9px); box-shadow: 0 32px 80px rgba(124,58,237,0.32), 0 8px 24px rgba(0,0,0,0.08); }
 }
-@keyframes tc-throw-left {
-  from { opacity: 1; transform: translateX(0)     rotate(0deg)  scale(1);    filter: blur(0); }
-  to   { opacity: 0; transform: translateX(-110%) rotate(-8deg) scale(0.88); filter: blur(6px); }
-}
-@keyframes tc-throw-right {
-  from { opacity: 1; transform: translateX(0)    rotate(0deg) scale(1);    filter: blur(0); }
-  to   { opacity: 0; transform: translateX(110%) rotate(8deg) scale(0.88); filter: blur(6px); }
-}
+
 @keyframes tc-spring-in {
   0%   { opacity: 0; transform: translateX(90px)  rotate(4deg)   scale(0.9);    filter: blur(10px); }
   65%  { opacity: 1; transform: translateX(-6px)  rotate(-1deg)  scale(1.02);   filter: blur(0); }
@@ -435,13 +428,13 @@ section { padding: 5.5rem 1.5rem; }
 
 /* ── CARTE MOBILE ── */
 @media (max-width: 768px) {
-  .testimonials-section { padding: 3.5rem 1.25rem 4rem; }
+  .testimonials-section { padding: 4.5rem 1.25rem 5rem; }
 
   .testimonials-grid {
     display: block !important;
     position: relative !important;
     overflow: visible !important;
-    margin: 1.75rem 0 0 !important;
+    margin: 2.25rem 0 0 !important;
     padding: 0 !important;
   }
 
@@ -482,24 +475,6 @@ section { padding: 5.5rem 1.5rem; }
     animation: tc-border-spin 4s linear infinite, tc-float 5s ease-in-out infinite !important;
   }
 
-  /* Carte qui sort */
-  .testimonial-card.tc-exiting {
-    display: block !important;
-    position: absolute !important;
-    top: 0; left: 0; right: 0;
-    z-index: 1;
-    pointer-events: none !important;
-    border: 2px solid transparent !important;
-    background:
-      linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
-      conic-gradient(from var(--tc-angle) at 50% 50%,
-        #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%) border-box !important;
-    animation: tc-throw-left 380ms cubic-bezier(0.4,0,1,1) forwards !important;
-  }
-  .testimonial-card.tc-exiting.tc-to-right {
-    animation: tc-throw-right 380ms cubic-bezier(0.4,0,1,1) forwards !important;
-  }
-
   /* Reveal séquentiel du contenu */
   .testimonial-card.tc-active .testimonial-stars  { animation: tc-item-in 400ms  40ms  cubic-bezier(0.22,1,0.36,1) both; }
   .testimonial-card.tc-active .testimonial-quote  { animation: tc-item-in 400ms  110ms cubic-bezier(0.22,1,0.36,1) both; }
@@ -513,7 +488,7 @@ section { padding: 5.5rem 1.5rem; }
     height: 2px;
     background: rgba(124,58,237,0.1);
     border-radius: 100px;
-    margin: 1.25rem 0 0;
+    margin: 1.75rem 0 0;
     overflow: hidden;
   }
   .testi-progress-fill {
@@ -529,7 +504,7 @@ section { padding: 5.5rem 1.5rem; }
     display: none;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
   }
   .testi-counter-num {
     font-family: var(--font-mono);
@@ -3581,27 +3556,15 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     const goingForward = direction !== 'prev';
     currentIdx = idx;
 
-    /* Stop floating on old card */
     clearTimeout(floatTimer);
 
-    /* Lock grid height so position:absolute on exiting card won't collapse it */
-    grid.style.height = grid.offsetHeight + 'px';
-
+    /* Hide old card instantly (becomes display:none — no layout collapse) */
     const oldCard = cards[oldIdx];
-    if (oldCard) {
-      oldCard.classList.remove('tc-active', 'tc-floating', 'tc-from-left');
-      oldCard.classList.add('tc-exiting');
-      if (!goingForward) oldCard.classList.add('tc-to-right');
-      setTimeout(() => {
-        oldCard.classList.remove('tc-exiting', 'tc-to-right');
-        grid.style.height = '';
-      }, 420);
-    } else {
-      setTimeout(() => { grid.style.height = ''; }, 420);
-    }
+    if (oldCard) oldCard.classList.remove('tc-active', 'tc-floating', 'tc-from-left');
 
+    /* Spring in new card */
     const newCard = cards[idx];
-    newCard.classList.remove('tc-exiting', 'tc-floating', 'tc-from-left');
+    newCard.classList.remove('tc-floating', 'tc-from-left');
     if (!goingForward) newCard.classList.add('tc-from-left');
     newCard.classList.add('tc-active');
 
