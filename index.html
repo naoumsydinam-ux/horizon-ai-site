@@ -3577,12 +3577,21 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
     /* Stop floating on old card */
     clearTimeout(floatTimer);
+
+    /* Lock grid height so position:absolute on exiting card won't collapse it */
+    grid.style.height = grid.offsetHeight + 'px';
+
     const oldCard = cards[oldIdx];
     if (oldCard) {
       oldCard.classList.remove('tc-active', 'tc-floating', 'tc-from-left');
       oldCard.classList.add('tc-exiting');
       if (!goingForward) oldCard.classList.add('tc-to-right');
-      setTimeout(() => { oldCard.classList.remove('tc-exiting', 'tc-to-right'); }, 340);
+      setTimeout(() => {
+        oldCard.classList.remove('tc-exiting', 'tc-to-right');
+        grid.style.height = '';
+      }, 420);
+    } else {
+      setTimeout(() => { grid.style.height = ''; }, 420);
     }
 
     const newCard = cards[idx];
