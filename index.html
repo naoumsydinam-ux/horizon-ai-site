@@ -2511,7 +2511,7 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     <div class="hslider-left">
       <span class="section-tag reveal">Ce qu'on fait</span>
       <h2 class="hslider-title reveal">Ce que vos agents<br>font <span class="grad-text-slow">à votre place</span></h2>
-      <p class="hslider-sub reveal">Survolez chaque service pour voir ce que ça donne concrètement.</p>
+      <p class="hslider-sub reveal">Les services défilent automatiquement — appuyez pour en savoir plus.</p>
 
       <div class="hslider-items" id="hslider-items">
         <div class="hslider-item active" data-index="0">
@@ -2999,15 +2999,16 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
   if (firstDash) animateDash(firstDash);
 })();
 
-/* ── HSLIDER — Hover slider ── */
+/* ── HSLIDER — Auto-cycle au scroll ── */
 (function() {
-  const items = document.querySelectorAll('.hslider-item');
-  const imgs  = document.querySelectorAll('.hslider-img');
-  const dots  = document.querySelectorAll('.hslider-dot');
+  const items   = document.querySelectorAll('.hslider-item');
+  const imgs    = document.querySelectorAll('.hslider-img');
+  const dots    = document.querySelectorAll('.hslider-dot');
+  const section = document.querySelector('.hslider-section');
 
   let cycleTimer = null;
   let cycleIdx   = 0;
-  const isMobile = () => window.innerWidth <= 860;
+  let active     = false;
 
   function stopCycle() { clearInterval(cycleTimer); cycleTimer = null; }
 
@@ -3018,16 +3019,28 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     dots.forEach((d, i)   => d.classList.toggle('active', i === idx));
   }
 
-  /* Desktop : hover + click */
+  function startCycle() {
+    stopCycle();
+    cycleTimer = setInterval(() => {
+      cycleIdx = (cycleIdx + 1) % items.length;
+      activate(cycleIdx);
+    }, 2800);
+  }
+
+  /* Desktop : hover pause → reprend quand souris quitte la section */
   items.forEach(item => {
     item.addEventListener('mouseenter', () => {
-      if (!isMobile()) activate(parseInt(item.dataset.index));
+      stopCycle();
+      activate(parseInt(item.dataset.index));
     });
     item.addEventListener('click', () => {
       stopCycle();
       activate(parseInt(item.dataset.index));
     });
   });
+  if (section) {
+    section.addEventListener('mouseleave', () => { if (active) startCycle(); });
+  }
 
   /* Dots : tap */
   dots.forEach(dot => {
@@ -3037,21 +3050,14 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
     });
   });
 
-  /* Auto-cycle sur mobile (toutes les 3s) */
-  function startCycle() {
-    if (!isMobile()) return;
-    cycleTimer = setInterval(() => {
-      cycleIdx = (cycleIdx + 1) % items.length;
-      activate(cycleIdx);
-    }, 3000);
-  }
-  startCycle();
-
-  /* Texte subtitle adapté au tactile */
-  const sub = document.querySelector('.hslider-sub');
-  if (sub && isMobile()) {
-    sub.textContent = 'Appuyez sur chaque service pour voir ce que ça donne concrètement.';
-  }
+  /* Démarre quand la section entre dans le viewport, s'arrête en sortie */
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { active = true; startCycle(); }
+      else { active = false; stopCycle(); }
+    });
+  }, { threshold: 0.2 });
+  if (section) obs.observe(section);
 })();
 
 /* ── TESTIMONIALS — Carousel dots ── */
