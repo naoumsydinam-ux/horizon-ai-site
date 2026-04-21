@@ -870,6 +870,42 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .form-note { text-align: center; margin-top: 0.75rem; padding-bottom: 1.75rem; font-size: 0.68rem; color: var(--c-text-muted); font-family: var(--font-mono); }
 .form-success { display: none; text-align: center; padding: 3rem 2rem; }
 .form-success svg { margin: 0 auto 1rem; display: block; }
+
+/* ── CONTACT FORM — spotlight effect ── */
+.cf-glow, .cf-border-glow {
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+.contact-form:hover .cf-glow,
+.contact-form:hover .cf-border-glow { opacity: 1; }
+.cf-glow {
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    400px at var(--mx, -999px) var(--my, -999px),
+    rgba(139,92,246,0.07) 0%,
+    transparent 70%
+  );
+  background-attachment: fixed;
+}
+.cf-border-glow {
+  inset: -2px;
+  padding: 2px;
+  z-index: 0;
+  background: radial-gradient(
+    300px at var(--mx, -999px) var(--my, -999px),
+    rgba(139,92,246,0.85) 0%,
+    rgba(59,130,246,0.45) 45%,
+    transparent 70%
+  );
+  background-attachment: fixed;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
 .form-success h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--c-text); }
 .form-success p { font-size: 0.875rem; color: var(--c-text-muted); }
 
@@ -3267,6 +3303,8 @@ footer { background: #0D0F12; color: rgba(255,255,255,0.45); }
 
       <!-- RIGHT: form -->
       <div class="contact-form reveal reveal-delay-1">
+        <div class="cf-glow" aria-hidden="true"></div>
+        <div class="cf-border-glow" aria-hidden="true"></div>
         <!-- Form header -->
         <div class="form-header">
           <div class="form-header-badge">
@@ -4001,6 +4039,16 @@ window.closeMobileNav = function() {
   obs.observe(section);
 
   update();
+})();
+
+/* ── CONTACT FORM — spotlight cursor ── */
+(function() {
+  const card = document.querySelector('.contact-form');
+  if (!card) return;
+  document.addEventListener('pointermove', (e) => {
+    card.style.setProperty('--mx', e.clientX + 'px');
+    card.style.setProperty('--my', e.clientY + 'px');
+  });
 })();
 
 /* ── TILT CARDS ── */
