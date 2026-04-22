@@ -510,83 +510,85 @@ section { padding: 5.5rem 1.5rem; }
     display: block !important;
     position: relative !important;
     overflow: visible !important;
-    margin: 2.25rem 0 0 !important;
+    margin: 2rem 0 0 !important;
     padding: 0 !important;
   }
 
   .testimonial-card {
     display: none;
     width: 100%;
-    padding: 1.25rem 1.25rem !important;
-    border-radius: 20px !important;
-    border: 2px solid var(--c-border) !important;
+    padding: 1.5rem 1.4rem !important;
+    border-radius: 24px !important;
+    border: 1.5px solid rgba(255,255,255,0.07) !important;
     will-change: transform, opacity;
   }
-  .testimonial-quote { font-size: 1.8rem !important; margin-bottom: 0.5rem !important; }
-  .testimonial-text  { font-size: 0.82rem !important; line-height: 1.6 !important; margin-bottom: 1rem !important; }
-  .testimonial-result { font-size: 0.68rem !important; padding: 0.25rem 0.7rem !important; margin-bottom: 1rem !important; }
-  .testimonial-stars { font-size: 0.72rem !important; margin-bottom: 0.6rem !important; }
-  .testimonial-avatar { width: 30px !important; height: 30px !important; font-size: 0.68rem !important; }
-  .author-info strong { font-size: 0.8rem !important; }
-  .author-info span   { font-size: 0.7rem !important; }
 
-  /* Carte active : bordure tournante uniquement */
+  /* Carte active : bordure tournante + ombre profonde */
   .testimonial-card.tc-active {
     --tc-angle: 0deg;
     display: block;
     position: relative !important;
     z-index: 2;
-    border: 2px solid transparent !important;
+    border: 1.5px solid transparent !important;
     background:
-      linear-gradient(var(--c-bg), var(--c-bg)) padding-box,
+      linear-gradient(var(--c-surface), var(--c-surface)) padding-box,
       conic-gradient(from var(--tc-angle) at 50% 50%,
         #3B82F6 0%, #8B5CF6 25%, #EC4899 50%, #F97316 75%, #3B82F6 100%) border-box !important;
     animation: tc-border-spin 4s linear infinite;
+    box-shadow: 0 28px 60px rgba(0,0,0,0.4), 0 0 40px rgba(124,58,237,0.12);
   }
 
+  /* Slides directionnels */
+  .tc-enter-right { animation: tc-from-right 0.4s cubic-bezier(0.34,1.2,0.64,1) forwards; }
+  .tc-enter-left  { animation: tc-from-left  0.4s cubic-bezier(0.34,1.2,0.64,1) forwards; }
+  @keyframes tc-from-right { from { opacity:0; transform:translateX(36px) scale(0.97); } to { opacity:1; transform:translateX(0) scale(1); } }
+  @keyframes tc-from-left  { from { opacity:0; transform:translateX(-36px) scale(0.97); } to { opacity:1; transform:translateX(0) scale(1); } }
+
+  /* Étoiles */
+  .testimonial-stars { font-size: 0.85rem !important; margin-bottom: 1rem !important; letter-spacing: 0.18em; color: #F59E0B !important; display: block; text-shadow: 0 0 12px rgba(245,158,11,0.4); }
+
+  /* Badge résultat — hero stat */
+  .testimonial-result {
+    font-size: 0.72rem !important;
+    padding: 0.4rem 0.9rem !important;
+    margin-bottom: 1.1rem !important;
+    background: linear-gradient(135deg, rgba(59,130,246,0.14), rgba(124,58,237,0.18)) !important;
+    border: 1px solid rgba(139,92,246,0.35) !important;
+    color: #C4B5FD !important;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  /* Citation */
+  .testimonial-quote { font-size: 2.8rem !important; margin-bottom: 0.3rem !important; color: rgba(139,92,246,0.35) !important; line-height: 0.9 !important; }
+
+  /* Texte — italic, phrase clé en blanc */
+  .testimonial-text {
+    font-size: 0.92rem !important;
+    line-height: 1.72 !important;
+    margin-bottom: 1.3rem !important;
+    color: rgba(255,255,255,0.72) !important;
+    font-style: italic;
+  }
+  .testimonial-text strong { color: #fff; font-style: normal; font-weight: 600; }
+
+  /* Auteur — séparateur + avatar plus grand */
+  .testimonial-author { padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.07); }
+  .testimonial-avatar { width: 40px !important; height: 40px !important; }
+  .author-info strong { font-size: 0.84rem !important; color: var(--c-text); }
+  .author-info span   { font-size: 0.68rem !important; color: var(--c-text-muted); }
+
   /* Barre de progression */
-  .testi-progress {
-    display: none;
-    height: 2px;
-    background: rgba(124,58,237,0.1);
-    border-radius: 100px;
-    margin: 1.75rem 0 0;
-    overflow: hidden;
-  }
-  .testi-progress-fill {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316);
-    border-radius: 100px;
-  }
+  .testi-progress { display: none; height: 2px; background: rgba(124,58,237,0.1); border-radius: 100px; margin: 1.5rem 0 0; overflow: hidden; }
+  .testi-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #F97316); border-radius: 100px; }
   .testi-progress-fill.running { animation: testi-progress 5s linear forwards; }
 
   /* Compteur + boutons */
-  .testi-counter {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-  }
-  .testi-counter-num {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    color: var(--c-text-muted);
-  }
+  .testi-counter { display: none; align-items: center; justify-content: space-between; margin-top: 1.25rem; }
+  .testi-counter-num { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--c-text-muted); }
   .testi-counter-num span { color: var(--c-text); font-weight: 700; }
   .testi-counter-btns { display: flex; gap: 0.5rem; }
-  .testi-btn {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    border: 1px solid var(--c-border-strong);
-    background: var(--c-surface);
-    color: var(--c-text);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: background 200ms, transform 120ms;
-    font-size: 0.75rem;
-  }
+  .testi-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--c-border-strong); background: var(--c-surface); color: var(--c-text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms, transform 120ms; font-size: 0.75rem; }
   .testi-btn:active { transform: scale(0.88); }
 
   .testimonials-dots { display: none; }
@@ -3446,7 +3448,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
       <div class="testimonial-card reveal tilt">
         <span class="testimonial-stars" aria-label="5 étoiles">★★★★★</span>
         <div class="testimonial-quote" aria-hidden="true">"</div>
-        <p class="testimonial-text">On avait déjà essayé deux logiciels qui n'avaient rien changé. Avec Horizon, en 3 semaines, mon équipe admin a récupéré l'équivalent d'un mi-temps. Ce qui m'a convaincu : ils ont commencé par l'audit.</p>
+        <p class="testimonial-text">On avait déjà essayé deux logiciels qui n'avaient rien changé. Avec Horizon, <strong>en 3 semaines, mon équipe admin a récupéré l'équivalent d'un mi-temps.</strong> Ce qui m'a convaincu : ils ont commencé par l'audit.</p>
         <div class="testimonial-result">14h / semaine récupérées — ROI en 3 semaines</div>
         <div class="testimonial-author">
           <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc B., Directeur Général — témoignage client Horizon AI" loading="lazy"></div>
@@ -3459,7 +3461,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
       <div class="testimonial-card reveal reveal-delay-1 tilt">
         <span class="testimonial-stars" aria-label="5 étoiles">★★★★★</span>
         <div class="testimonial-quote" aria-hidden="true">"</div>
-        <p class="testimonial-text">Ils n'ont jamais utilisé un seul mot technique. Ils ont parlé de mes problèmes, pas de leur technologie. Aujourd'hui mon équipe commerciale passe 2h de moins par jour sur l'admin — et ça se voit sur le CA.</p>
+        <p class="testimonial-text">Ils n'ont jamais utilisé un seul mot technique. Ils ont parlé de mes problèmes, pas de leur technologie. <strong>Aujourd'hui mon équipe commerciale passe 2h de moins par jour sur l'admin</strong> — et ça se voit sur le CA.</p>
         <div class="testimonial-result">+22% de CA dès le 2ème mois</div>
         <div class="testimonial-author">
           <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie L., Directrice Générale — témoignage client Horizon AI" loading="lazy"></div>
@@ -3472,7 +3474,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
       <div class="testimonial-card reveal tilt">
         <span class="testimonial-stars" aria-label="5 étoiles">★★★★★</span>
         <div class="testimonial-quote" aria-hidden="true">"</div>
-        <p class="testimonial-text">On était sceptiques au départ. En une semaine de test, notre service client a traité 3× plus de tickets sans recruter. L'audit gratuit nous a convaincus — ils ont mis le doigt exactement sur nos points de friction.</p>
+        <p class="testimonial-text">On était sceptiques au départ. <strong>En une semaine de test, notre service client a traité 3× plus de tickets sans recruter.</strong> L'audit gratuit nous a convaincus — ils ont mis le doigt exactement sur nos points de friction.</p>
         <div class="testimonial-result">×3 tickets traités — 0 recrutement</div>
         <div class="testimonial-author">
           <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Thomas R., COO — témoignage client Horizon AI" loading="lazy"></div>
@@ -3485,7 +3487,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
       <div class="testimonial-card reveal tilt">
         <span class="testimonial-stars" aria-label="5 étoiles">★★★★★</span>
         <div class="testimonial-quote" aria-hidden="true">"</div>
-        <p class="testimonial-text">Nos commerciaux passaient 40% de leur temps sur des tâches admin. Aujourd'hui ce chiffre est tombé à 12%. Ils se concentrent sur ce qui compte : vendre. Le ROI a été visible dès le premier mois.</p>
+        <p class="testimonial-text">Nos commerciaux passaient 40% de leur temps sur des tâches admin. <strong>Aujourd'hui ce chiffre est tombé à 12%.</strong> Ils se concentrent sur ce qui compte : vendre. Le ROI a été visible dès le premier mois.</p>
         <div class="testimonial-result">–28% temps admin · ROI mois 1</div>
         <div class="testimonial-author">
           <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Amélie C., Directrice Commerciale — témoignage client Horizon AI" loading="lazy"></div>
@@ -4035,8 +4037,12 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
     const oldCard = cards[oldIdx];
     if (oldCard) oldCard.classList.remove('tc-active');
 
-    /* Show new card with spinning border */
-    cards[idx].classList.add('tc-active');
+    /* Show new card with spinning border + slide direction */
+    const card = cards[idx];
+    card.classList.remove('tc-enter-right', 'tc-enter-left');
+    card.classList.add('tc-active');
+    void card.offsetWidth; /* force reflow */
+    card.classList.add(dir === 'forward' ? 'tc-enter-right' : 'tc-enter-left');
 
     updateCounter();
     resetProgress();
