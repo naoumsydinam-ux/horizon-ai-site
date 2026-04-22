@@ -4042,7 +4042,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
     card.classList.remove('tc-enter-right', 'tc-enter-left');
     card.classList.add('tc-active');
     void card.offsetWidth; /* force reflow */
-    card.classList.add(dir === 'forward' ? 'tc-enter-right' : 'tc-enter-left');
+    card.classList.add(direction === 'next' ? 'tc-enter-right' : 'tc-enter-left');
 
     updateCounter();
     resetProgress();
