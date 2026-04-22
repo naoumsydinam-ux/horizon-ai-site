@@ -4258,12 +4258,41 @@ window.closeMobileNav = function() {
 (function() {
   const btn = document.getElementById('form-btn');
   if (!btn) return;
-  btn.addEventListener('click', () => {
-    const prenom = document.getElementById('f-prenom')?.value.trim();
-    const email  = document.getElementById('f-email')?.value.trim();
-    if (!prenom || !email) { alert('Merci de renseigner au minimum votre prénom et email.'); return; }
-    document.getElementById('form-wrapper').style.display = 'none';
-    document.getElementById('form-success').style.display = 'flex';
+  btn.addEventListener('click', async () => {
+    const prenom  = document.getElementById('f-prenom')?.value.trim();
+    const nom     = document.getElementById('f-nom')?.value.trim();
+    const email   = document.getElementById('f-email')?.value.trim();
+    const taille  = document.getElementById('f-taille')?.value;
+    const message = document.getElementById('f-message')?.value.trim();
+
+    if (!prenom || !email) {
+      alert('Merci de renseigner au minimum votre prénom et email.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    try {
+      const res = await fetch('https://formspree.io/f/xqewyjev', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prenom, nom, email, taille, message })
+      });
+
+      if (res.ok) {
+        document.getElementById('form-wrapper').style.display = 'none';
+        document.getElementById('form-success').style.display = 'flex';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Réserver mon audit gratuit →';
+        alert('Une erreur est survenue. Merci de réessayer ou de nous contacter par email.');
+      }
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Réserver mon audit gratuit →';
+      alert('Erreur réseau. Vérifiez votre connexion et réessayez.');
+    }
   });
 })();
 
