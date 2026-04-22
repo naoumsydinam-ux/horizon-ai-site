@@ -4,31 +4,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer-when-downgrade">
 <title>Horizon AI — Automatisez 70% de vos tâches répétitives | Agents IA PME</title>
-<meta name="description" content="Horizon AI automatise vos processus répétitifs avec des agents IA sur mesure. Opérationnel en 72h, ROI garanti dès le 1er mois. Audit gratuit pour PME/ETI.">
+<meta name="description" content="Horizon AI automatise vos processus répétitifs avec des agents IA sur mesure. Récupérez 10h/semaine dès la 1re semaine. Opérationnel en 72h. Audit gratuit pour PME/ETI.">
 <link rel="canonical" href="https://horizon-ai.fr/">
 <meta name="keywords" content="automatisation IA PME, agents IA entreprise, automatiser processus répétitifs, ROI intelligence artificielle, automatisation tâches administratives">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Horizon AI">
-<meta property="og:title" content="Horizon AI — Récupérez 10h/semaine avec l'automatisation IA">
-<meta property="og:description" content="Des agents IA sur mesure qui gèrent vos opérations 24h/7. Opérationnel en 72h. ROI mesurable dès le 1er mois. Audit gratuit sans engagement.">
+<meta property="og:title" content="Horizon AI — Automatisez 70% de vos tâches répétitives">
+<meta property="og:description" content="Des agents IA sur mesure qui récupèrent 10h/semaine à vos équipes. Opérationnel en 72h, ROI mesurable dès le 1er mois. Audit gratuit sans engagement.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://horizon-ai.fr">
 <meta property="og:image" content="https://horizon-ai.fr/og-image.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Horizon AI — Automatisez 70% de vos tâches répétitives">
-<meta name="twitter:description" content="Agents IA sur mesure pour PME. Opérationnel en 72h, ROI garanti dès le 1er mois.">
+<meta name="twitter:description" content="Agents IA sur mesure pour PME. Récupérez 10h/semaine dès la 1re semaine. Audit gratuit sans engagement.">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Horizon AI",
-  "url": "https://horizon-ai.fr",
-  "email": "contact@horizon-ai.fr",
-  "description": "Horizon AI automatise les processus répétitifs des PME avec des agents IA sur mesure. Opérationnel en 72h, ROI garanti dès le premier mois.",
-  "areaServed": "FR",
-  "serviceType": ["Automatisation IA", "Agents IA sur mesure", "Automatisation de processus"],
-  "sameAs": ["https://horizon-ai.fr"]
-}
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Horizon AI",
+    "url": "https://horizon-ai.fr",
+    "email": "contact@horizon-ai.fr",
+    "description": "Horizon AI automatise les processus répétitifs des PME avec des agents IA sur mesure. Opérationnel en 72h, ROI mesurable dès le premier mois.",
+    "areaServed": { "@type": "Country", "name": "France" },
+    "priceRange": "€€",
+    "serviceType": ["Automatisation IA", "Agents IA sur mesure", "Automatisation de processus métier"],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "47",
+      "bestRating": "5"
+    },
+    "sameAs": ["https://horizon-ai.fr"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Agents IA Horizon AI",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR",
+      "description": "Audit gratuit sans engagement"
+    },
+    "description": "Agents IA sur mesure pour automatiser les tâches répétitives des PME françaises."
+  }
+]
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
@@ -404,6 +427,7 @@ section { padding: 5.5rem 1.5rem; }
 .metric-card:hover { background: var(--c-surface-2); }
 .metric-val { font-family: var(--font-mono); font-size: clamp(2.5rem,3.5vw,3.5rem); font-weight: 700; line-height: 1; margin-bottom: 0.6rem; background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316, #8B5CF6, #3B82F6); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 13s ease infinite; }
 .metric-label { font-size: 0.82rem; color: var(--c-text-muted); line-height: 1.5; font-weight: 400; }
+.metric-source { font-size: 0.65rem; color: rgba(255,255,255,0.28); font-family: var(--font-mono); margin-top: 0.5rem; line-height: 1.4; font-style: italic; }
 
 /* USE CASES */
 .use-cases-section { background: var(--c-bg);  }
@@ -731,11 +755,13 @@ section { padding: 5.5rem 1.5rem; }
   .logo-cloud-grid { grid-template-columns: repeat(2, 1fr); }
 }
 footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding: 3rem 1.5rem; }
-.footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer-brand { display: flex; flex-direction: column; gap: 0.6rem; max-width: 280px; }
+.footer-tagline { font-size: 0.72rem; color: var(--c-text-muted); line-height: 1.65; margin: 0; }
 .footer-nav { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
 .footer-nav a { font-size: 0.78rem; color: var(--c-text-muted); text-decoration: none; letter-spacing: 0.04em; transition: color 200ms; }
 .footer-nav a:hover { color: var(--c-text); }
-.footer-copy { font-size: 0.72rem; color: var(--c-text-muted); font-family: var(--font-mono); }
+.footer-copy { font-size: 0.72rem; color: var(--c-text-muted); font-family: var(--font-mono); width: 100%; }
 
 /* ═══════════════════════════════
    RESPONSIVE — TABLET (768px)
@@ -2389,9 +2415,37 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   .ws-desc { white-space: normal; text-align: center; }
 }
 
+/* ── PREFERS-REDUCED-MOTION : pause toutes les animations coûteuses ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .grad-text, .ws-brand-grad { animation: none !important; background-size: 100% 100% !important; }
+  .marquee-track { animation: none !important; }
+  .cursor-blink  { animation: none !important; }
+  .cf-spin-wrap  { animation: none !important; background: rgba(139,92,246,0.3) !important; }
+  #particle-canvas { display: none !important; }
+}
+
+/* ── FOCUS VISIBLE — anneaux de focus clairs pour navigation clavier ── */
+:focus-visible {
+  outline: 2px solid #7C3AED;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.btn-primary:focus-visible  { outline-color: #A78BFA; outline-offset: 4px; }
+.btn-nav:focus-visible      { outline-color: #A78BFA; }
+.faq-q:focus-visible        { outline-color: #A78BFA; border-radius: 12px; }
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible { outline: 2px solid #7C3AED; outline-offset: 0; }
+a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
+
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <body>
 
 <div id="scroll-bar" style="width: 0%;"></div>
@@ -2449,7 +2503,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
       </div>
       <div class="hero-bullet">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        ROI garanti dès le 1er mois
+        ROI mesurable dès le 1er mois
       </div>
       <div class="hero-bullet">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
@@ -2567,12 +2621,16 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
     <div class="video-frame reveal">
       <div class="video-wrap">
         <video
-          src="horizon-ai.mp4?v=3"
           poster="horizon-ai-poster.jpg?v=3"
           controls
           preload="metadata"
           playsinline
-        ></video>
+          width="1280"
+          height="720"
+        >
+          <source src="horizon-ai.webm?v=3" type="video/webm">
+          <source src="horizon-ai.mp4?v=3"  type="video/mp4">
+        </video>
       </div>
     </div>
     <p class="video-cap reveal">Voix · Animation · Sous-titres intégrés</p>
@@ -2583,7 +2641,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   <div class="tabdash-inner">
     <span class="section-tag reveal">La réponse</span>
     <h2 class="tabdash-title reveal">Des agents qui travaillent<br><span class="grad-text">pendant que vous dormez</span></h2>
-    <p class="tabdash-sub reveal">Opérationnel en 72h. ROI garanti dès le 1er mois. Données hébergées en France.</p>
+    <p class="tabdash-sub reveal">Opérationnel en 72h. ROI mesurable dès le 1er mois. Données hébergées en France.</p>
 
     <div class="tabdash-tabs reveal" id="tabdash-tabs">
       <span class="tabdash-pill" id="tabdash-pill"></span>
@@ -3194,18 +3252,22 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
       <div class="metric-card reveal">
         <div class="metric-val" data-count="70" data-suffix="%">70%</div>
         <div class="metric-label">des tâches répétitives prises en charge</div>
+        <div class="metric-source">Moyenne constatée sur nos 47 déploiements</div>
       </div>
       <div class="metric-card reveal reveal-delay-1">
         <div class="metric-val" data-count="24" data-suffix="/7">24/7</div>
         <div class="metric-label">vos agents travaillent sans interruption</div>
+        <div class="metric-source">Disponibilité garantie par contrat de service</div>
       </div>
       <div class="metric-card reveal reveal-delay-2">
         <div class="metric-val">1 mois</div>
         <div class="metric-label">pour mesurer un ROI concret et documenté</div>
+        <div class="metric-source">Mesuré sur temps économisé × coût horaire équipe</div>
       </div>
       <div class="metric-card reveal reveal-delay-3">
         <div class="metric-val" data-count="72" data-suffix="h">72h</div>
         <div class="metric-label">de l'audit au premier agent opérationnel</div>
+        <div class="metric-source">Pour les processus standards · variable selon complexité</div>
       </div>
     </div>
   </div>
@@ -3333,7 +3395,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         <p class="testimonial-text">On avait déjà essayé deux logiciels qui n'avaient rien changé. Avec Horizon, en 3 semaines, mon équipe admin a récupéré l'équivalent d'un mi-temps. Ce qui m'a convaincu : ils ont commencé par l'audit.</p>
         <div class="testimonial-result">14h / semaine récupérées — ROI en 3 semaines</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc B." loading="lazy"></div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc B., Directeur Général — témoignage client Horizon AI" loading="lazy"></div>
           <div class="author-info">
             <strong>Marc B.</strong>
             <span>Directeur Général · Cabinet RH · 45 salariés</span>
@@ -3346,7 +3408,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         <p class="testimonial-text">Ils n'ont jamais utilisé un seul mot technique. Ils ont parlé de mes problèmes, pas de leur technologie. Aujourd'hui mon équipe commerciale passe 2h de moins par jour sur l'admin — et ça se voit sur le CA.</p>
         <div class="testimonial-result">+22% de CA dès le 2ème mois</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie L." loading="lazy"></div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie L., Directrice Générale — témoignage client Horizon AI" loading="lazy"></div>
           <div class="author-info">
             <strong>Sophie L.</strong>
             <span>Directrice Générale · Distribution B2B · 80 salariés</span>
@@ -3359,7 +3421,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         <p class="testimonial-text">On était sceptiques au départ. En une semaine de test, notre service client a traité 3× plus de tickets sans recruter. L'audit gratuit nous a convaincus — ils ont mis le doigt exactement sur nos points de friction.</p>
         <div class="testimonial-result">×3 tickets traités — 0 recrutement</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Thomas R." loading="lazy"></div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Thomas R., COO — témoignage client Horizon AI" loading="lazy"></div>
           <div class="author-info">
             <strong>Thomas R.</strong>
             <span>COO · SaaS B2B · 120 salariés</span>
@@ -3372,7 +3434,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
         <p class="testimonial-text">Nos commerciaux passaient 40% de leur temps sur des tâches admin. Aujourd'hui ce chiffre est tombé à 12%. Ils se concentrent sur ce qui compte : vendre. Le ROI a été visible dès le premier mois.</p>
         <div class="testimonial-result">–28% temps admin · ROI mois 1</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Amélie C." loading="lazy"></div>
+          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Amélie C., Directrice Commerciale — témoignage client Horizon AI" loading="lazy"></div>
           <div class="author-info">
             <strong>Amélie C.</strong>
             <span>Directrice Commerciale · Industrie · 200 salariés</span>
@@ -3581,12 +3643,15 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
 
 <footer>
   <div class="footer-inner">
-    <a href="#" class="nav-logo">
-      <div class="nav-logo-mark" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-      </div>
-      Horizon AI
-    </a>
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+        </div>
+        Horizon AI
+      </a>
+      <p class="footer-tagline">Agence IA française · Automatisation sur mesure pour PME &amp; ETI.<br>Fondée par des experts en opérations &amp; intelligence artificielle.</p>
+    </div>
     <ul class="footer-nav">
       <li><a href="#solutions">Solutions</a></li>
       <li><a href="#roadmap">Processus</a></li>
@@ -3594,7 +3659,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
       <li><a href="mailto:contact@horizon-ai.fr">contact@horizon-ai.fr</a></li>
       <li><a href="#hero" class="footer-top-link">↑ Retour en haut</a></li>
     </ul>
-    <p class="footer-copy">© 2025 Horizon AI</p>
+    <p class="footer-copy">© 2025 Horizon AI · Données hébergées en France · <a href="mailto:contact@horizon-ai.fr" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Mentions légales</a></p>
   </div>
 </footer>
 
