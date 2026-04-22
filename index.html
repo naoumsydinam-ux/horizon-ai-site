@@ -4164,14 +4164,15 @@ window.closeMobileNav = function() {
 
 /* ── LENIS SMOOTH SCROLL — ultra fluide, tous appareils ── */
 (function() {
+  const onMobile = 'ontouchstart' in window && window.innerWidth <= 768;
   const lenis = new Lenis({
-    duration: 2.8,
+    duration: onMobile ? 1.2 : 2.8,
     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     smoothWheel: true,
     wheelMultiplier: 0.75,
     smoothTouch: true,
-    touchMultiplier: 1.2,
+    touchMultiplier: onMobile ? 1.6 : 1.2,
   });
 
   function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
