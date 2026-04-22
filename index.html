@@ -2415,18 +2415,26 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   .ws-desc { white-space: normal; text-align: center; }
 }
 
-/* ── PREFERS-REDUCED-MOTION : pause toutes les animations coûteuses ── */
+/* ── PREFERS-REDUCED-MOTION : uniquement les animations purement décoratives ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  /* Gradient animés en arrière-plan — décoratifs uniquement */
+  .grad-text, .ws-brand-grad, .metric-val {
+    animation: none !important;
+    background-size: 100% 100% !important;
   }
-  .grad-text, .ws-brand-grad { animation: none !important; background-size: 100% 100% !important; }
+  /* Marquee défilant — décoratif */
   .marquee-track { animation: none !important; }
-  .cursor-blink  { animation: none !important; }
+  /* Curseur clignotant — décoratif */
+  .cursor-blink  { animation: none !important; opacity: 1 !important; }
+  /* Bordure tournante du formulaire */
   .cf-spin-wrap  { animation: none !important; background: rgba(139,92,246,0.3) !important; }
+  /* Canvas particules — décoratif et coûteux */
   #particle-canvas { display: none !important; }
+  /* Pulse / spin divers */
+  .form-header-dot, .rd-ring-1, .rd-ring-2, .rd-ring-3, .rd-ring-4 {
+    animation: none !important;
+  }
+  /* Les sections interactives (bounce cards, capot, word scroll) restent intactes */
 }
 
 /* ── FOCUS VISIBLE — anneaux de focus clairs pour navigation clavier ── */
