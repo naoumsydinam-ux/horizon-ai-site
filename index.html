@@ -1030,8 +1030,48 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .form-prompt-send:hover { transform: scale(1.08); }
 .form-submit { width: 100%; justify-content: center; font-size: 0.9rem; padding: 0.9rem 1.5rem; white-space: nowrap; }
 .form-note { text-align: center; margin-top: 0.75rem; padding-bottom: 1.75rem; font-size: 0.68rem; color: var(--c-text-muted); font-family: var(--font-mono); }
-.form-success { display: none; text-align: center; padding: 3rem 2rem; }
-.form-success svg { margin: 0 auto 1rem; display: block; }
+/* ── FORM SUCCESS — onboarding premium ── */
+.form-success {
+  display: none; flex-direction: column; align-items: center;
+  padding: 2rem 1.5rem 1.75rem;
+  animation: fs-enter 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes fs-enter {
+  from { opacity: 0; transform: translateY(18px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+.fs-icon-wrap { position: relative; width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+.fs-ring { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 70%); animation: fs-pulse 2.2s ease-in-out infinite; }
+.fs-ring::before { content: ''; position: absolute; inset: -10px; border-radius: 50%; border: 1.5px solid rgba(139,92,246,0.25); animation: fs-pulse 2.2s ease-in-out infinite 0.4s; }
+@keyframes fs-pulse { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.1)} }
+.fs-check-circle { width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg,#7C3AED,#EC4899); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; box-shadow: 0 8px 32px rgba(124,58,237,0.45), 0 0 0 8px rgba(124,58,237,0.08); }
+.fs-steps { display: flex; align-items: center; margin-bottom: 0.45rem; }
+.fs-step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; font-family: var(--font-mono); flex-shrink: 0; }
+.fs-step-dot.done   { background: linear-gradient(135deg,#7C3AED,#EC4899); color:#fff; box-shadow:0 0 14px rgba(124,58,237,0.4); }
+.fs-step-dot.active { background: rgba(59,130,246,0.15); border:1.5px solid #3B82F6; color:#60A5FA; }
+.fs-step-dot.idle   { background: rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.25); }
+.fs-step-line       { width: 36px; height: 1.5px; background:rgba(255,255,255,0.08); }
+.fs-step-line.done  { background: linear-gradient(90deg,#7C3AED,#3B82F6); }
+.fs-step-label { font-size:0.63rem; font-family:var(--font-mono); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#A78BFA; margin-bottom:1.2rem; }
+.fs-title { font-family:var(--font-display); font-weight:700; font-size:clamp(1.1rem,2.5vw,1.35rem); color:var(--c-text); text-align:center; margin-bottom:0.5rem; line-height:1.25; }
+.fs-sub { font-size:0.81rem; color:var(--c-text-muted); text-align:center; line-height:1.65; max-width:340px; margin-bottom:1.6rem; }
+.fs-next { width:100%; display:flex; flex-direction:column; border:1px solid rgba(255,255,255,0.07); border-radius:1rem; overflow:hidden; margin-bottom:1.4rem; }
+.fs-next-item { display:flex; align-items:center; gap:0.85rem; padding:0.8rem 1.1rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+.fs-next-item:last-child { border-bottom:none; }
+.fs-next-item.done   { background:rgba(124,58,237,0.08); }
+.fs-next-item.active { background:rgba(59,130,246,0.05); }
+.fs-next-item.idle   {}
+.fs-next-dot { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.63rem; font-weight:700; font-family:var(--font-mono); flex-shrink:0; }
+.fs-next-item.done   .fs-next-dot { background:linear-gradient(135deg,#7C3AED,#EC4899); color:#fff; }
+.fs-next-item.active .fs-next-dot { background:rgba(59,130,246,0.15); border:1.5px solid #3B82F6; color:#60A5FA; }
+.fs-next-item.idle   .fs-next-dot { background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.09); color:rgba(255,255,255,0.22); }
+.fs-next-text { display:flex; flex-direction:column; gap:0.08rem; }
+.fs-next-text strong { font-size:0.79rem; font-weight:600; color:var(--c-text); }
+.fs-next-item.idle .fs-next-text strong { color:rgba(255,255,255,0.35); }
+.fs-next-text span { font-size:0.65rem; color:var(--c-text-muted); font-family:var(--font-mono); }
+.fs-proof { display:flex; align-items:center; gap:0.5rem; font-size:0.65rem; color:var(--c-text-muted); font-family:var(--font-mono); }
+.fs-proof-dot { width:6px; height:6px; border-radius:50%; background:#22C55E; flex-shrink:0; animation:pulse-dot 2s infinite; }
+
 
 /* ── CONTACT FORM — spotlight effect ── */
 .cf-glow, .cf-border-glow {
@@ -3644,9 +3684,54 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         </div>
 
         <div class="form-success" id="form-success">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#A78BFA"><circle cx="12" cy="12" r="10"></circle><polyline points="20 6 9 17 4 12" stroke="#A78BFA"></polyline></svg>
-          <h3>Message envoyé !</h3>
-          <p>Nous vous répondons dans les 4 heures ouvrées avec une première analyse de votre potentiel d'automatisation.</p>
+          <!-- Icône animée -->
+          <div class="fs-icon-wrap">
+            <div class="fs-ring"></div>
+            <div class="fs-check-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+          </div>
+          <!-- Progression 1/3 -->
+          <div class="fs-steps">
+            <div class="fs-step-dot done">✓</div>
+            <div class="fs-step-line done"></div>
+            <div class="fs-step-dot active">2</div>
+            <div class="fs-step-line"></div>
+            <div class="fs-step-dot idle">3</div>
+          </div>
+          <p class="fs-step-label">Étape 1 sur 3 — Demande reçue</p>
+          <!-- Titre personnalisé -->
+          <h3 class="fs-title" id="fs-title">Votre dossier est entre de bonnes mains</h3>
+          <p class="fs-sub">Nos experts analysent votre situation. Une première analyse personnalisée arrive dans votre boîte dans les 4h ouvrées.</p>
+          <!-- Suite du processus -->
+          <div class="fs-next">
+            <div class="fs-next-item done">
+              <div class="fs-next-dot">✓</div>
+              <div class="fs-next-text">
+                <strong>Demande reçue</strong>
+                <span>À l'instant · Confirmé</span>
+              </div>
+            </div>
+            <div class="fs-next-item active">
+              <div class="fs-next-dot">2</div>
+              <div class="fs-next-text">
+                <strong>Analyse personnalisée en cours</strong>
+                <span>Sous 4h ouvrées · Par email</span>
+              </div>
+            </div>
+            <div class="fs-next-item idle">
+              <div class="fs-next-dot">3</div>
+              <div class="fs-next-text">
+                <strong>Session stratégique 30 min</strong>
+                <span>Planifiée ensemble · À votre rythme</span>
+              </div>
+            </div>
+          </div>
+          <!-- Preuve sociale live -->
+          <div class="fs-proof">
+            <span class="fs-proof-dot"></span>
+            <span>47 entreprises ont démarré leur audit ce mois</span>
+          </div>
         </div>
       </div>
       </div><!-- /cf-spin-wrap -->
@@ -4281,6 +4366,8 @@ window.closeMobileNav = function() {
       });
 
       if (res.ok) {
+        const titleEl = document.getElementById('fs-title');
+        if (titleEl && prenom) titleEl.textContent = `${prenom}, votre dossier est entre de bonnes mains`;
         document.getElementById('form-wrapper').style.display = 'none';
         document.getElementById('form-success').style.display = 'flex';
       } else {
