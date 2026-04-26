@@ -760,6 +760,112 @@ section { padding: 5.5rem 1.5rem; }
 @media (max-width: 480px) {
   .logo-cloud-grid { grid-template-columns: repeat(2, 1fr); }
 }
+/* ═══════════════════════════════
+   PRICING SECTION
+═══════════════════════════════ */
+.pricing-section { background: var(--c-bg); padding: 6rem 1.5rem; position: relative; }
+.pricing-section .section-inner { text-align: center; }
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3.5rem; text-align: left; }
+.pricing-card { position: relative; background: var(--c-surface); border: 1px solid var(--c-border-strong); border-radius: var(--radius-lg); padding: 2.25rem 1.85rem; display: flex; flex-direction: column; transition: border-color 300ms, transform 300ms var(--ease), box-shadow 300ms; }
+.pricing-card:hover { transform: translateY(-4px); border-color: var(--c-border-accent); box-shadow: 0 16px 50px rgba(139,92,246,0.15); }
+.pricing-card.featured { background: var(--c-surface-2); border-color: transparent; background: linear-gradient(var(--c-surface-2), var(--c-surface-2)) padding-box, linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316) border-box; }
+.pricing-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 100px; background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316); color: #fff; white-space: nowrap; }
+.pricing-name { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-text-muted); margin-bottom: 1rem; }
+.pricing-price { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 0.5rem; }
+.pricing-amount { font-family: var(--font-display); font-size: 2.4rem; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
+.pricing-card.featured .pricing-amount { background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6, #FB923C); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 18s ease infinite; }
+.pricing-period { font-family: var(--font-mono); font-size: 0.78rem; color: var(--c-text-muted); }
+.pricing-tagline { font-size: 0.85rem; color: var(--c-text-muted); line-height: 1.55; margin-bottom: 1.6rem; padding-bottom: 1.6rem; border-bottom: 1px solid var(--c-border); min-height: 3.6rem; }
+.pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; flex: 1; }
+.pricing-features li { display: flex; align-items: flex-start; gap: 0.65rem; font-size: 0.85rem; color: var(--c-text); line-height: 1.5; }
+.pricing-features li svg { flex-shrink: 0; margin-top: 3px; color: #A78BFA; }
+.pricing-features li.muted { color: var(--c-text-muted); }
+.pricing-features li.muted svg { color: var(--c-surface-3); }
+.pricing-cta { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 0.9rem 1.25rem; border-radius: 100px; font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: background 200ms, transform 200ms, box-shadow 200ms; min-height: 48px; }
+.pricing-cta.secondary { background: rgba(255,255,255,0.06); color: var(--c-text); border: 1px solid var(--c-border-strong); }
+.pricing-cta.secondary:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+.pricing-cta.primary { background: #fff; color: #0D0F12; border: none; position: relative; overflow: hidden; z-index: 0; }
+.pricing-cta.primary::before { content: ''; position: absolute; inset: -2px; border-radius: 100px; background: linear-gradient(135deg, #3B82F6, #8B5CF6, #EC4899, #F97316, #8B5CF6, #3B82F6); background-size: 300% 300%; animation: gradient-shift 18s ease infinite; z-index: -1; opacity: 0; transition: opacity 300ms; }
+.pricing-cta.primary:hover::before { opacity: 1; }
+.pricing-cta.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(139,92,246,0.35); }
+.pricing-note { margin-top: 2.5rem; font-size: 0.78rem; color: var(--c-text-muted); font-family: var(--font-mono); letter-spacing: 0.04em; }
+.pricing-note strong { color: var(--c-text); font-weight: 600; }
+
+/* ═══════════════════════════════
+   ABOUT SECTION
+═══════════════════════════════ */
+.about-section { background: var(--c-surface); padding: 6rem 1.5rem; position: relative; overflow: hidden; }
+.about-section .section-inner { position: relative; z-index: 1; }
+.about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; margin-top: 3.5rem; }
+.about-portrait { position: relative; border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4 / 5; border: 1px solid var(--c-border-strong); background: var(--c-bg); }
+.about-portrait::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.18), rgba(236,72,153,0.18), rgba(249,115,22,0.18)); z-index: 0; }
+.about-portrait::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.04) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(255,255,255,0.03) 0%, transparent 50%); z-index: 1; }
+.about-portrait-initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: clamp(4rem, 10vw, 8rem); font-weight: 700; letter-spacing: -0.05em; background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6, #FB923C); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 18s ease infinite; z-index: 2; }
+.about-portrait-tag { position: absolute; bottom: 1.25rem; left: 1.25rem; right: 1.25rem; z-index: 3; display: flex; flex-direction: column; gap: 0.25rem; padding: 0.85rem 1rem; background: rgba(0,0,0,0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-md); }
+.about-portrait-tag strong { font-size: 0.92rem; font-weight: 600; color: var(--c-text); }
+.about-portrait-tag span { font-size: 0.74rem; color: var(--c-text-muted); font-family: var(--font-mono); letter-spacing: 0.06em; }
+.about-content > p { font-size: 1rem; color: var(--c-text-muted); line-height: 1.75; margin-bottom: 1.25rem; font-weight: 400; }
+.about-content > p:first-of-type { font-size: 1.1rem; color: var(--c-text); }
+.about-values { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.about-value { padding: 1rem 1.1rem; background: var(--c-bg); border: 1px solid var(--c-border); border-radius: var(--radius-md); transition: border-color 250ms, transform 250ms; }
+.about-value:hover { border-color: var(--c-border-accent); transform: translateY(-2px); }
+.about-value strong { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; }
+.about-value strong svg { color: #A78BFA; flex-shrink: 0; }
+.about-value span { font-size: 0.78rem; color: var(--c-text-muted); line-height: 1.55; }
+.about-stats { display: flex; gap: 2.25rem; margin-top: 2.25rem; padding-top: 2rem; border-top: 1px solid var(--c-border); }
+.about-stat strong { display: block; font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; line-height: 1; margin-bottom: 0.3rem; background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.about-stat span { font-size: 0.74rem; color: var(--c-text-muted); font-family: var(--font-mono); letter-spacing: 0.05em; }
+
+/* RESPONSIVE pricing + about */
+@media (max-width: 900px) {
+  .pricing-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .about-portrait { max-width: 320px; margin: 0 auto; }
+  .about-values { grid-template-columns: 1fr; }
+  .about-stats { gap: 1.5rem; flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+  .pricing-section, .about-section { padding: 4rem 1.25rem; }
+  .pricing-card { padding: 1.85rem 1.4rem; }
+}
+
+/* ═══════════════════════════════
+   FIXES RESPONSIVE — petits écrans
+═══════════════════════════════ */
+/* Pricing — éviter débordement texte sur mobile */
+@media (max-width: 480px) {
+  .pricing-amount { font-size: clamp(1.85rem, 8.5vw, 2.4rem); }
+  .pricing-tagline { min-height: auto; }
+  .pricing-features li { font-size: 0.82rem; }
+  .pricing-badge { font-size: 0.58rem; padding: 0.3rem 0.7rem; }
+}
+
+/* About portrait tag — moins serré sur très petits */
+@media (max-width: 414px) {
+  .about-portrait-tag { padding: 0.7rem 0.85rem; left: 1rem; right: 1rem; bottom: 1rem; }
+  .about-portrait-tag strong { font-size: 0.85rem; }
+  .about-portrait-tag span { font-size: 0.7rem; }
+  .about-stats { gap: 1.25rem; }
+  .about-stat strong { font-size: 1.4rem; }
+}
+
+/* Footer cols — meilleure transition entre 480 et 768 */
+@media (max-width: 700px) and (min-width: 481px) {
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
+}
+
+/* Hero bullets — plus compact sur mobile */
+@media (max-width: 480px) {
+  .hero-bullets { gap: 0.85rem 1.25rem; font-size: 0.8rem; }
+  .hero-bullet { font-size: 0.8rem; }
+}
+
+/* Filet de sécurité global contre l'overflow horizontal */
+@media (max-width: 480px) {
+  body, html { overflow-x: hidden; }
+  .section-inner, .nav-inner, .footer-inner { max-width: 100%; }
+}
+
 footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding: 3rem 1.5rem; }
 .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
 .footer-brand { display: flex; flex-direction: column; gap: 0.6rem; max-width: 280px; }
@@ -767,14 +873,37 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .footer-nav { display: flex; gap: 1.75rem; list-style: none; flex-wrap: wrap; }
 .footer-nav a { font-size: 0.78rem; color: var(--c-text-muted); text-decoration: none; letter-spacing: 0.04em; transition: color 200ms; }
 .footer-nav a:hover { color: var(--c-text); }
-.footer-copy { font-size: 0.72rem; color: var(--c-text-muted); font-family: var(--font-mono); width: 100%; }
+.footer-copy { font-size: 0.72rem; color: var(--c-text-muted); font-family: var(--font-mono); width: 100%; padding-top: 1.5rem; border-top: 1px solid var(--c-border); margin-top: 0.5rem; }
+.footer-social { display: flex; gap: 0.6rem; margin-top: 0.85rem; }
+.footer-social-link { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--c-border-strong); color: var(--c-text-muted); transition: color 200ms, border-color 200ms, transform 200ms, background 200ms; }
+.footer-social-link:hover { color: var(--c-text); border-color: var(--c-border-accent); background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+.footer-cols { display: grid; grid-template-columns: repeat(3, minmax(120px, auto)); gap: 2.5rem; }
+.footer-col { display: flex; flex-direction: column; gap: 0.85rem; }
+.footer-col-title { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-text); }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+.footer-col ul a { font-size: 0.78rem; color: var(--c-text-muted); text-decoration: none; letter-spacing: 0.02em; transition: color 200ms; }
+.footer-col ul a:hover { color: var(--c-text); }
+@media (max-width: 768px) {
+  .footer-cols { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; width: 100%; }
+}
+@media (max-width: 480px) {
+  .footer-cols { grid-template-columns: 1fr 1fr; gap: 1.25rem 1.5rem; }
+}
+
+/* ═══════════════════════════════
+   RESPONSIVE — NAV SWITCH (920px)
+   5 nav items + logo + button ne tiennent plus sous 920px
+═══════════════════════════════ */
+@media (max-width: 920px) {
+  .nav-links, nav .btn-nav { display: none; }
+  .hamburger { display: flex; }
+}
 
 /* ═══════════════════════════════
    RESPONSIVE — TABLET (768px)
 ═══════════════════════════════ */
 @media (max-width: 768px) {
-  /* NAV */
-  .nav-links, .btn-nav { display: none; }
+  /* NAV — déjà géré par le breakpoint 920px */
   .hamburger { display: flex; }
 
   /* HERO */
@@ -2523,6 +2652,8 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
     <ul class="nav-links">
       <li><a href="#solutions">Solutions</a></li>
       <li><a href="#roadmap">Processus</a></li>
+      <li><a href="#tarifs">Tarifs</a></li>
+      <li><a href="#about">À propos</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="btn-nav">Audit gratuit</a>
@@ -2534,6 +2665,8 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
 <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
   <a href="#solutions" onclick="closeMobileNav()">Solutions</a>
   <a href="#roadmap" onclick="closeMobileNav()">Processus</a>
+  <a href="#tarifs" onclick="closeMobileNav()">Tarifs</a>
+  <a href="#about" onclick="closeMobileNav()">À propos</a>
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
   <a href="#contact" class="btn-primary" onclick="closeMobileNav()">Réserver mon audit gratuit →</a>
 </nav>
@@ -3517,6 +3650,152 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
   </div>
 </section>
 
+<!-- PRICING -->
+<section class="pricing-section" id="tarifs">
+  <div class="section-inner">
+    <span class="section-tag reveal">Tarifs</span>
+    <h2 class="section-title reveal" style="text-align:center;">Une offre adaptée à <span class="grad-text">chaque étape</span></h2>
+    <p class="section-desc reveal" style="margin: 0 auto;">Trois formules transparentes. Engagement mensuel, sans surprise. Tous les tarifs incluent l'audit, le déploiement et le support.</p>
+
+    <div class="pricing-grid">
+
+      <!-- STARTER -->
+      <div class="pricing-card reveal">
+        <div class="pricing-name">Starter</div>
+        <div class="pricing-price">
+          <span class="pricing-amount">790€</span>
+          <span class="pricing-period">/ mois HT</span>
+        </div>
+        <p class="pricing-tagline">Un premier agent IA pour tester l'impact sur un processus clé.</p>
+        <ul class="pricing-features">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>1 agent IA déployé en 72h</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Jusqu'à 2 intégrations (CRM, Slack…)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Tableau de bord ROI mensuel</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Support email (réponse &lt; 24h)</li>
+          <li class="muted"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>Formation équipe sur demande</li>
+          <li class="muted"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>Support prioritaire 24/7</li>
+        </ul>
+        <a href="#contact" class="pricing-cta secondary">Démarrer Starter</a>
+      </div>
+
+      <!-- PRO (FEATURED) -->
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-badge">Le plus choisi</div>
+        <div class="pricing-name">Pro</div>
+        <div class="pricing-price">
+          <span class="pricing-amount">1 890€</span>
+          <span class="pricing-period">/ mois HT</span>
+        </div>
+        <p class="pricing-tagline">L'offre complète pour automatiser plusieurs processus en parallèle.</p>
+        <ul class="pricing-features">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Jusqu'à 4 agents IA orchestrés</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Intégrations illimitées (Zapier, API…)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Reporting hebdo + alertes Slack</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Support prioritaire (réponse &lt; 4h)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Formation équipe incluse (2 sessions)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Garantie ROI à J+30 contractuelle</li>
+        </ul>
+        <a href="#contact" class="pricing-cta primary">Démarrer Pro
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+        </a>
+      </div>
+
+      <!-- SUR-MESURE -->
+      <div class="pricing-card reveal reveal-delay-2">
+        <div class="pricing-name">Sur-mesure</div>
+        <div class="pricing-price">
+          <span class="pricing-amount">Sur devis</span>
+        </div>
+        <p class="pricing-tagline">Pour les structures avec des besoins spécifiques ou des volumes importants.</p>
+        <ul class="pricing-features">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Agents illimités, architecture dédiée</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Hébergement privé (cloud souverain)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Chef de projet IA dédié</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Support 24/7 (réponse &lt; 1h, SLA)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Conformité étendue (ISO, HDS, sectoriel)</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Roadmap trimestrielle co-construite</li>
+        </ul>
+        <a href="#contact" class="pricing-cta secondary">Discuter du projet</a>
+      </div>
+
+    </div>
+
+    <p class="pricing-note reveal">Tous les forfaits incluent <strong>l'audit gratuit</strong>, le <strong>déploiement initial</strong> et le <strong>support en français</strong>. Pas de frais cachés. Résiliable à tout moment avec préavis 30 jours.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-inner">
+    <span class="section-tag reveal">À propos</span>
+    <h2 class="section-title reveal" style="text-align:center;">Une équipe qui parle votre <span class="grad-text">langage métier.</span></h2>
+    <p class="section-desc reveal" style="margin: 0 auto;">Horizon AI est née d'un constat simple : la majorité des PME perdent un temps considérable sur des tâches qu'une IA bien configurée peut absorber.</p>
+
+    <div class="about-grid">
+
+      <div class="about-portrait reveal">
+        <span class="about-portrait-initials" aria-hidden="true">HA</span>
+        <div class="about-portrait-tag">
+          <strong>Naoum SY</strong>
+          <span>Fondateur · Horizon AI</span>
+        </div>
+      </div>
+
+      <div class="about-content reveal reveal-delay-1">
+        <p>Après plusieurs années à voir des équipes opérationnelles s'épuiser sur des tâches répétitives — relances clients, saisie, reporting, qualification de leads — nous avons construit Horizon AI pour rendre l'automatisation IA accessible aux entreprises qui n'ont ni le temps, ni le budget, ni l'envie d'un projet de transformation lourd.</p>
+        <p>Notre conviction : l'IA n'est utile que si elle est <strong style="color:var(--c-text);">déployée vite, intégrée à vos outils existants, et mesurable</strong>. Pas de promesse fumeuse, pas de rapport de 80 pages — un agent qui tourne en 72h et un ROI qui se chiffre dès le premier mois.</p>
+
+        <ul class="about-values">
+          <li class="about-value">
+            <strong>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Transparence
+            </strong>
+            <span>Tarifs publics, ROI mesuré, contrats sans clause piège.</span>
+          </li>
+          <li class="about-value">
+            <strong>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path></svg>
+              Souveraineté
+            </strong>
+            <span>Données hébergées en France, conformité RGPD by design.</span>
+          </li>
+          <li class="about-value">
+            <strong>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Vitesse
+            </strong>
+            <span>Déploiement en 72h. Pas de comité, pas de slides.</span>
+          </li>
+          <li class="about-value">
+            <strong>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              Humain d'abord
+            </strong>
+            <span>L'IA augmente vos équipes — elle ne les remplace pas.</span>
+          </li>
+        </ul>
+
+        <div class="about-stats">
+          <div class="about-stat">
+            <strong>47</strong>
+            <span>Entreprises<br>accompagnées</span>
+          </div>
+          <div class="about-stat">
+            <strong>72h</strong>
+            <span>Délai de<br>déploiement</span>
+          </div>
+          <div class="about-stat">
+            <strong>100%</strong>
+            <span>Hébergé<br>en France</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="faq-section">
   <div class="section-inner" style="text-align:center;">
@@ -3752,15 +4031,47 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         Horizon AI
       </a>
       <p class="footer-tagline">Agence IA française · Automatisation sur mesure pour PME &amp; ETI.<br>Fondée par des experts en opérations &amp; intelligence artificielle.</p>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/company/horizon-ai-fr" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Horizon AI" class="footer-social-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg>
+        </a>
+        <a href="mailto:contact@horizon-ai.fr" aria-label="Email Horizon AI" class="footer-social-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </a>
+      </div>
     </div>
-    <ul class="footer-nav">
-      <li><a href="#solutions">Solutions</a></li>
-      <li><a href="#roadmap">Processus</a></li>
-      <li><a href="#contact">Audit gratuit</a></li>
-      <li><a href="mailto:contact@horizon-ai.fr">contact@horizon-ai.fr</a></li>
-      <li><a href="#hero" class="footer-top-link">↑ Retour en haut</a></li>
-    </ul>
-    <p class="footer-copy">© 2025 Horizon AI · Données hébergées en France · <a href="mailto:contact@horizon-ai.fr" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Mentions légales</a></p>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <span class="footer-col-title">Produit</span>
+        <ul>
+          <li><a href="#solutions">Solutions</a></li>
+          <li><a href="#roadmap">Processus</a></li>
+          <li><a href="#tarifs">Tarifs</a></li>
+          <li><a href="#contact">Audit gratuit</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Agence</span>
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="mailto:contact@horizon-ai.fr">Nous contacter</a></li>
+          <li><a href="mailto:recrutement@horizon-ai.fr">Carrières</a></li>
+          <li><a href="#hero" class="footer-top-link">↑ Haut de page</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title">Légal</span>
+        <ul>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="confidentialite.html">Confidentialité</a></li>
+          <li><a href="cgv.html">CGV</a></li>
+          <li><a href="confidentialite.html#cookies">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="footer-copy">© 2026 Horizon AI · Micro-entreprise (Naoum SY) · Leuville-sur-Orge, France · Données hébergées en France · Conforme RGPD</p>
   </div>
 </footer>
 
