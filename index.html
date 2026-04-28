@@ -2586,7 +2586,8 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   50%      { transform: rotate(45deg) translate(3px,3px); }
 }
 @media (max-width: 640px) {
-  .word-scroll-section { height: 260vh; }
+  .word-scroll-section { height: auto; }
+  .ws-sticky { position: relative; height: 100vh; }
   .ws-before, .ws-after { font-size: 1rem; }
   .ws-descs-container { min-width: 90vw; }
   .ws-desc { white-space: normal; text-align: center; }
@@ -4316,7 +4317,26 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
     requestAnimationFrame(loop);
   }
 
-  window.addEventListener('scroll', () => { scrollP = getScrollProgress(); }, { passive: true });
+  const isMobile = 'ontouchstart' in window && window.innerWidth <= 640;
+
+  if (isMobile) {
+    /* Mobile: auto-cycle through words when section is in view */
+    let mZone = 0, mTimer = null;
+    const mObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        if (!mTimer) mTimer = setInterval(() => {
+          mZone = (mZone + 1) % N;
+          scrollP = mZone / Math.max(1, N - 1);
+          activateZone(mZone);
+        }, 1800);
+      } else {
+        clearInterval(mTimer); mTimer = null;
+      }
+    }, { threshold: 0.4 });
+    mObs.observe(section);
+  } else {
+    window.addEventListener('scroll', () => { scrollP = getScrollProgress(); }, { passive: true });
+  }
 
   activateZone(0); /* Premier mot visible dès le chargement */
   loop();
