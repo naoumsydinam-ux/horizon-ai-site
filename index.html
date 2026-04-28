@@ -2516,7 +2516,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
   position: sticky; top: 0; height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  overflow: hidden;
+  overflow: hidden; background: var(--c-bg);
 }
 .ws-header { position: absolute; top: 5.5rem; left: 50%; transform: translateX(-50%); text-align: center; white-space: nowrap; }
 .ws-stage  { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; text-align: center; }
@@ -2587,6 +2587,7 @@ footer { background: #0A0A0A; color: rgba(255,255,255,0.6); }
 }
 @media (max-width: 640px) {
   .word-scroll-section { height: 300vh; }
+  .ws-sticky { position: relative; top: 0; }
   .ws-before, .ws-after { font-size: 1rem; }
   .ws-descs-container { min-width: 90vw; }
   .ws-desc { white-space: normal; text-align: center; }
@@ -4316,7 +4317,35 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
     requestAnimationFrame(loop);
   }
 
-  window.addEventListener('scroll', () => { scrollP = getScrollProgress(); }, { passive: true });
+  const isMobile = 'ontouchstart' in window && window.innerWidth <= 640;
+
+  if (isMobile) {
+    /* Sticky JS pour mobile — fiable sur tous iOS/Android */
+    const sticky = section.querySelector('.ws-sticky');
+    const vpH = window.innerHeight;
+    let secTop = section.getBoundingClientRect().top + window.pageYOffset;
+    window.addEventListener('resize', () => {
+      secTop = section.getBoundingClientRect().top + window.pageYOffset;
+    }, { passive: true });
+
+    function mobileScroll() {
+      scrollP = getScrollProgress();
+      const sy = window.pageYOffset;
+      const secH = section.offsetHeight;
+      if (sy <= secTop) {
+        sticky.style.cssText = 'position:relative;top:0;';
+      } else if (sy < secTop + secH - vpH) {
+        sticky.style.cssText = `position:fixed;top:0;left:0;right:0;height:${vpH}px;z-index:50;background:var(--c-bg);overflow:hidden;`;
+      } else {
+        sticky.style.cssText = `position:absolute;top:${secH - vpH}px;left:0;right:0;height:${vpH}px;background:var(--c-bg);overflow:hidden;`;
+      }
+    }
+
+    window.addEventListener('scroll', mobileScroll, { passive: true });
+    mobileScroll();
+  } else {
+    window.addEventListener('scroll', () => { scrollP = getScrollProgress(); }, { passive: true });
+  }
 
   activateZone(0); /* Premier mot visible dès le chargement */
   loop();
