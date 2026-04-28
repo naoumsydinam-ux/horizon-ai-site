@@ -1405,13 +1405,13 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
 .rd-step[data-step="3"] .rd-card,
 .rd-step[data-step="4"] .rd-card { border-color: var(--c-border); }
 .rd-card, .rd-num, .rd-badge, .rd-details li::before {
-  transition: border-color 500ms ease, background 500ms ease, color 500ms ease, box-shadow 500ms ease;
+  transition: border-color 650ms ease, background 650ms ease, color 650ms ease, box-shadow 650ms ease;
 }
 /* LIT state — card border, number, badge and bullets all light up together */
-.rd-step.lit[data-step="1"] .rd-card { border-color: rgba(59,130,246,0.5);  box-shadow: 0 8px 32px rgba(59,130,246,0.08); }
-.rd-step.lit[data-step="2"] .rd-card { border-color: rgba(139,92,246,0.5);  box-shadow: 0 8px 32px rgba(139,92,246,0.08); }
-.rd-step.lit[data-step="3"] .rd-card { border-color: rgba(236,72,153,0.5);  box-shadow: 0 8px 32px rgba(236,72,153,0.08); }
-.rd-step.lit[data-step="4"] .rd-card { border-color: rgba(249,115,22,0.5);  box-shadow: 0 8px 32px rgba(249,115,22,0.08); }
+.rd-step.lit[data-step="1"] .rd-card { border-color: rgba(59,130,246,0.3);  box-shadow: 0 6px 24px rgba(59,130,246,0.06); }
+.rd-step.lit[data-step="2"] .rd-card { border-color: rgba(139,92,246,0.3);  box-shadow: 0 6px 24px rgba(139,92,246,0.06); }
+.rd-step.lit[data-step="3"] .rd-card { border-color: rgba(236,72,153,0.3);  box-shadow: 0 6px 24px rgba(236,72,153,0.06); }
+.rd-step.lit[data-step="4"] .rd-card { border-color: rgba(249,115,22,0.3);  box-shadow: 0 6px 24px rgba(249,115,22,0.06); }
 .rd-step[data-step="1"] .rd-card:hover { border-color: rgba(59,130,246,0.7);  box-shadow: 0 12px 40px rgba(59,130,246,0.12);  transform: translateY(-3px); }
 .rd-step[data-step="2"] .rd-card:hover { border-color: rgba(139,92,246,0.7);  box-shadow: 0 12px 40px rgba(139,92,246,0.12);  transform: translateY(-3px); }
 .rd-step[data-step="3"] .rd-card:hover { border-color: rgba(236,72,153,0.7);  box-shadow: 0 12px 40px rgba(236,72,153,0.12); transform: translateY(-3px); }
@@ -1518,12 +1518,12 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
   .rd-node-label { margin-top: 0.4rem; }
   .rd-card {
     padding: 1rem 1.1rem;
-    transform: scale(0.95);
+    transform: scale(0.97);
     transform-origin: center top;
-    transition: border-color 400ms ease, box-shadow 400ms ease, transform 400ms cubic-bezier(0.34, 1.28, 0.64, 1);
+    transition: border-color 650ms ease, box-shadow 650ms ease, transform 550ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .rd-step.lit .rd-card {
-    transform: scale(1.02);
+    transform: scale(1.005);
   }
   .rd-title { font-size: 0.95rem; }
   .rd-desc  { font-size: 0.8rem; }
