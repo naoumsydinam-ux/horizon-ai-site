@@ -986,14 +986,15 @@ footer { background: var(--c-bg); border-top: 1px solid var(--c-border); padding
   /* HOW → 1 col */
   /* how-step 480px responsive removed */
 
-  /* METRICS → 1 col */
-  .metrics-grid { grid-template-columns: 1fr; }
-  .metric-card { border-right: none !important; padding: 1.4rem 1.25rem; }
+  /* METRICS → 2×2 */
+  .metrics-grid { grid-template-columns: 1fr 1fr; }
+  .metric-card { border-right: none !important; padding: 1rem 0.75rem; }
+  .metric-card:nth-child(odd) { border-right: 1px solid var(--c-border) !important; }
+  .metric-card:nth-child(3), .metric-card:nth-child(4) { border-top: 1px solid var(--c-border); }
   .metric-card:last-child { border-bottom: none; }
-  .metric-card:nth-child(3), .metric-card:nth-child(4) { border-top: none; }
-  .metric-val { font-size: 2rem; margin-bottom: 0.35rem; }
-  .metric-label { font-size: 0.78rem; }
-  .metric-sub { font-size: 0.72rem; margin-top: 0.25rem; }
+  .metric-val { font-size: 1.65rem; margin-bottom: 0.25rem; }
+  .metric-label { font-size: 0.72rem; line-height: 1.35; }
+  .metric-sub { font-size: 0.65rem; margin-top: 0.2rem; }
 
   /* PHOTOS */
   .ai-photo-grid { grid-template-columns: 1fr; }
