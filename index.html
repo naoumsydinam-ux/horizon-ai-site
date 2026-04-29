@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230D0F12'/><path d='M16 5L5 11v10l11 6 11-6V11L16 5z' fill='none' stroke='url(%23g)' stroke-width='2' stroke-linejoin='round'/><path d='M5 11l11 6 11-6M16 17v10' fill='none' stroke='url(%23g)' stroke-width='2'/><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%233B82F6'/><stop offset='0.5' stop-color='%238B5CF6'/><stop offset='1' stop-color='%23EC4899'/></linearGradient></defs></svg>">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer-when-downgrade">
@@ -455,6 +456,7 @@ section { padding: 5.5rem 1.5rem; }
 .testimonial-author { display: flex; align-items: center; gap: 0.85rem; }
 .testimonial-avatar { width: 44px; height: 44px; border-radius: 50%; border: 2px solid transparent; background: linear-gradient(var(--c-surface),var(--c-surface)) padding-box, linear-gradient(135deg,#3B82F6,#8B5CF6,#EC4899,#F97316) border-box; flex-shrink: 0; }
 .testimonial-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+.avatar-initials { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; color: #fff; }
 .author-info strong { display: block; font-size: 0.88rem; font-weight: 600; }
 .author-info span { font-size: 0.78rem; color: var(--c-text-muted); }
 .testimonials-cta { text-align: center; margin-top: 3.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
@@ -3599,7 +3601,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         <p class="testimonial-text">On avait déjà essayé deux logiciels qui n'avaient rien changé. Avec Horizon, <strong>en 3 semaines, mon équipe admin a récupéré l'équivalent d'un mi-temps.</strong> Ce qui m'a convaincu : ils ont commencé par l'audit.</p>
         <div class="testimonial-result">14h / semaine récupérées — ROI en 3 semaines</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Marc B., Directeur Général — témoignage client Horizon AI" loading="lazy"></div>
+          <div class="testimonial-avatar"><div class="avatar-initials" style="background:linear-gradient(135deg,#3B82F6,#6D28D9)" aria-label="Marc B.">MB</div></div>
           <div class="author-info">
             <strong>Marc B.</strong>
             <span>Directeur Général · Cabinet RH · 45 salariés</span>
@@ -3612,7 +3614,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         <p class="testimonial-text">Ils n'ont jamais utilisé un seul mot technique. Ils ont parlé de mes problèmes, pas de leur technologie. <strong>Aujourd'hui mon équipe commerciale passe 2h de moins par jour sur l'admin</strong> — et ça se voit sur le CA.</p>
         <div class="testimonial-result">+22% de CA dès le 2ème mois</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sophie L., Directrice Générale — témoignage client Horizon AI" loading="lazy"></div>
+          <div class="testimonial-avatar"><div class="avatar-initials" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)" aria-label="Sophie L.">SL</div></div>
           <div class="author-info">
             <strong>Sophie L.</strong>
             <span>Directrice Générale · Distribution B2B · 80 salariés</span>
@@ -3625,7 +3627,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         <p class="testimonial-text">On était sceptiques au départ. <strong>En une semaine de test, notre service client a traité 3× plus de tickets sans recruter.</strong> L'audit gratuit nous a convaincus — ils ont mis le doigt exactement sur nos points de friction.</p>
         <div class="testimonial-result">×3 tickets traités — 0 recrutement</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Thomas R., COO — témoignage client Horizon AI" loading="lazy"></div>
+          <div class="testimonial-avatar"><div class="avatar-initials" style="background:linear-gradient(135deg,#EC4899,#F97316)" aria-label="Thomas R.">TR</div></div>
           <div class="author-info">
             <strong>Thomas R.</strong>
             <span>COO · SaaS B2B · 120 salariés</span>
@@ -3638,7 +3640,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         <p class="testimonial-text">Nos commerciaux passaient 40% de leur temps sur des tâches admin. <strong>Aujourd'hui ce chiffre est tombé à 12%.</strong> Ils se concentrent sur ce qui compte : vendre. Le ROI a été visible dès le premier mois.</p>
         <div class="testimonial-result">–28% temps admin · ROI mois 1</div>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Amélie C., Directrice Commerciale — témoignage client Horizon AI" loading="lazy"></div>
+          <div class="testimonial-avatar"><div class="avatar-initials" style="background:linear-gradient(135deg,#F97316,#3B82F6)" aria-label="Amélie C.">AC</div></div>
           <div class="author-info">
             <strong>Amélie C.</strong>
             <span>Directrice Commerciale · Industrie · 200 salariés</span>
@@ -3889,7 +3891,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
         <div class="contact-testimonial">
           <p class="contact-testimonial-text">L'audit a identifié 8h d'économies hebdomadaires pour notre équipe. Mis en place en 2 semaines, sans aucune disruption.</p>
           <div class="contact-testimonial-author">
-            <div class="contact-testimonial-avatar"><img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Sophie Laurent" loading="lazy"></div>
+            <div class="contact-testimonial-avatar"><div class="avatar-initials" style="background:linear-gradient(135deg,#8B5CF6,#3B82F6);width:100%;height:100%;" aria-label="Sophie Laurent">SL</div></div>
             <div>
               <strong>Sophie Laurent</strong>
               <span>DRH · Groupe Medicis</span>
@@ -3937,16 +3939,16 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
           <div class="contact-form-row">
             <div class="form-group">
               <label class="form-label" for="f-prenom">Prénom</label>
-              <input class="form-input" type="text" id="f-prenom" placeholder="Marie" autocomplete="given-name">
+              <input class="form-input" type="text" id="f-prenom" placeholder="Marie" autocomplete="given-name" required>
             </div>
             <div class="form-group">
               <label class="form-label" for="f-nom">Nom</label>
-              <input class="form-input" type="text" id="f-nom" placeholder="Martin" autocomplete="family-name">
+              <input class="form-input" type="text" id="f-nom" placeholder="Martin" autocomplete="family-name" required>
             </div>
           </div>
           <div class="form-group">
             <label class="form-label" for="f-email">Email professionnel</label>
-            <input class="form-input" type="email" id="f-email" placeholder="marie@monentreprise.fr" autocomplete="email">
+            <input class="form-input" type="email" id="f-email" placeholder="marie@monentreprise.fr" autocomplete="email" required>
           </div>
           <div class="form-group">
             <label class="form-label" for="f-taille">Taille de l'entreprise</label>
@@ -3965,7 +3967,7 @@ a:focus-visible             { outline-color: #A78BFA; border-radius: 3px; }
               </div>
               <span class="form-prompt-label-text">Décrivez votre défi opérationnel</span>
             </div>
-            <textarea class="form-prompt-textarea" id="f-message" rows="4" placeholder="Ex : Mon équipe passe 3h par jour à relancer les factures impayées et mettre à jour le CRM manuellement…"></textarea>
+            <textarea class="form-prompt-textarea" id="f-message" rows="4" placeholder="Ex : Mon équipe passe 3h par jour à relancer les factures impayées et mettre à jour le CRM manuellement…" required></textarea>
             <div class="form-prompt-footer">
               <span class="form-prompt-hint">Plus c'est précis, plus l'analyse sera pertinente</span>
               <button class="form-prompt-send" type="button" title="Envoyer" tabindex="-1">
